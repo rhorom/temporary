@@ -35,7 +35,8 @@ export function Map({param}){
   }
 
   useEffect(() => {
-    const url = `./src/data/${param.country}/adm0.json`
+    const url = `./public/data/${param.country}/adm0.json`
+    console.log(url)
     //const url = `https://github.com/rhorom/grid_viewer/tree/main/src/data/${param.country}/adm0.json`
     fetch(url)
       .then(resp => resp.json())

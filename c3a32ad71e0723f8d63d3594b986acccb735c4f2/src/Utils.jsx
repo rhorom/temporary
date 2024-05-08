@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
-import colormaps from './data/colormaps.json';
+import colormaps from './colormaps.json';
 
 export async function getFromUrl(url) {
     try {

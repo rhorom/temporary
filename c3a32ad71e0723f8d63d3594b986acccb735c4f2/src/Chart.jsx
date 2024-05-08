@@ -8,7 +8,7 @@ import { SimpleSelect, DecimalFormat, FloatFormat, GetColor, ArgMax, ArgMin } fr
 import { Ask } from './pages/Info';
 import { pIndicator, nIndicator } from './config';
 
-import specs from './data/chart_spec.json';
+import specs from './chart_spec.json';
 
 function Average(array) {
   return array.reduce((a, b) => a + b) / array.length;
