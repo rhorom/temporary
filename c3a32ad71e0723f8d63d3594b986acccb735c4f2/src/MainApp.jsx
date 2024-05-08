@@ -18,22 +18,33 @@ const country_paths = Object.keys(mainConfig)
 const countries = ['Burkina Faso', 'India', 'Kenya', 'Nigeria']
 const disableCountries = ['Burkina Faso', 'Nigeria']
 
+const fetchData = async (url, func) => {
+  await fetch(url)
+  .then(resp => resp.json())
+  .then(json => func(json))
+}
+
 export function MainApp() {
     let navigate = useNavigate()
     let location = useLocation()
     const [appParam, setAppParam] = useState({
       country: '',
       indicator: '',
-      config: '',
-      region: ''
+      config: ''
     })
   
+    const [boundary, setBoundary] = useState()
+    const [aggData, setAggData] = useState()
+    const [tabData, setTabData] = useState()
+    const [regData, setRegData] = useState()
+    const [region, setRegion] = useState()
+
     useEffect(() => {
       const val = location.pathname.split('/')
       let param = {
         country: '',
         indicator: '',
-        config: ''  
+        config: ''
       }
   
       if (country_paths.includes(val[1])){
@@ -51,15 +62,34 @@ export function MainApp() {
       setAppParam(param, {replace:true})
     }, [location])
   
+    useEffect(() => {
+      if (appParam.indicator === '') {
+        return
+      }
+      const url = `./public/data/${appParam.country}`
+      fetchData(`${url}/${appParam.config.TLC}_adm1.json`, setBoundary)
+      fetchData(`${url}/${appParam.config.TLC}_data.json`, setAggData)
+      fetchData(`${url}/${appParam.config.TLC}_table.json`, setTabData)
+    }, [appParam])
+
+    useEffect(() => {
+      if (region) {
+        const filtered = tabData.filter((item) => item.state === region)
+        setRegData(filtered, {replace:true})
+      }
+    }, [region])
+
     function changeCountry(e){
       const val = e.target.value
       let param = {
         country: val,
         indicator: '',
-        config: mainConfig[val],
-        region: ''
+        config: mainConfig[val]
       }
       setAppParam(param, {replace:true})
+      setRegion()
+      setAggData()
+      setRegData()
       navigate('/'+val, {replace:true})
 
       if (document.getElementById('selectIndicator')) {
@@ -71,6 +101,8 @@ export function MainApp() {
       const val = e.target.value
       const url = `/${appParam.country}/${val}`
       navigate(url, {replace:true})
+      setRegion()
+      setRegData()
     }
   
     function SelectCountry(){
@@ -136,6 +168,14 @@ export function MainApp() {
       }
     }, [appParam.country])
 
+    const ChartPanel = useMemo(() => {
+      if (regData) {
+        return <Chart data={regData} param={appParam}/>
+      } else {
+        return <></>
+      } 
+    }, [regData])
+
     return (
       <div className='container-fluid main-body'>
         <hr/>
@@ -161,11 +201,11 @@ export function MainApp() {
 
         <div className='row p-0 m-0'>
           <div className='col-md-7 m-0 p-0'>
-            {appParam.indicator ? <Map param={appParam} /> : <></>}
+            {aggData ? <Map param={appParam} boundary={boundary} data={aggData} func={setRegion}/> : <></>}
           </div>
 
           <div className='col-md-5 m-0 p-0'>
-            {appParam.indicator ? <Chart param={appParam.config} data={[]}/> : <></>}
+            {ChartPanel}
           </div>
           
         </div>

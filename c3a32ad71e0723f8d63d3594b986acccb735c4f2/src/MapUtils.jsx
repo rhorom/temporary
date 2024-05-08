@@ -4,6 +4,7 @@ import { BsQuestionCircleFill, BsCaretUpFill, BsArrowDownCircleFill, BsPrinterFi
 import { ArgMin, FloatFormat, LookupTable, GetColor, GetXFromRGB, SimpleSelect, BasicSelect } from './Utils';
 import { Ask } from './pages/Info';
 import { colormaps } from './config'
+import './index.css';
 
 export function ZoomPanel({ map, param }){
   return (
@@ -36,6 +37,7 @@ export function RadioPanel({ pass, param }){
   function changeOption(val){
     let par = {
       round: val,
+      field: param.indicator + '_' + val,
       showRaster: false,
       showLabel: false,
       showImprove: false,
@@ -173,8 +175,8 @@ export function LegendPanel({ param, opt }){
 
     return (
       <div className='row m-0 mt-2 pt-2 mb-2' style={{background:'#f0f0f0', borderRadius:'10px', minHeight:'125px'}}>
-        <div className='p-0 text-light'>
-          <div style={{display:'inline-block', background:'#e9546e', borderRadius:'7px', padding:'5px', marginBottom:'10px'}}>
+        <div className='p-0'>
+          <div className='subtitle'>
           {param.Indicator}
           </div>
         </div>

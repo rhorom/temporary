@@ -2054,7 +2054,7 @@ export const indicatorDef = {
 
 export const StateStyle = () => {
     return {
-        weight: 0.5,
+        weight: 1,
         opacity: 0.5,
         color: 'black',
         fillOpacity: 0,
@@ -2087,7 +2087,10 @@ export const colormaps = {
 
 let pos = []
 let neg = []
-Object.keys(indicatorDef).forEach((item) => {if (item.Proportional) {pos.push(item)} else {neg.push(item)}})
+Object.keys(indicatorDef).forEach((key) => {
+    let item = indicatorDef[key]
+    if (item.Proportional) {pos.push(key)} else {neg.push(key)}
+})
 
 export const pIndicator = pos
 export const nIndicator = neg

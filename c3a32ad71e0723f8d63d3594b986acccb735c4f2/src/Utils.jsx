@@ -190,7 +190,7 @@ export function SimpleSelect({ name, items, defaultOpt, value, pass, noDefault, 
             <Form.Select id={'select'+name} key={'select'+name} value={value} onChange={handleChange}>
                 {noDefault ? '' : <option value={''}></option>}
                 {items.map((item, i) => {
-                    const value = item.replaceAll(' ','').toLowerCase()
+                    const value = item.replaceAll(' ','')
                     return (
                         <option key={i} value={value}>{item}</option>
                     )
