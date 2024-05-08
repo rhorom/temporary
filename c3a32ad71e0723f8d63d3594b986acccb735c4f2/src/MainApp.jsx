@@ -24,16 +24,19 @@ export function MainApp() {
     const [appParam, setAppParam] = useState({
       country: '',
       indicator: '',
-      config: '',
-      region: ''
+      config: ''
     })
   
+    const [aggData, setAggData] = useState()
+    const [tabData, setTabData] = useState([])
+    const [region, setRegion] = useState()
+
     useEffect(() => {
       const val = location.pathname.split('/')
       let param = {
         country: '',
         indicator: '',
-        config: ''  
+        config: ''
       }
   
       if (country_paths.includes(val[1])){
@@ -48,9 +51,37 @@ export function MainApp() {
         }
       }
   
+      if (param.country) {
+        const url = `./public/data/${param.country}/${param.config.TLC}_data.json`
+        fetch(url)
+          .then(resp => resp.json())
+          .then(json => setAggData(json))
+      }
+
       setAppParam(param, {replace:true})
     }, [location])
   
+    useEffect(() => {
+      if (appParam.country) {
+        const url = `./public/data/${appParam.country}/${appParam.config.TLC}_data.json`
+        fetch(url)
+          .then(resp => resp.json())
+          .then(json => setAggData(json))
+      }
+    }, [appParam])
+    
+    useEffect(() => {
+      if (region) {
+        const url = `./public/data/${appParam.country}/${appParam.config.TLC}_table.json`
+        fetch(url)
+          .then(resp => resp.json())
+          .then(json => {
+            const filtered = json.filter((item) => item.state === region)
+            setTabData(filtered)
+          })
+      }
+    }, [region, appParam])
+
     function changeCountry(e){
       const val = e.target.value
       let param = {
@@ -60,6 +91,7 @@ export function MainApp() {
         region: ''
       }
       setAppParam(param, {replace:true})
+      setRegion()
       navigate('/'+val, {replace:true})
 
       if (document.getElementById('selectIndicator')) {
@@ -161,11 +193,11 @@ export function MainApp() {
 
         <div className='row p-0 m-0'>
           <div className='col-md-7 m-0 p-0'>
-            {appParam.indicator ? <Map param={appParam} /> : <></>}
+            {appParam.indicator ? <Map param={appParam} data={aggData} func={setRegion}/> : <></>}
           </div>
 
           <div className='col-md-5 m-0 p-0'>
-            {appParam.indicator ? <Chart param={appParam.config} data={[]}/> : <></>}
+            {region ? <Chart param={appParam} data={tabData}/> : <></>}
           </div>
           
         </div>

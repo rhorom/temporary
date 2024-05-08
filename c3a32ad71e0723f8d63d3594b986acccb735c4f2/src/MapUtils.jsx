@@ -36,6 +36,7 @@ export function RadioPanel({ pass, param }){
   function changeOption(val){
     let par = {
       round: val,
+      field: param.indicator + '_' + val,
       showRaster: false,
       showLabel: false,
       showImprove: false,

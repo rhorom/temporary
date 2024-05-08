@@ -14,49 +14,32 @@ const basemaps = {
   'positron': 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png'
 };
 var main_map;
+const zoomFit = (bounds) => {main_map.fitBounds(bounds)}
 
-export function Map({param}){
+export function Map({ param, data, func }){
   let cfg = mainConfig[param.country]
-  
+
   const [boundary, setBoundary] = useState()
-  const [aggData, setAggData] = useState()
+  const [selectedState, setSelectedState] = useState()
   
   const [opt, setOpt] = useState({
     round: 'R2',
+    field: param.indicator + '_R2',
     showRaster: false,
     showLabel: false,
     showImprove: false,
     probLimit: 0
   })
 
-  const ref = useRef()
+  const refDistrict = useRef()
+  const refState = useRef()
+  const refSelected = useRef()
+  const choropleth = useRef()
   
   const DefineMap = () => {
     main_map = useMap();
     return null
   }
-
-  useEffect(() => {
-    const url = `./public/data/${param.country}/${param.config.TLC}_adm1.json`
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(),
-      mode: 'no-cors',
-      headers: {'Content-Type': 'application/json'}
-    })
-      .then(resp => resp.json())
-      .then(json => {
-        console.log(json)
-        setBoundary(json)
-      })
-  }, [param])
-
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.clearLayers()
-      ref.current.addData(boundary)
-    }
-  }, [ref, boundary])
 
   const theRadioPanel = useMemo(() => {
     return (
@@ -71,6 +54,153 @@ export function Map({param}){
     c['Proportional'] = indicatorDef[param.indicator].Proportional
     return <LegendPanel param={c} opt={opt.round}/>
   }, [param, opt])
+
+  const TileStyle = useCallback((feature) => {
+    const palette = (opt.round === 'CH') ? 'Palette2' : 'Palette1';
+    const color = GetColor(feature.properties[opt.field], 
+      [param.config.indicators[param.indicator].Min, param.config.indicators[param.indicator].Max], 
+      param.config.indicators[param.indicator][palette]
+    );
+    return {
+        zIndex: 2,
+        weight: 0.5,
+        opacity: 1,
+        color: color,
+        fillOpacity: 1,
+        fillColor: color
+    }
+  }, [param, opt])
+
+  let district = data ? data.features.filter((item) => (item.properties.state === selectedState)) : []
+  district.forEach((item) => {
+    const content = opt.round === 'CH' ? (
+      {
+        'R1': item.properties[param.indicator + '_R1'], 
+        'R2': item.properties[param.indicator + '_R2'], 
+        'CH': item.properties[param.indicator + '_CH']}
+    ) : (
+      {
+        [opt.round]: item.properties[opt.field],
+      }
+    )
+    item.properties['toDisplay'] = content
+  })
+
+  useEffect(() => {
+    const url = `./public/data/${param.country}/${param.config.TLC}_adm1.json`
+    fetch(url)
+      .then(resp => resp.json())
+      .then(json => setBoundary(json))
+  }, [param])
+
+  useEffect(() => {
+    if (refState.current) {
+      refState.current.clearLayers()
+      refState.current.addData(boundary)
+    }
+    if (refDistrict.current) {
+      refDistrict.current.clearLayers()
+      refDistrict.current.addData(district)
+    }
+  }, [refState, boundary, district])
+
+  useEffect(() => {
+    if (refSelected.current) {
+      const s = boundary.features.filter((item) => (item.properties.state === selectedState));
+      refSelected.current.clearLayers()
+      refSelected.current.addData(s)
+    }
+  }, [refSelected, selectedState])
+
+  useEffect(() => {
+    const filterData = (feature) => {
+      //const val = feature.properties[`${param.indicator}_CH`];
+      //const pval = feature.properties[`${param.indicator}_CH_P`];
+      let res = true
+      return res
+    }
+
+    let filteredData = data ? data.features.filter(filterData) : [];
+    
+    if (choropleth.current) {
+      choropleth.current.clearLayers()
+      choropleth.current.addData(filteredData)
+      choropleth.current.setStyle(TileStyle)
+    }
+  }, [param, data, TileStyle])
+
+  const mainLayer = useMemo(() => {  
+    if (opt.showRaster) {
+      let url = "https://tiles.arcgis.com/tiles/7vxqqNxnsIHE3EKt/arcgis/rest/services/";
+      url += `${opt.field}/MapServer`;
+      //return <TiledMapLayer name='thisRaster' url={url}/>;
+      return <></>
+    } else {  
+      return <GeoJSON
+        data={data}
+        ref={choropleth}
+        style={TileStyle}
+        attribution='Powered by <a href="https://www.esri.com">Esri</a>'
+        />
+    }
+  }, [opt, param, data, TileStyle])
+
+  const onEachState = (feature, layer) => {
+    layer.on({
+      mouseover: function(e){
+        const prop = e.target.feature.properties;
+        let content = `<div><b>${prop.state}</b></div>`;
+        layer.setStyle({weight:3})
+        layer.bindTooltip(content)
+        layer.openTooltip()
+      },
+      mouseout: function(e){
+        layer.setStyle({weight:0.5})
+        //layer.unbindTooltip()
+        layer.closeTooltip()
+      },
+      click: function(e){
+        const val = e.target.feature.properties.state
+        layer.setStyle({weight:3})
+        zoomFit(e.target._bounds)
+        setSelectedState(val)
+        func(val)
+      }
+    })
+  }
+
+  const onEachDistrict = (feature, layer) => {
+    layer.on({
+      mouseover: function(e){
+        const prop = e.target.feature.properties;
+        const content = DistrictPopup(prop, param.indicator);
+
+        layer.setStyle({weight:3, fillOpacity:0.7})
+        layer.bindTooltip(content)
+        layer.openTooltip()
+      },
+      mouseout: function(e){
+        layer.setStyle({weight:0.5, fillOpacity:0})
+        //layer.unbindTooltip()
+        layer.closeTooltip()
+      },
+    })
+  }
+
+  function DistrictPopup(obj, col){
+    let content = `<div><b>${obj.district}</b>`;
+    const mapper = {
+      'R1': 'R<sub>1</sub>',
+      'R2': 'R<sub>2</sub>',
+      'CH': 'Change',
+    }
+    content += `<br/>${obj.state}<br/>`
+    Object.keys(obj.toDisplay).forEach((key, i) => {
+      content += `<br/> ${mapper[key]}\u25b9 ${FloatFormat(obj.toDisplay[key], 1)}`
+    })
+    content += '</div>'
+    return (content)
+  }
 
   return (
     <div className='row'>
@@ -113,9 +243,44 @@ export function Map({param}){
           </Pane>
           }
 
-          <Pane name='selected' style={{zIndex:60}}>
-            <GeoJSON data={boundary} ref={ref}/>
+          {opt.showLabel ? <TileLayer url={basemaps['label']} zIndex={500}/> : <></>}
+
+          <Pane name='tiles' style={{zIndex:55}}>
+            {mainLayer}
           </Pane>
+
+          <Pane name='selected' style={{zIndex:60}}>
+            <GeoJSON
+              data={selectedState}
+              ref={refSelected}
+              style={StateStyle2}
+              zIndex={400}
+            />
+
+            <GeoJSON 
+              data={boundary}
+              ref={refState}
+              style={StateStyle}
+              onEachFeature={onEachState}
+            />
+          </Pane>
+
+          {opt.showLabel ? null :
+          <Pane name='boundary' style={{zIndex:65}}>    
+            <GeoJSON
+              data={boundary}
+              style={StateStyle}
+              onEachFeature={onEachState}
+              />
+
+            <GeoJSON
+              data={district}
+              ref={refDistrict}
+              style={DistrictStyle}
+              onEachFeature={onEachDistrict}
+            />
+          </Pane>}
+
         </MapContainer>
       </div>
   

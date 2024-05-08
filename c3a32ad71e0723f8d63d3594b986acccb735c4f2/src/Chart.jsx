@@ -158,16 +158,18 @@ function MakeTable({ columns, data, palette }) {
 export function Chart({ param, data}){
   const [sortChart, setSortChart] = useState('SortbyName');
   const [sorttype, setSorttype] = useState('ascending');
+  const length = data.length
 
-  const stateName = 'stateName'// data[0].state;
-  const nodata = data.length === 0 ? <kbd>No data displayed. Modify the filter.</kbd> : ''
+  const stateName = length === 0 ? '' : data[0].state;
+  const nodata = length === 0 ? <kbd>No data displayed. Modify the filter.</kbd> : ''
 
-  const adm1 = String(param.Adm1).toLowerCase()
-  const adm2 = String(param.Adm2).toLowerCase()
+  const adm1 = String(param.config.Adm1).toLowerCase()
+  const adm2 = String(param.config.Adm2).toLowerCase()
   const adm2s = adm2.slice(-1) === 'y' ? adm2.slice(0,-1) + 'ies' : adm2 + 's'
+  const description = param.config.indicators[param.indicator]
 
   const columns = [
-    {Header:`${param.Adm2} Name`, accessor:'district'},
+    {Header:`${param.config.Adm2} Name`, accessor:'district'},
     {Header:`R1`, accessor: `${param.indicator}_R1`, Cell:DecimalFormat, sortType:'basic'},
     {Header:`CI_R1`, accessor: `${param.indicator}_R1CI`, disableSortBy: true},
     {Header:'R2', accessor:`${param.indicator}_R2`, Cell:DecimalFormat, sortType:'basic'},
@@ -190,14 +192,79 @@ export function Chart({ param, data}){
     </div>
   )
 
-  //const round2 = (description['R2'] !== 'No data') ? ` In round 2, (${description['R2']}, ${description['Y2']}) the figure was ${hilite[1]['avg']}${description['Unit']}.` : ''
+  const hilite = useMemo(() => {
+    return (
+      ['_R1', '_R2', '_CH'].map((item) => {
+        let obj = {}
+        function removeNull(x){
+          return x[param.indicator+item] != null
+        }
+        const data1 = data.filter(removeNull)
+        const y = data1.map((x) => x[param.indicator+item])
+        const z = data1.map((x) => x['district'])
+        
+        if (y.length > 0){
+          const maxi = ArgMax(y)
+          const mini = ArgMin(y)
+          
+          obj['avg'] = FloatFormat(Average(y), 1)// + description['Unit'];
+          if (pIndicator.includes(param.indicator)){
+            obj['best'] = z[maxi]
+            obj['worst'] = z[mini]
+            obj['bestVal'] = FloatFormat(y[maxi], 1)
+            obj['worstVal'] = FloatFormat(y[mini], 1)
+          } else {
+            obj['best'] = z[mini]
+            obj['worst'] = z[maxi]
+            obj['bestVal'] = FloatFormat(y[mini], 1)
+            obj['worstVal'] = FloatFormat(y[maxi], 1)
+          }  
+        } else {
+          obj['avg'] = '-'
+          obj['best'] = '-'
+          obj['worst'] = '-'
+          obj['bestVal'] = '-'
+          obj['worstVal'] = '-'
+        }
+        return obj
+      })
+    )
+  }, [data, param])
 
-  const hilite = []
+  const round2 = (description['R2'] !== 'No data') ? ` In round 2, (${description['R2']}, ${description['Y2']}) the figure was ${hilite[1]['avg']} ${description['Unit']}.` : ''
 
   const summaryTab = (
     <div style={{fontSize:'90%'}}>
       <div className='row p-2'>
+        <Table striped bordered hover size='sm'>
+          <thead>
+            <tr>
+              <td>
+                <Ask about='How to read table' />
+              </td><td>Round 1</td><td>Round 2</td><td>Change</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{param.config.Adm1} Level Average</td><td>{hilite[0]['avg']}</td><td>{hilite[1]['avg']}</td><td>{hilite[2]['avg']}</td>
+            </tr>
+            <tr>
+              <td>Highest Performing</td><td>{hilite[0]['best']}</td><td>{hilite[1]['best']}</td><td>{hilite[2]['best']}</td>
+            </tr>
+            <tr>
+              <td>Least Performing</td><td>{hilite[0]['worst']}</td><td>{hilite[1]['worst']}</td><td>{hilite[2]['worst']}</td>
+            </tr>
+          </tbody>
+        </Table>
       </div>
+
+      <p>
+        In the {adm1} of <b>{stateName}</b>, {description['Remark']} approximately {hilite[0]['avg']}{description['Statement']} in round 1 ({description['R1']}, {description['Y1']}).
+        {round2}
+      </p>
+      <p>
+        The {adm2} of <b>{hilite[2]['best']}</b> experienced the highest {pIndicator.includes(param.indicator) ? 'increase': 'decrease (lowest increase)'} of {(description['Indicator']).toLowerCase()} with a {hilite[2]['bestVal']} {description['Unit']} change from round 1 ({description['R1']}, {description['Y1']}) to round 2 ({description['R2']}, {description['Y2']}), showing an improvement in conditions.
+      </p>
     </div>
   )
 
