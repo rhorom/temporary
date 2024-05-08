@@ -1,6 +1,7 @@
 export const mainConfig = {
     "burkinafaso": {
         "Name": "Burkina Faso",
+        "TLC": "BFA",
         "Adm1": "Region",
         "Adm2": "Province",
         "Center": [12.7, -1.8],
@@ -279,7 +280,7 @@ export const mainConfig = {
                 "Y2":"2019-21"
             },
             "NAR_prim": {
-                "Indicator":"Primary school enrolment",
+                "Indicator":"Net primary school attendance",
                 "Theme":"Education",
                 "Remark":"",
                 "Min":62.0,
@@ -297,7 +298,7 @@ export const mainConfig = {
                 "Y2":"2019-21"
             },
             "NAR_sec": {
-                "Indicator":"Secondary school enrolment",
+                "Indicator":"Net secondary school attendance",
                 "Theme":"Education",
                 "Remark":"",
                 "Min":28.0,
@@ -462,6 +463,7 @@ export const mainConfig = {
     },
     "india": {
         "Name": "India",
+        "TLC": "IND",
         "Adm1": "State",
         "Adm2": "District",
         "Center": [22.9, 79.6],
@@ -740,7 +742,7 @@ export const mainConfig = {
                 "Y2":"2019-21"
             },
             "NAR_prim": {
-                "Indicator":"Primary school enrolment",
+                "Indicator":"Net primary school attendance",
                 "Theme":"Education",
                 "Remark":"",
                 "Min":62.0,
@@ -758,7 +760,7 @@ export const mainConfig = {
                 "Y2":"2019-21"
             },
             "NAR_sec": {
-                "Indicator":"Secondary school enrolment",
+                "Indicator":"Net secondary school attendance",
                 "Theme":"Education",
                 "Remark":"",
                 "Min":28.0,
@@ -923,6 +925,7 @@ export const mainConfig = {
     },
     "kenya": {
         "Name": "Kenya",
+        "TLC": "KEN",
         "Adm1": "County",
         "Adm2": "Sub-county",
         "Center": [0.6, 37.8],
@@ -1201,7 +1204,7 @@ export const mainConfig = {
                 "Y2":"2019-21"
             },
             "NAR_prim": {
-                "Indicator":"Primary school enrolment",
+                "Indicator":"Net primary school attendance",
                 "Theme":"Education",
                 "Remark":"",
                 "Min":62.0,
@@ -1219,7 +1222,7 @@ export const mainConfig = {
                 "Y2":"2019-21"
             },
             "NAR_sec": {
-                "Indicator":"Secondary school enrolment",
+                "Indicator":"Net secondary school attendance",
                 "Theme":"Education",
                 "Remark":"",
                 "Min":28.0,
@@ -1384,6 +1387,7 @@ export const mainConfig = {
     },
     "nigeria": {
         "Name": "Nigeria",
+        "TLC": "NGA",
         "Adm1": "State",
         "Adm2": "Local Government Area",
         "Center": [9.5, 8.0],
@@ -1662,7 +1666,7 @@ export const mainConfig = {
                 "Y2":"2019-21"
             },
             "NAR_prim": {
-                "Indicator":"Primary school enrolment",
+                "Indicator":"Net primary school attendace",
                 "Theme":"Education",
                 "Remark":"",
                 "Min":62.0,
@@ -1680,7 +1684,7 @@ export const mainConfig = {
                 "Y2":"2019-21"
             },
             "NAR_sec": {
-                "Indicator":"Secondary school enrolment",
+                "Indicator":"Net secondary school attendance",
                 "Theme":"Education",
                 "Remark":"",
                 "Min":28.0,
@@ -1967,7 +1971,7 @@ export const indicatorDef = {
         "Proportional":true,
     },
     "NAR_prim": {
-        "Indicator":"Primary school enrolment",
+        "Indicator":"Net primary school attendance",
         "Theme":"Education",
         "Definition":"Number of children of official primary school age who are enrolled in primary education as a percentage (%) of the total children of the official school-age population",
         "Unit": "percent",
@@ -1975,7 +1979,7 @@ export const indicatorDef = {
         "Proportional": true,
     },
     "NAR_sec": {
-        "Indicator":"Secondary school enrolment",
+        "Indicator":"Net secondary school attendance",
         "Theme":"Education",
         "Definition":"Number of children of official secondary school age who are enrolled in secondary education as a percentage (%) of the total children of the official school-age population",
         "Unit": "percent",

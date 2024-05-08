@@ -37,12 +37,11 @@ export default function App() {
 function Layout() {
   return (
     <div>
-      <div className='shadow mb-4'>
+      <div className='shadow mb-2'>
         <div className='container-xl px-2'>
           <Navbar expand='md'>
             <Navbar.Toggle />
-
-            <Navbar.Collapse className='justify-content-end'>
+            <Navbar.Collapse>
               <Nav>
                 <Nav.Link href='./'><i className='pi pi-home mx-1'></i>Home</Nav.Link>
                 <Nav.Link href='#/about'><i className='pi pi-info-circle mx-1'></i>About</Nav.Link>
@@ -51,9 +50,13 @@ function Layout() {
                   <NavDropdown.Item href='#/technote-1'>Technical Note 1</NavDropdown.Item>
                   <NavDropdown.Item href='#/technote-2'>Technical Note 2</NavDropdown.Item>
                 </NavDropdown>
-                <Nav.Link href='/temporary/'><i className='pi pi-sign-out mx-1'></i>Logout</Nav.Link>
               </Nav>
             </Navbar.Collapse>
+            <Navbar className='justify-content-end'>
+              <Nav>
+                <Nav.Link href='/temporary/'><i className='pi pi-sign-out mx-1'></i>Logout</Nav.Link>
+              </Nav>
+            </Navbar>
           </Navbar>
         </div>
       </div>

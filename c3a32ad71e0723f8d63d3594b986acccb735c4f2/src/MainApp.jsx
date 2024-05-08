@@ -16,7 +16,7 @@ import { mainConfig } from './config.jsx'
 const country_paths = Object.keys(mainConfig)
 //const countries = country_paths.map((item) => mainConfig[item].Name)
 const countries = ['Burkina Faso', 'India', 'Kenya', 'Nigeria']
-const disableCountries = ['India']
+const disableCountries = ['Burkina Faso', 'Nigeria']
 
 export function MainApp() {
     let navigate = useNavigate()
@@ -139,8 +139,8 @@ export function MainApp() {
     return (
       <div className='container-fluid main-body'>
         <hr/>
-        <blockquote className='blockquote text-center p-3'>
-          <h2 className='display-5'>Subnational mapping of child and maternal health and development indicators in selected low- and middle-income countries</h2>
+        <blockquote className='blockquote text-center p-2'>
+          <h2 className='display-6'>Subnational mapping of child and maternal health and development indicators in selected low- and <br/>middle-income countries</h2>
         </blockquote>
         <hr/>
 

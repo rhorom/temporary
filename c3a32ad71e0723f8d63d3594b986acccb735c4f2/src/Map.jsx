@@ -19,6 +19,8 @@ export function Map({param}){
   let cfg = mainConfig[param.country]
   
   const [boundary, setBoundary] = useState()
+  const [aggData, setAggData] = useState()
+  
   const [opt, setOpt] = useState({
     round: 'R2',
     showRaster: false,
@@ -35,12 +37,16 @@ export function Map({param}){
   }
 
   useEffect(() => {
-    const url = `./public/data/${param.country}/adm0.json`
-    console.log(url)
-    //const url = `https://github.com/rhorom/grid_viewer/tree/main/src/data/${param.country}/adm0.json`
-    fetch(url)
+    const url = `./public/data/${param.country}/${param.config.TLC}_adm1.json`
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(),
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'}
+    })
       .then(resp => resp.json())
       .then(json => {
+        console.log(json)
         setBoundary(json)
       })
   }, [param])
@@ -72,11 +78,11 @@ export function Map({param}){
         <div className='title'>Map of {cfg.Name}</div>
         <div className='frame' style={{fontSize:'100%'}}>
           <div>
-            <p>The map below displays surfaces of subnational areas (either at {cfg.Adm1} and {cfg.Adm2} level or high-resolution 5x5km - pixel level data) of a particular indicator in {cfg.Name}.</p>
+            <p>The map below displays surfaces of subnational areas (either at {cfg.Adm1.toLowerCase()} and {cfg.Adm2.toLowerCase()} level or high-resolution 5x5km - pixel level data) of a particular indicator in {cfg.Name}.</p>
             <p>Data from Round 1 ({cfg.indicators[param.indicator].R1}, {cfg.indicators[param.indicator].Y1}), 
               Round 2 ({cfg.indicators[param.indicator].R2}, {cfg.indicators[param.indicator].Y2}), 
               or the change between rounds (Round 2 - Round 1) for {cfg.Name} can be selected and displayed.</p>
-            <p>To get deeper information on a specific {cfg.Adm1} or {cfg.Adm2} in {cfg.Name}, 
+            <p>To get deeper information on a specific {cfg.Adm1.toLowerCase()} or {cfg.Adm2.toLowerCase()} in {cfg.Name}, 
               click on an area on the map or use the drop-down menu below. Once an area on the map has been selected, 
               an additional set of information including tables or graphs to facilitate the interpretation 
               of the data is displayed on the right side panel (Summary, Chart, and Table tabs).</p>
@@ -101,11 +107,11 @@ export function Map({param}){
           <DefineMap/>
           <ZoomPanel map={main_map} param={param.config}/>
           {theRadioPanel}
-          {/* 
+          {
           <Pane name='basemap' style={{zIndex:0}}>
             {<TileLayer url={basemaps['positron']}/>}
           </Pane>
-          */}
+          }
 
           <Pane name='selected' style={{zIndex:60}}>
             <GeoJSON data={boundary} ref={ref}/>
