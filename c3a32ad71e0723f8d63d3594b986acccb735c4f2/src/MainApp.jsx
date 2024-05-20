@@ -3,7 +3,6 @@ import {
   useNavigate, useLocation
 } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
-//import { getFromUrl, GroupSelect, SimpleSelect } from './Utils';
 import { Chart } from './Chart';
 import { Map } from './Map';
 

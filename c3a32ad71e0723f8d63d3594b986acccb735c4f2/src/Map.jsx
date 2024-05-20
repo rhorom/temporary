@@ -8,12 +8,27 @@ import { ArgMin, FloatFormat, LookupTable, GetColor, GetXFromRGB, SimpleSelect, 
 import { mainConfig, indicatorDef, StateStyle, StateStyle2, DistrictStyle } from './config';
 import { ZoomPanel, RadioPanel, LegendPanel } from './MapUtils'
 import { Ask } from './pages/Info';
+import { Print } from './pages/Modal';
 
 const basemaps = {
   'esri':'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
   'label':'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png',
   'positron': 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png'
 };
+
+const probOption = {
+  'Show Improvement': {
+    'posA': {'label':'any (>0%)', 'limit':0.00},
+    'posB': {'label':'likely (>90%)', 'limit':0.90},
+    'posC': {'label':'highly likely (>95%)', 'limit':0.95},
+  },
+  'Show Worsening': {
+    'negA': {'label':'any (>0%)', 'limit':0.00},
+    'negB': {'label':'likely (>90%)', 'limit':0.90},
+    'negC': {'label':'highly likely (>95%)', 'limit':0.95},
+  }
+}
+
 var main_map;
 const zoomFit = (bounds) => {main_map.fitBounds(bounds)}
 
@@ -57,18 +72,34 @@ export function Map({ param, data, boundary, func }){
 
   const toolBarPanel = useMemo(() => {
     return (
-      <div className='row m-0 pt-2 mb-2' style={{fontSize:'small', background:'#f0f0f0', borderRadius:'10px', minHeight:'125px'}}>
-        <div className='col-sm'>
-          <label className='form-check-label'><b>Change significance</b>
+      <div className='row m-0 p-0'>
+        <div className='row m-0 p-0 pb-2 justify-content-between'>
+          <div className='col-sm'>
+            <b>Filter by Change</b>
             <Ask about='Note on the change certainty' positive={true}/>
-            : <span id='valueCI'>any (0-100%)</span>
-          </label>
-          <input className='form-range' type='range' id='rangeCI' defaultValue='0' min='0' max='3' step='1' name='CIRange'/><br/>
-          <div className='bg-danger-subtle justify-content-between'>A B C</div>
-        </div>
-        <div className='col-sm'>Grid value</div>
-        <div className='col-sm'>
-          <div className='float-end'>Print and full</div>
+            <Form.Select
+              id='selectChange'
+              disabled={true}
+              //onChange={changeCountry}
+              //defaultValue={appParam.country}
+            >
+              <option value='all'>Show all</option>
+              {Object.keys(probOption).map((item,i) => {
+                return (
+                  <optgroup key={i} label={item}>
+                    {Object.keys(probOption[item]).map((opt, j) => {
+                      return (
+                        <option key={j} value={opt}>{probOption[item][opt]['label']}</option>
+                      )
+                    })}
+                  </optgroup>
+                )
+              })}
+            </Form.Select>
+          </div>
+          <div className='col-sm justify-content-end'>
+            <Print element={<></>}/>
+          </div>
         </div>
       </div>
     )
