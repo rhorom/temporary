@@ -18,11 +18,12 @@ export function ZoomPanel({ map, param }){
   )
 }
 
-export function RadioPanel({ pass, param }){
+export function RadioPanel({ p, setP, param }){
   const [showControl, setShowControl] = useState(true);
   let noGrid = param.config.DistrictOnly.includes(param.indicator) ? true : false;
-  let noR2 = param.config.SingleTime.includes(param.indicator) ? true : false;
-  
+  let noR1 = param.config.NoR1.includes(param.indicator) ? true : false;
+  let noR2 = param.config.NoR2.includes(param.indicator) ? true : false;
+
   function hideLayerControl(){
     let elem = document.getElementById('layerControl');
     if (elem.getAttribute('style') === 'display: block;') {
@@ -35,23 +36,18 @@ export function RadioPanel({ pass, param }){
   }
 
   function changeOption(val){
-    let par = {
-      round: val,
-      field: param.indicator + '_' + val,
-      showRaster: false,
-      showLabel: false,
-      showImprove: false,
-      probLimit: 0
-    }
-    pass(par)
-    if (val === 'CH'){
-      //document.getElementById('optionCI').style.display = 'block';
-    } else {
-      //document.getElementById('optionCI').style.display = 'none';
-    }
-    //document.getElementById('optionInspect').style.display = 'none';
-    document.getElementById('radio_agg').checked = true;
-    document.getElementById('radio_grid').checked = false;
+    let par = {...p}
+    par['round'] = val
+    par['field'] = param.indicator + '_' + val,
+    par['showImprove'] = 'all'
+    par['probLimit'] = 0
+    setP(par)
+  }
+
+  function showHiRes(val){
+    let par = {...p}
+    par['showRaster'] = val
+    setP(par)
   }
 
   return (
@@ -67,11 +63,12 @@ export function RadioPanel({ pass, param }){
             <div className='m-0'>
               <Form.Check
                 defaultChecked={noR2 ? true : false}
+                disabled={noR1}
                 type='radio'
                 id='radio1'
                 label='Round 1'
                 name='optRound'
-                title='Show round 1 data'
+                title={noR1 ? 'Unavailable for this indicator' : 'Show round 1 data'}
                 onClick={() => changeOption('R1')}
               />
             </div>
@@ -89,7 +86,7 @@ export function RadioPanel({ pass, param }){
             </div>
             <div className='m-0'>
               <Form.Check 
-                disabled={noR2}
+                disabled={noR2 || noR1}
                 type='radio'
                 id='radio3'
                 label='Change'
@@ -108,6 +105,7 @@ export function RadioPanel({ pass, param }){
                 label='District Level'
                 name='optRaster'
                 title='Show aggregated data'
+                onClick={() => showHiRes(false)}
               />
             </div>
             <div>
@@ -118,6 +116,7 @@ export function RadioPanel({ pass, param }){
                 label='Grid Level'
                 name='optRaster'
                 title={noGrid ? 'Unavailable for this indicator' : 'Show gridded data'}
+                onClick={() => showHiRes(true)}
               />
             </div>
           </Form>
@@ -174,7 +173,7 @@ export function LegendPanel({ param, opt }){
     //const updateIndicator = (value) => {}
 
     return (
-      <div className='row m-0 mt-2 pt-2 mb-2' style={{background:'#f0f0f0', borderRadius:'10px', minHeight:'125px'}}>
+      <div className='row m-0 p-2 mb-2 rounded-3 bg-secondary-subtle'>
         <div className='p-0'>
           <div className='subtitle'>
           {param.Indicator}
@@ -189,7 +188,7 @@ export function LegendPanel({ param, opt }){
           </div>
           
           <div className='col-7' style={{fontSize:'75%'}}>
-            <div className='row p-0 m-0'>
+            <div className='row p-0 m-0 justify-content-between'>
               <div className='col-md-5 p-1 m-0'>
                 <b>Remarks</b><br/>
                 <b>R<sub>1</sub>{'\u25B9'}</b> {param.R1}, {param.Y1}
@@ -197,7 +196,7 @@ export function LegendPanel({ param, opt }){
                 <br/><b>Ch{'\u25B9'}</b> (R<sub>2</sub> - R<sub>1</sub>)
               </div>
 
-              <div className='col-md-7 p-1 m-0'>
+              <div className='col-md-7 p-1 m-0' style={{maxWidth:'400px'}}>
                 <div className='float-end'>
                   <Ask about='About this color bar' />
                 </div>

@@ -7,7 +7,8 @@ export const mainConfig = {
         "Center": [12.7, -1.8],
         "Zoom": [6],
         "DistrictOnly": [],
-        "SingleTime": [],
+        "NoR1": [],
+        "NoR2": [],
         "indicators": {
             "LBW": {
                 "Indicator":"Low birth weight",
@@ -469,7 +470,8 @@ export const mainConfig = {
         "Center": [22.9, 79.6],
         "Zoom": [4],
         "DistrictOnly": ['NMR', 'Unsafe_Ab', 'CHMR', 'Lab_child', 'Stillbirth'],
-        "SingleTime": ['Lab_child'],
+        "NoR1": [],
+        "NoR2": ['Lab_child'],
         "indicators": {
             "LBW": {
                 "Indicator":"Low birth weight",
@@ -930,8 +932,9 @@ export const mainConfig = {
         "Adm2": "Sub-county",
         "Center": [0.6, 37.8],
         "Zoom": [6],
-        "DistrictOnly": [],
-        "SingleTime": [],
+        "DistrictOnly": ['LBW', 'Min_diet', 'Sever_wast', 'Teen_Pregn', 'U_Pregn', 'Anaemia', 'ANC_4plus', 'ANC_blood', 'ANC_suppl', 'ANC_timing', 'ANC_urine', 'Breastfeed', 'C_Prev', 'Child_m', 'Labour_fem', 'NAR_prim', 'NAR_sec', 'Stunting', 'Wash_sanit', 'Wash_water', 'NMR', 'Unsafe_Ab', 'CHMR', 'Lab_child', 'Stillbirth'],
+        "NoR1": ['Anaemia'],
+        "NoR2": ['Teen_Pregn', 'U_Pregn'],
         "indicators": {
             "LBW": {
                 "Indicator":"Low birth weight",
@@ -1393,7 +1396,8 @@ export const mainConfig = {
         "Center": [9.5, 8.0],
         "Zoom": [6],
         "DistrictOnly": [],
-        "SingleTime": [],
+        "NoR1": [],
+        "NoR2": [],
         "indicators": {
             "LBW": {
                 "Indicator":"Low birth weight",
@@ -2094,3 +2098,17 @@ Object.keys(indicatorDef).forEach((key) => {
 
 export const pIndicator = pos
 export const nIndicator = neg
+
+export const probOption = {
+    'Show Improvement': {
+      'posA': {'label':'any (>0%)', 'limit':0},
+      'posB': {'label':'likely (>90%)', 'limit':90},
+      'posC': {'label':'highly likely (>95%)', 'limit':95},
+    },
+    'Show Worsening': {
+      'negA': {'label':'any (>0%)', 'limit':0},
+      'negB': {'label':'likely (>90%)', 'limit':90},
+      'negC': {'label':'highly likely (>95%)', 'limit':95},
+    }
+}
+  

@@ -11,7 +11,7 @@ import 'primeicons/primeicons.css'
 import './index.css'
 
 import { MainApp } from './MainApp.jsx'
-import { TechNote } from './Pages'
+import { Technical } from './pages/Technical.jsx'
 import About from './pages/About.jsx'
 import Guide from './pages/Guide.jsx'
 
@@ -26,8 +26,8 @@ export default function App() {
           </Route>
           <Route path='about' element={<About/>}/>
           <Route path='guide' element={<Guide/>}/>
-          <Route path='technote-1' element={<TechNote/>}/>
-          <Route path='technote-2' element={<TechNote/>}/>
+          <Route path='technote-1' element={<Technical which='boundary'/>}/>
+          <Route path='technote-2' element={<Technical which='change'/>}/>
         </Route>
       </Routes>
     </HashRouter>

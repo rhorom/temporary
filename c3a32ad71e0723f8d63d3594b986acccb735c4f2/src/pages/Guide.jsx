@@ -11,13 +11,14 @@ export default function Guide() {
       <hr/>
 
       <div className='row'>
-        <div className="d-flex justify-content-center mb-4 p-3">
-          <ReactPlayer 
-            url='https://www.youtube.com/watch?v=kSd3E6FfEeo'
-          />
-        </div>
-        <hr/>
-        
+        {/*
+          <div className="d-flex justify-content-center mb-4 p-3">
+            <ReactPlayer 
+              url='https://www.youtube.com/watch?v=kSd3E6FfEeo'
+            />
+          </div>
+          <hr/>
+        */}
         <div className='row'>
         <div className='col-lg-5 pb-3'>
           <div className='row'>

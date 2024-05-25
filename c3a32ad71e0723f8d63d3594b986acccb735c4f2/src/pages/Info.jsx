@@ -35,7 +35,7 @@ const askChangeN = (
             The values shown on the map are our "best guess" given the data and modelling but as with any statistics there are a range of plausible values.
         </p>
         <p>
-            The slider allows the user to choose the probability that there is meaningful improvement/worsening. The map filters out units where it is unlikely that there have been meaningful improvements.
+            The user can choose the probability that there is meaningful improvement or worsening. The map filters out units where it is unlikely that there have been meaningful improvements.
         </p>
         <Illustration/>
 
@@ -44,10 +44,10 @@ const askChangeN = (
             The <i>exceedance probability</i> is the probability, given the observed data, that the true change in a district is negative for improvement or positive for worsening.
         </p>
         <p>
-            We use that to filter which districts to show on the map. Districts where the exceedance probability is less than the limit, set by the user on the slider, will be filtered out.
+            We use that to filter which districts to show on the map. Districts where the exceedance probability is less than the selected limit will be filtered out.
         </p>
         <hr/>
-        Find out more on the <a href='#tech-note-2' target='_blank'>Tech Note 2</a> page.
+        Find out more on the <a href='#technote-2' target='_blank'>Technical Note 2</a> page.
     </div>
 )
 
@@ -57,7 +57,7 @@ const askChangeP = (
             The values shown on the map are our "best guess" given the data and modelling but as with any statistics there are a range of plausible values.
         </p>
         <p>
-            The slider allows the user to choose the probability that there is meaningful improvement/worsening. The map filters out units where it is unlikely that there have been meaningful improvements.
+            The user can choose the probability that there is meaningful improvement or worsening. The map filters out units where it is unlikely that there have been meaningful improvements.
         </p>
         <Illustration/>
 
@@ -66,10 +66,10 @@ const askChangeP = (
             The <i>exceedance probability</i> is the probability, given the observed data, that the true change in a district is positive for improvement or negative for worsening.
         </p>
         <p>
-            We use that to filter which districts to show on the map. Districts where the exceedance probability is less than the limit, set by the user on the slider, will be filtered out.
+            We use that to filter which districts to show on the map. Districts where the exceedance probability is less than the selected limit will be filtered out.
         </p>
         <hr/>
-        Find out more on the <a href='#tech-note-2' target='_blank'>Tech Note 2</a> page.
+        Find out more on the <a href='#tech-note-2' target='_blank'>Technical Note 2</a> page.
     </div>
 )
 

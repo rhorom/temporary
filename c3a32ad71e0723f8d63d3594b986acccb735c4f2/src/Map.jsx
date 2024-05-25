@@ -1,14 +1,11 @@
 import { React, useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { MapContainer, GeoJSON, Circle, Pane, TileLayer, useMap } from 'react-leaflet';
-import { BsQuestionCircleFill, BsCaretUpFill, BsArrowDownCircleFill, BsPrinterFill, BsDashCircleFill, BsPlusCircleFill, BsHouseFill, BsCaretDownFill } from 'react-icons/bs';
 import { TiledMapLayer } from 'react-esri-leaflet';
-import { Form } from 'react-bootstrap';
 
-import { ArgMin, FloatFormat, LookupTable, GetColor, GetXFromRGB, SimpleSelect, BasicSelect } from './Utils';
-import { mainConfig, indicatorDef, StateStyle, StateStyle2, DistrictStyle } from './config';
+import { FloatFormat, GetColor } from './Utils';
+import { mainConfig, indicatorDef, StateStyle, StateStyle2, DistrictStyle, pIndicator, nIndicator } from './config';
 import { ZoomPanel, RadioPanel, LegendPanel } from './MapUtils'
 import { Ask } from './pages/Info';
-import { Print } from './pages/Modal';
 
 const basemaps = {
   'esri':'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
@@ -16,34 +13,18 @@ const basemaps = {
   'positron': 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png'
 };
 
-const probOption = {
-  'Show Improvement': {
-    'posA': {'label':'any (>0%)', 'limit':0.00},
-    'posB': {'label':'likely (>90%)', 'limit':0.90},
-    'posC': {'label':'highly likely (>95%)', 'limit':0.95},
-  },
-  'Show Worsening': {
-    'negA': {'label':'any (>0%)', 'limit':0.00},
-    'negB': {'label':'likely (>90%)', 'limit':0.90},
-    'negC': {'label':'highly likely (>95%)', 'limit':0.95},
-  }
-}
-
 var main_map;
 const zoomFit = (bounds) => {main_map.fitBounds(bounds)}
 
 export function Map({ param, data, boundary, func }){
-  let cfg = mainConfig[param.country]
-
+  const cfg = mainConfig[param.country]
   const [selectedState, setSelectedState] = useState()
-  
+  const defRound = cfg.NoR2.includes(param.indicator) ? 'R1' : 'R2'
   const [opt, setOpt] = useState({
-    round: 'R2',
-    field: param.indicator + '_R2',
+    round: defRound,
+    field: param.indicator + '_' + defRound,
     showRaster: false,
-    showLabel: false,
-    showImprove: false,
-    probLimit: 0
+    showLabel: false
   })
 
   const refDistrict = useRef()
@@ -58,7 +39,7 @@ export function Map({ param, data, boundary, func }){
 
   const theRadioPanel = useMemo(() => {
     return (
-      <RadioPanel pass={setOpt} param={param}/>
+      <RadioPanel p={opt} setP={setOpt} param={param}/>
     )
   }, [param])
 
@@ -70,42 +51,18 @@ export function Map({ param, data, boundary, func }){
     return <LegendPanel param={c} opt={opt.round}/>
   }, [param, opt])
 
-  const toolBarPanel = useMemo(() => {
+  const inspectMap = useMemo(() => {
     return (
-      <div className='row m-0 p-0'>
-        <div className='row m-0 p-0 pb-2 justify-content-between'>
-          <div className='col-sm'>
-            <b>Filter by Change</b>
-            <Ask about='Note on the change certainty' positive={true}/>
-            <Form.Select
-              id='selectChange'
-              disabled={true}
-              //onChange={changeCountry}
-              //defaultValue={appParam.country}
-            >
-              <option value='all'>Show all</option>
-              {Object.keys(probOption).map((item,i) => {
-                return (
-                  <optgroup key={i} label={item}>
-                    {Object.keys(probOption[item]).map((opt, j) => {
-                      return (
-                        <option key={j} value={opt}>{probOption[item][opt]['label']}</option>
-                      )
-                    })}
-                  </optgroup>
-                )
-              })}
-            </Form.Select>
-          </div>
-          <div className='col-sm justify-content-end'>
-            <Print element={<></>}/>
-          </div>
+      <div className='row'>
+        <div className='col-lg-7'></div>
+        <div className='col-lg-5'>
+          <b>Inspect Map</b>
         </div>
       </div>
     )
   }, [opt])
 
-  const TileStyle = useCallback((feature) => {
+  const TileStyleX = useCallback((feature) => {
     let palette = cfg.indicators[param.indicator]['Palette1']
     let minmax = [cfg.indicators[param.indicator].Min, cfg.indicators[param.indicator].Max]
     if (opt.round === 'CH') {
@@ -163,37 +120,50 @@ export function Map({ param, data, boundary, func }){
   }, [refSelected, selectedState])
 
   useEffect(() => {
-    const filterData = (feature) => {
-      //const val = feature.properties[`${param.indicator}_CH`];
-      //const pval = feature.properties[`${param.indicator}_CH_P`];
-      let res = true
-      return res
+    const TileStyle = (feature) => {
+      let palette = cfg.indicators[param.indicator]['Palette1']
+      let minmax = [cfg.indicators[param.indicator].Min, cfg.indicators[param.indicator].Max]
+      if (opt.round === 'CH') {
+        palette = cfg.indicators[param.indicator]['Palette2']
+        minmax = [cfg.indicators[param.indicator].CHMin, cfg.indicators[param.indicator].CHMax]
+      }
+      const color = GetColor(feature.properties[opt.field], 
+        minmax, palette
+      );
+      return {
+          zIndex: 2,
+          weight: 0.5,
+          opacity: 1,
+          color: color,
+          fillOpacity: 1,
+          fillColor: color
+      }
     }
 
-    let filteredData = data ? data.features.filter(filterData) : [];
-    
+    let filteredData = {...data};
+    //filteredData.features = data.features.filter((item) => filterFunc(item.properties));
+
     if (choropleth.current) {
       choropleth.current.clearLayers()
       choropleth.current.addData(filteredData)
       choropleth.current.setStyle(TileStyle)
     }
-  }, [param, data, TileStyle])
+  }, [param, opt, data])
 
   const mainLayer = useMemo(() => {  
     if (opt.showRaster) {
       let url = "https://tiles.arcgis.com/tiles/7vxqqNxnsIHE3EKt/arcgis/rest/services/";
       url += `${opt.field}/MapServer`;
-      //return <TiledMapLayer name='thisRaster' url={url}/>;
-      return <></>
+      return <TiledMapLayer name='thisRaster' url={url}/>;
     } else {  
       return <GeoJSON
         data={data}
         ref={choropleth}
-        style={TileStyle}
+        style={TileStyleX}
         attribution='Powered by <a href="https://www.esri.com">Esri</a>'
         />
     }
-  }, [opt, param, data, TileStyle])
+  }, [opt, param, data])
 
   const onEachState = (feature, layer) => {
     layer.on({
@@ -223,7 +193,7 @@ export function Map({ param, data, boundary, func }){
     layer.on({
       mouseover: function(e){
         const prop = e.target.feature.properties;
-        const content = DistrictPopup(prop, param.indicator);
+        const content = DistrictPopup(prop);
 
         layer.setStyle({weight:3, fillOpacity:0.7})
         layer.bindTooltip(content)
@@ -237,7 +207,7 @@ export function Map({ param, data, boundary, func }){
     })
   }
 
-  function DistrictPopup(obj, col){
+  function DistrictPopup(obj){
     let content = `<div><b>${obj.district}</b>`;
     const mapper = {
       'R1': 'R<sub>1</sub>',
@@ -253,32 +223,9 @@ export function Map({ param, data, boundary, func }){
   }
 
   return (
-    <div className='row'>
-      <div className='row' style={{minHeight:'120px'}}>
-        <div className='p-0'>
-          <div className='title'>Map of {cfg.Name}</div>
-        </div>
-        <div className='frame' style={{fontSize:'100%'}}>
-          <div>
-            <p>The map below displays surfaces of subnational areas (either at {cfg.Adm1.toLowerCase()} and {cfg.Adm2.toLowerCase()} level or high-resolution 5x5km - pixel level data) of a particular indicator in {cfg.Name}.</p>
-            <p>Data from Round 1 ({cfg.indicators[param.indicator].R1}, {cfg.indicators[param.indicator].Y1}), 
-              Round 2 ({cfg.indicators[param.indicator].R2}, {cfg.indicators[param.indicator].Y2}), 
-              or the change between rounds (Round 2 - Round 1) for {cfg.Name} can be selected and displayed.</p>
-            <p>To get deeper information on a specific {cfg.Adm1.toLowerCase()} or {cfg.Adm2.toLowerCase()} in {cfg.Name}, 
-              click on an area on the map or use the drop-down menu below. Once an area on the map has been selected, 
-              an additional set of information including tables or graphs to facilitate the interpretation 
-              of the data is displayed on the right side panel (Summary, Chart, and Table tabs).</p>
-          </div>
-        </div>
-      </div>
-
-      <div id='map-container' className='row m-0 mb-5'
-        style={{paddingLeft:'0px', paddingRight:'25px'}}
-      >
-        {theLegendPanel}
-
-        {toolBarPanel}
-
+    <div className='row p-0 m-0'>
+      {theLegendPanel}
+      <div id='map-container' className='row m-0 p-0 mb-2'>
         <MapContainer
           zoomControl={false}
           center={param.config.Center}
@@ -291,12 +238,11 @@ export function Map({ param, data, boundary, func }){
           <DefineMap/>
           <ZoomPanel map={main_map} param={param.config}/>
           {theRadioPanel}
-          {
+          
           <Pane name='basemap' style={{zIndex:0}}>
             {<TileLayer url={basemaps['positron']}/>}
           </Pane>
-          }
-
+          
           {opt.showLabel ? <TileLayer url={basemaps['label']} zIndex={500}/> : <></>}
 
           <Pane name='tiles' style={{zIndex:55}}>
@@ -337,7 +283,6 @@ export function Map({ param, data, boundary, func }){
 
         </MapContainer>
       </div>
-  
     </div>
   )
 }

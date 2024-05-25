@@ -176,7 +176,7 @@ export function Chart({ param, data}){
   const length = data.length
 
   const stateName = length === 0 ? '' : data[0].state;
-  const nodata = length === 0 ? <kbd>No data displayed. Modify the filter.</kbd> : ''
+  const nodata = length === 0 ? <div className='m-0 p-0 mt-2'><kbd>No data displayed. Modify the filter.</kbd></div> : ''
 
   const adm1 = String(param.config.Adm1).toLowerCase()
   const adm2 = String(param.config.Adm2).toLowerCase()
@@ -208,12 +208,13 @@ export function Chart({ param, data}){
     {Header:`CI_CH`, accessor: `${param.indicator}_CHCI`, disableSortBy: true, align:'center'}
   ]
   
+  const filteredData = data.copy()
+
   const districtchart = useMemo(() => {
     return (
-      <MakeChart input={data} field={param.indicator} sorter={sortChart} sorttype={sortType}/>
+      <MakeChart input={filteredData} field={param.indicator} sorter={sortChart} sorttype={sortType}/>
   )}, [data, param, sortChart, sortType])
-  
- 
+   
   const sortButton = (
     <div className=' p-2'>
       <button className='map-btn' title={'reverse sort'} onClick={() => {setSortType(sortType === 'ascending' ? 'descending' : 'ascending')}}>
@@ -327,9 +328,6 @@ export function Chart({ param, data}){
       <div style={{maxHeight:'560px', overflowY:'auto'}}>
         {districtchart}
       </div>
-      <div style={{fontSize:'90%'}}>
-        {nodata}
-      </div>
       </div>
     </div>
   )
@@ -348,10 +346,7 @@ export function Chart({ param, data}){
           <div className='subtitle'>{description.Indicator}</div>
         </div>
       <div style={{maxHeight:'610px', overflowY:'auto'}}>
-        {<MakeTable columns={columns} data={data} palette={palette} indicators={indicators}/>}
-      </div>
-      <div style={{fontSize:'90%'}}>
-        {nodata}
+        {<MakeTable columns={columns} data={filteredData} palette={palette} indicators={indicators}/>}
       </div>
       </div>
     </div>
@@ -359,12 +354,13 @@ export function Chart({ param, data}){
 
   return (
     <div className='row m-0 p-0'>
-      <div className='p-0'>
-        <div className='title'>Detailed Data</div>
-      </div>
-      <div className='pt-1 pb-2 frame' style={{fontSize:'100%'}}>
-        <h5>{stateName} ({data.length} {adm2s})</h5>
-        <div>
+      <div className='row m-0 p-2 pt-2 rounded-3 bg-secondary-subtle'>
+        <div className='p-0'>
+          <div className='subtitle'>
+            {stateName} ({data.length} {adm2s})
+          </div>
+        </div>
+        <div className='p-0'>
           <p>{param.config.Adm2} and {adm1} level summary estimates are presented for the selected indicators and for each survey round and for the change between the two rounds.</p>
         </div>
       </div>
