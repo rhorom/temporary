@@ -1,0 +1,895 @@
+{
+  "StateAggregate": {
+    "$schema": "https://vega.github.io/schema/vega/v5.json",
+    "background": "white",
+    "padding": 5,
+    "title": {
+      "text": "An increase in the indicator below means improvement",
+      "anchor": "start"
+    },
+    "data": [
+      {"name": "input_data", "values": []},
+      {
+        "name": "data_0",
+        "source": "input_data",
+        "transform": [
+          {"type": "filter", "expr": "(datum.Proportional === true)"},
+          {
+            "type": "filter",
+            "expr": "isValid(datum[\"Mean\"]) && isFinite(+datum[\"Mean\"])"
+          }
+        ]
+      },
+      {
+        "name": "row_domain",
+        "source": "data_0",
+        "transform": [{"type": "aggregate", "groupby": ["Indicator"]}]
+      }
+    ],
+    "signals": [
+      {"name": "child_width", "value": 200},
+      {"name": "child_height", "value": 15}
+    ],
+    "layout": {
+      "padding": {"row": 2, "column": 20},
+      "columns": 1,
+      "bounds": "full",
+      "align": "all"
+    },
+    "marks": [
+      {
+        "name": "row_header",
+        "type": "group",
+        "role": "row-header",
+        "from": {"data": "row_domain"},
+        "sort": {"field": "datum[\"Indicator\"]", "order": "ascending"},
+        "title": {
+          "text": {
+            "signal": "isValid(parent[\"Indicator\"]) ? parent[\"Indicator\"] : \"\"+parent[\"Indicator\"]"
+          },
+          "orient": "left",
+          "style": "guide-label",
+          "frame": "group",
+          "baseline": "middle",
+          "align": "left",
+          "anchor": "middle",
+          "angle": 0,
+          "offset": 10
+        },
+        "encode": {"update": {"height": {"signal": "child_height"}}},
+        "axes": [
+          {
+            "scale": "y",
+            "orient": "left",
+            "grid": false,
+            "labels": false,
+            "zindex": 0
+          }
+        ]
+      },
+      {
+        "name": "column_footer",
+        "type": "group",
+        "role": "column-footer",
+        "encode": {"update": {"width": {"signal": "child_width"}}},
+        "axes": [
+          {
+            "scale": "x",
+            "orient": "bottom",
+            "grid": false,
+            "labelFlush": true,
+            "labelOverlap": true,
+            "tickCount": {"signal": "ceil(child_width/40)"},
+            "zindex": 0
+          }
+        ]
+      },
+      {
+        "name": "cell",
+        "type": "group",
+        "style": "cell",
+        "from": {
+          "facet": {"name": "facet", "data": "data_0", "groupby": ["Indicator"]}
+        },
+        "sort": {"field": ["datum[\"Indicator\"]"], "order": ["ascending"]},
+        "encode": {
+          "update": {
+            "width": {"signal": "child_width"},
+            "height": {"signal": "child_height"}
+          }
+        },
+        "marks": [
+          {
+            "name": "child_marks",
+            "type": "rect",
+            "style": ["bar"],
+            "from": {"data": "facet"},
+            "encode": {
+              "update": {
+                "fill": {"scale": "color", "field": "Round"},
+                "tooltip": {
+                  "signal": "{\"Round\": isValid(datum[\"Round\"]) ? datum[\"Round\"] : \"\"+datum[\"Round\"], \"Mean\": format(datum[\"Mean\"], \".1f\"), \"Std\": format(datum[\"Std\"], \".1f\")}"
+                },
+                "ariaRoleDescription": {"value": "bar"},
+                "description": {
+                  "signal": "\"Round: \" + (isValid(datum[\"Round\"]) ? datum[\"Round\"] : \"\"+datum[\"Round\"]) + \"; Mean: \" + (format(datum[\"Mean\"], \".1f\")) + \"; Std: \" + (format(datum[\"Std\"], \".1f\"))"
+                },
+                "x": [
+                  {
+                    "test": "!isValid(datum[\"Mean\"]) || !isFinite(+datum[\"Mean\"])",
+                    "value": 0
+                  },
+                  {"scale": "x", "field": "Mean"}
+                ],
+                "x2": {"value": 0},
+                "y": {"scale": "y", "field": "Round"},
+                "height": {"scale": "y", "band": 1}
+              }
+            }
+          }
+        ],
+        "axes": [
+          {
+            "scale": "x",
+            "orient": "bottom",
+            "gridScale": "y",
+            "grid": true,
+            "tickCount": {"signal": "ceil(child_width/40)"},
+            "domain": false,
+            "labels": false,
+            "aria": false,
+            "maxExtent": 0,
+            "minExtent": 0,
+            "ticks": false,
+            "zindex": 0
+          }
+        ]
+      }
+    ],
+    "scales": [
+      {
+        "name": "x",
+        "type": "linear",
+        "domain": {"data": "data_0", "field": "Mean"},
+        "range": [0, {"signal": "child_width"}],
+        "zero": false,
+        "nice": true
+      },
+      {
+        "name": "y",
+        "type": "band",
+        "domain": {"data": "data_0", "field": "Round", "sort": true},
+        "range": [0, {"signal": "child_height"}],
+        "paddingInner": 0.1,
+        "paddingOuter": 0.05
+      },
+      {
+        "name": "color",
+        "type": "ordinal",
+        "domain": {"data": "data_0", "field": "Round", "sort": true},
+        "range": ["#2b2b2b", "#e90051"]
+      }
+    ],
+    "legends": [{"orient": "top", "columns": 2, "fill": "color", "symbolType": "square", "title": ""}]
+  },
+
+  "DistrictRanges": {
+    "$schema": "https://vega.github.io/schema/vega/v5.json",
+    "background": "white",
+    "padding": 5,
+    "width": 200,
+    "height": 275,
+    "data": [
+      {
+        "name": "input_data",
+        "values": []
+      },
+      {
+        "name": "data_0",
+        "source": "input_data",
+        "transform": [
+          {"type": "formula", "expr": "datum.ANC_4plus_R1L", "as": "R1L"},
+          {"type": "formula", "expr": "datum.ANC_4plus_R1", "as": "R1"},
+          {"type": "formula", "expr": "datum.ANC_4plus_R1U", "as": "R1U"},
+          {"type": "formula", "expr": "datum.ANC_4plus_R2L", "as": "R2L"},
+          {"type": "formula", "expr": "datum.ANC_4plus_R2", "as": "R2"},
+          {"type": "formula", "expr": "datum.ANC_4plus_R2U", "as": "R2U"},
+          {"type": "formula", "expr": "datum.R1", "as": "sorter"},
+          {"type": "fold", "fields": ["R1", "R2"], "as": ["Round", "Avg"]}
+        ]
+      },
+      {
+        "name": "data_2",
+        "source": "data_0",
+        "transform": [
+          {
+            "type": "filter",
+            "expr": "isValid(datum[\"Avg\"]) && isFinite(+datum[\"Avg\"])"
+          }
+        ]
+      },
+      {
+        "name": "data_3",
+        "source": "data_0",
+        "transform": [
+          {
+            "type": "filter",
+            "expr": "isValid(datum[\"R1\"]) && isFinite(+datum[\"R1\"])"
+          }
+        ]
+      },
+      {
+        "name": "data_4",
+        "source": "data_0",
+        "transform": [
+          {
+            "type": "filter",
+            "expr": "isValid(datum[\"R2\"]) && isFinite(+datum[\"R2\"])"
+          }
+        ]
+      },
+      {
+        "name": "data_5",
+        "source": "data_0",
+        "transform": [
+          {
+            "type": "filter",
+            "expr": "isValid(datum[\"Avg\"]) && isFinite(+datum[\"Avg\"])"
+          }
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "name": "layer_0_marks",
+        "type": "rect",
+        "style": ["tick"],
+        "from": {"data": "data_2"},
+        "encode": {
+          "update": {
+            "opacity": {"value": 0.7},
+            "fill": {"value": "#ffffff"},
+            "ariaRoleDescription": {"value": "tick"},
+            "description": {
+              "signal": "\"Avg: \" + (format(datum[\"Avg\"], \"\")) + \"; district: \" + (isValid(datum[\"district\"]) ? datum[\"district\"] : \"\"+datum[\"district\"])"
+            },
+            "xc": {"scale": "x", "field": "Avg"},
+            "yc": {"scale": "y", "field": "district", "band": 0.5},
+            "height": {"value": 4},
+            "width": {"value": 1}
+          }
+        }
+      },
+      {
+        "name": "layer_1_marks",
+        "type": "rect",
+        "style": ["rect"],
+        "from": {"data": "data_3"},
+        "encode": {
+          "update": {
+            "fill": {
+              "value": {
+                "gradient": "linear",
+                "stops": [
+                  {"color": "#8d8d8d", "offset": 0},
+                  {"color": "#ffffff", "offset": 1}
+                ],
+                "x1": 1,
+                "x2": 0
+              }
+            },
+            "tooltip": {
+              "signal": "{\"district\": isValid(datum[\"district\"]) ? datum[\"district\"] : \"\"+datum[\"district\"], \"R1\": format(datum[\"R1\"], \".1f\"), \"R2\": format(datum[\"R2\"], \".1f\")}"
+            },
+            "description": {
+              "signal": "\"R1: \" + (format(datum[\"R1\"], \"\")) + \"; district: \" + (isValid(datum[\"district\"]) ? datum[\"district\"] : \"\"+datum[\"district\"]) + \"; R1L: \" + (format(datum[\"R1L\"], \"\")) + \"; R2: \" + (format(datum[\"R2\"], \".1f\"))"
+            },
+            "x": {"scale": "x", "field": "R1"},
+            "x2": {"scale": "x", "field": "R1L"},
+            "yc": {"scale": "y", "field": "district", "offset": -5, "band": 0.5},
+            "height": {"value": 6}
+          }
+        }
+      },
+      {
+        "name": "layer_2_marks",
+        "type": "rect",
+        "style": ["rect"],
+        "from": {"data": "data_3"},
+        "encode": {
+          "update": {
+            "fill": {
+              "value": {
+                "gradient": "linear",
+                "stops": [
+                  {"color": "#8d8d8d", "offset": 0},
+                  {"color": "#ffffff", "offset": 1}
+                ],
+                "x1": 0,
+                "x2": 1
+              }
+            },
+            "tooltip": {
+              "signal": "{\"district\": isValid(datum[\"district\"]) ? datum[\"district\"] : \"\"+datum[\"district\"], \"R1\": format(datum[\"R1\"], \".1f\"), \"R2\": format(datum[\"R2\"], \".1f\")}"
+            },
+            "description": {
+              "signal": "\"R1: \" + (format(datum[\"R1\"], \"\")) + \"; district: \" + (isValid(datum[\"district\"]) ? datum[\"district\"] : \"\"+datum[\"district\"]) + \"; R1U: \" + (format(datum[\"R1U\"], \"\")) + \"; R2: \" + (format(datum[\"R2\"], \".1f\"))"
+            },
+            "x": {"scale": "x", "field": "R1"},
+            "x2": {"scale": "x", "field": "R1U"},
+            "yc": {"scale": "y", "field": "district", "offset": -5, "band": 0.5},
+            "height": {"value": 6}
+          }
+        }
+      },
+      {
+        "name": "layer_3_marks",
+        "type": "rect",
+        "style": ["rect"],
+        "from": {"data": "data_4"},
+        "encode": {
+          "update": {
+            "fill": {
+              "value": {
+                "gradient": "linear",
+                "stops": [
+                  {"color": "#e9546e", "offset": 0},
+                  {"color": "#ffffff", "offset": 1}
+                ],
+                "x1": 1,
+                "x2": 0
+              }
+            },
+            "tooltip": {
+              "signal": "{\"district\": isValid(datum[\"district\"]) ? datum[\"district\"] : \"\"+datum[\"district\"], \"R1\": format(datum[\"R1\"], \".1f\"), \"R2\": format(datum[\"R2\"], \".1f\")}"
+            },
+            "description": {
+              "signal": "\"R2: \" + (format(datum[\"R2\"], \"\")) + \"; district: \" + (isValid(datum[\"district\"]) ? datum[\"district\"] : \"\"+datum[\"district\"]) + \"; R2L: \" + (format(datum[\"R2L\"], \"\")) + \"; R1: \" + (format(datum[\"R1\"], \".1f\"))"
+            },
+            "x": {"scale": "x", "field": "R2"},
+            "x2": {"scale": "x", "field": "R2L"},
+            "yc": {"scale": "y", "field": "district", "offset": 5, "band": 0.5},
+            "height": {"value": 6}
+          }
+        }
+      },
+      {
+        "name": "layer_4_marks",
+        "type": "rect",
+        "style": ["rect"],
+        "from": {"data": "data_4"},
+        "encode": {
+          "update": {
+            "fill": {
+              "value": {
+                "gradient": "linear",
+                "stops": [
+                  {"color": "#e9546e", "offset": 0},
+                  {"color": "#ffffff", "offset": 1}
+                ],
+                "x1": 0,
+                "x2": 1
+              }
+            },
+            "tooltip": {
+              "signal": "{\"district\": isValid(datum[\"district\"]) ? datum[\"district\"] : \"\"+datum[\"district\"], \"R1\": format(datum[\"R1\"], \".1f\"), \"R2\": format(datum[\"R2\"], \".1f\")}"
+            },
+            "description": {
+              "signal": "\"R2: \" + (format(datum[\"R2\"], \"\")) + \"; district: \" + (isValid(datum[\"district\"]) ? datum[\"district\"] : \"\"+datum[\"district\"]) + \"; R2U: \" + (format(datum[\"R2U\"], \"\")) + \"; R1: \" + (format(datum[\"R1\"], \".1f\"))"
+            },
+            "x": {"scale": "x", "field": "R2"},
+            "x2": {"scale": "x", "field": "R2U"},
+            "yc": {"scale": "y", "field": "district", "offset": 5, "band": 0.5},
+            "height": {"value": 6}
+          }
+        }
+      },
+      {
+        "name": "layer_5_marks",
+        "type": "rect",
+        "style": ["tick"],
+        "from": {"data": "data_5"},
+        "encode": {
+          "update": {
+            "opacity": {"value": 0.7},
+            "fill": {"scale": "color", "field": "Round"},
+            "ariaRoleDescription": {"value": "tick"},
+            "description": {
+              "signal": "\"Avg: \" + (format(datum[\"Avg\"], \"\")) + \"; district: \" + (isValid(datum[\"district\"]) ? datum[\"district\"] : \"\"+datum[\"district\"]) + \"; Round: \" + (isValid(datum[\"Round\"]) ? datum[\"Round\"] : \"\"+datum[\"Round\"])"
+            },
+            "xc": {"scale": "x", "field": "Avg"},
+            "yc": {
+              "scale": "y",
+              "field": "district",
+              "offset": {"scale": "yOffset", "field": "Round"}
+            },
+            "height": {"value": 8},
+            "width": {"value": 3}
+          }
+        }
+      }
+    ],
+    "scales": [
+      {
+        "name": "x",
+        "type": "linear",
+        "domain": {
+          "fields": [
+            {"data": "data_2", "field": "Avg"},
+            {"data": "data_3", "field": "R1"},
+            {"data": "data_3", "field": "R1L"},
+            {"data": "data_3", "field": "R1U"},
+            {"data": "data_4", "field": "R2"},
+            {"data": "data_4", "field": "R2L"},
+            {"data": "data_4", "field": "R2U"},
+            {"data": "data_5", "field": "Avg"}
+          ]
+        },
+        "range": [0, {"signal": "width"}],
+        "zero": false,
+        "nice": true
+      },
+      {
+        "name": "y",
+        "type": "band",
+        "domain": {
+          "data": "data_0",
+          "field": "district",
+          "sort": {"op": "min", "field": "sorter", "order": "descending"}
+        },
+        "range": [0, {"signal": "height"}],
+        "paddingInner": 0,
+        "paddingOuter": 0
+      },
+      {
+        "name": "yOffset",
+        "type": "point",
+        "domain": {"data": "data_5", "field": "Round", "sort": true},
+        "range": [0, {"signal": "bandwidth('y')"}],
+        "paddingOuter": 0.5
+      },
+      {
+        "name": "color",
+        "type": "ordinal",
+        "domain": {"data": "data_5", "field": "Round", "sort": true},
+        "range": ["black", "red"]
+      }
+    ],
+    "axes": [
+      {
+        "scale": "x",
+        "orient": "bottom",
+        "gridScale": "y",
+        "grid": true,
+        "tickCount": {"signal": "ceil(width/40)"},
+        "domain": false,
+        "labels": false,
+        "aria": false,
+        "maxExtent": 0,
+        "minExtent": 0,
+        "ticks": false,
+        "zindex": 0
+      },
+      {
+        "scale": "x",
+        "orient": "bottom",
+        "grid": false,
+        "labelFlush": true,
+        "labelOverlap": true,
+        "tickCount": {"signal": "ceil(width/40)"},
+        "zindex": 0
+      },
+      {"scale": "y", "orient": "left", "grid": true, "zindex": 0}
+    ],
+    "legends": [
+      {
+        "columns": 2,
+        "orient": "top",
+        "fill": "color",
+        "direction": "horizontal",
+        "symbolType": "square",
+        "encode": {"symbols": {"update": {"opacity": {"value": 0.7}}}}
+      }
+    ]
+  },
+
+  "AllInRanges": {
+    "$schema": "https://vega.github.io/schema/vega/v5.json",
+    "background": "white",
+    "padding": 5,
+    "width": 250,
+    "title": {
+      "text": "A decrease in the indicator below means improvement",
+      "fontSize": 12,
+      "subtitle": " ",
+      "frame": "group"
+    },
+    "data": [
+      {
+        "name": "data-input",
+        "values": []
+      },
+      {
+        "name": "data_0",
+        "source": "data-input",
+        "transform": [
+          {"type": "fold", "fields": ["R1", "R2"], "as": ["key", "value"]},
+          {"type": "filter", "expr": "(datum.Proportional === true)"}
+        ]
+      },
+      {
+        "name": "data_2",
+        "source": "data_0",
+        "transform": [
+          {
+            "type": "filter",
+            "expr": "isValid(datum[\"value\"]) && isFinite(+datum[\"value\"])"
+          }
+        ]
+      },
+      {
+        "name": "data_3",
+        "source": "data_0",
+        "transform": [
+          {
+            "type": "filter",
+            "expr": "isValid(datum[\"R1\"]) && isFinite(+datum[\"R1\"])"
+          }
+        ]
+      },
+      {
+        "name": "data_4",
+        "source": "data_0",
+        "transform": [
+          {
+            "type": "filter",
+            "expr": "isValid(datum[\"R1\"]) && isFinite(+datum[\"R1\"])"
+          }
+        ]
+      },
+      {
+        "name": "data_5",
+        "source": "data_0",
+        "transform": [
+          {
+            "type": "filter",
+            "expr": "isValid(datum[\"R2\"]) && isFinite(+datum[\"R2\"])"
+          }
+        ]
+      },
+      {
+        "name": "data_6",
+        "source": "data_0",
+        "transform": [
+          {
+            "type": "filter",
+            "expr": "isValid(datum[\"R2\"]) && isFinite(+datum[\"R2\"])"
+          }
+        ]
+      }
+    ],
+    "signals": [
+      {"name": "y_step", "value": 20},
+      {"name": "height", "update": "bandspace(domain('y').length, 0, 0) * y_step"}
+    ],
+    "marks": [
+      {
+        "name": "layer_0_marks",
+        "type": "symbol",
+        "style": ["square"],
+        "from": {"data": "data_2"},
+        "encode": {
+          "update": {
+            "opacity": {"value": 0.7},
+            "size": {"value": 1},
+            "fill": {"scale": "color", "field": "key"},
+            "x": [
+              {
+                "test": "!isValid(datum[\"value\"]) || !isFinite(+datum[\"value\"])",
+                "value": 0
+              },
+              {"scale": "x", "field": "value"}
+            ],
+            "y": {"scale": "y", "field": "Indicator", "band": 0.5},
+            "shape": {"value": "square"}
+          }
+        }
+      },
+      {
+        "name": "layer_1_marks",
+        "type": "rect",
+        "style": ["rect"],
+        "from": {"data": "data_3"},
+        "encode": {
+          "update": {
+            "height": {"value": 6},
+            "fill": {
+              "value": {
+                "gradient": "linear",
+                "stops": [
+                  {"color": "#8d8d8d", "offset": 0},
+                  {"color": "#ffffff", "offset": 1}
+                ],
+                "x1": 1,
+                "x2": 0
+              }
+            },
+            "tooltip": {
+              "signal": "{\"Indicator\": ''+datum[\"Indicator\"], \"R1\": format(datum[\"R1\"], \".2f\")}"
+            },
+            "x": [
+              {
+                "test": "!isValid(datum[\"R1\"]) || !isFinite(+datum[\"R1\"])",
+                "value": 0
+              },
+              {"scale": "x", "field": "R1"}
+            ],
+            "x2": [
+              {
+                "test": "!isValid(datum[\"R1L\"]) || !isFinite(+datum[\"R1L\"])",
+                "value": 0
+              },
+              {"scale": "x", "field": "R1L"}
+            ],
+            "yc": {"scale": "y", "field": "Indicator", "offset": -3, "band": 0.5}
+          }
+        }
+      },
+      {
+        "name": "layer_2_marks",
+        "type": "rect",
+        "style": ["rect"],
+        "from": {"data": "data_3"},
+        "encode": {
+          "update": {
+            "height": {"value": 6},
+            "fill": {
+              "value": {
+                "gradient": "linear",
+                "stops": [
+                  {"color": "#8d8d8d", "offset": 0},
+                  {"color": "#ffffff", "offset": 1}
+                ],
+                "x1": 0,
+                "x2": 1
+              }
+            },
+            "tooltip": {
+              "signal": "{\"Indicator\": ''+datum[\"Indicator\"], \"R1\": format(datum[\"R1\"], \".2f\")}"
+            },
+            "x": [
+              {
+                "test": "!isValid(datum[\"R1\"]) || !isFinite(+datum[\"R1\"])",
+                "value": 0
+              },
+              {"scale": "x", "field": "R1"}
+            ],
+            "x2": [
+              {
+                "test": "!isValid(datum[\"R1U\"]) || !isFinite(+datum[\"R1U\"])",
+                "value": 0
+              },
+              {"scale": "x", "field": "R1U"}
+            ],
+            "yc": {"scale": "y", "field": "Indicator", "offset": -3, "band": 0.5}
+          }
+        }
+      },
+      {
+        "name": "layer_3_marks",
+        "type": "rect",
+        "style": ["tick"],
+        "from": {"data": "data_4"},
+        "encode": {
+          "update": {
+            "opacity": {"value": 0.7},
+            "height": {"value": 6},
+            "fill": {"value": "#000000"},
+            "xc": [
+              {
+                "test": "!isValid(datum[\"R1\"]) || !isFinite(+datum[\"R1\"])",
+                "value": 0
+              },
+              {"scale": "x", "field": "R1"}
+            ],
+            "yc": {"scale": "y", "field": "Indicator", "offset": -3, "band": 0.5},
+            "width": {"value": 3}
+          }
+        }
+      },
+      {
+        "name": "layer_4_marks",
+        "type": "rect",
+        "style": ["rect"],
+        "from": {"data": "data_5"},
+        "encode": {
+          "update": {
+            "height": {"value": 6},
+            "fill": {
+              "value": {
+                "gradient": "linear",
+                "stops": [
+                  {"color": "#e9546e", "offset": 0},
+                  {"color": "#ffffff", "offset": 1}
+                ],
+                "x1": 1,
+                "x2": 0
+              }
+            },
+            "tooltip": {
+              "signal": "{\"Indicator\": ''+datum[\"Indicator\"], \"R2\": format(datum[\"R2\"], \".2f\")}"
+            },
+            "x": [
+              {
+                "test": "!isValid(datum[\"R2\"]) || !isFinite(+datum[\"R2\"])",
+                "value": 0
+              },
+              {"scale": "x", "field": "R2"}
+            ],
+            "x2": [
+              {
+                "test": "!isValid(datum[\"R2L\"]) || !isFinite(+datum[\"R2L\"])",
+                "value": 0
+              },
+              {"scale": "x", "field": "R2L"}
+            ],
+            "yc": {"scale": "y", "field": "Indicator", "offset": 3, "band": 0.5}
+          }
+        }
+      },
+      {
+        "name": "layer_5_marks",
+        "type": "rect",
+        "style": ["rect"],
+        "from": {"data": "data_5"},
+        "encode": {
+          "update": {
+            "height": {"value": 6},
+            "fill": {
+              "value": {
+                "gradient": "linear",
+                "stops": [
+                  {"color": "#e9546e", "offset": 0},
+                  {"color": "#ffffff", "offset": 1}
+                ],
+                "x1": 0,
+                "x2": 1
+              }
+            },
+            "tooltip": {
+              "signal": "{\"Indicator\": ''+datum[\"Indicator\"], \"R2\": format(datum[\"R2\"], \".2f\")}"
+            },
+            "x": [
+              {
+                "test": "!isValid(datum[\"R2\"]) || !isFinite(+datum[\"R2\"])",
+                "value": 0
+              },
+              {"scale": "x", "field": "R2"}
+            ],
+            "x2": [
+              {
+                "test": "!isValid(datum[\"R2U\"]) || !isFinite(+datum[\"R2U\"])",
+                "value": 0
+              },
+              {"scale": "x", "field": "R2U"}
+            ],
+            "yc": {"scale": "y", "field": "Indicator", "offset": 3, "band": 0.5}
+          }
+        }
+      },
+      {
+        "name": "layer_6_marks",
+        "type": "rect",
+        "style": ["tick"],
+        "from": {"data": "data_6"},
+        "encode": {
+          "update": {
+            "opacity": {"value": 0.7},
+            "height": {"value": 6},
+            "fill": {"value": "#ff0000"},
+            "xc": [
+              {
+                "test": "!isValid(datum[\"R2\"]) || !isFinite(+datum[\"R2\"])",
+                "value": 0
+              },
+              {"scale": "x", "field": "R2"}
+            ],
+            "yc": {"scale": "y", "field": "Indicator", "offset": 3, "band": 0.5},
+            "width": {"value": 3}
+          }
+        }
+      }
+    ],
+    "scales": [
+      {
+        "name": "x",
+        "type": "linear",
+        "domain": {
+          "fields": [
+            {"data": "data_2", "field": "value"},
+            {"data": "data_3", "field": "R1"},
+            {"data": "data_3", "field": "R1L"},
+            {"data": "data_3", "field": "R1U"},
+            {"data": "data_4", "field": "R1"},
+            {"data": "data_5", "field": "R2"},
+            {"data": "data_5", "field": "R2L"},
+            {"data": "data_5", "field": "R2U"},
+            {"data": "data_6", "field": "R2"}
+          ]
+        },
+        "range": [0, {"signal": "width"}],
+        "zero": false,
+        "nice": true
+      },
+      {
+        "name": "y",
+        "type": "band",
+        "domain": {
+          "fields": [
+            {"data": "data_0", "field": "Indicator"},
+            {"data": "data_4", "field": "Indicator"},
+            {"data": "data_6", "field": "Indicator"}
+          ],
+          "sort": true
+        },
+        "range": {"step": {"signal": "y_step"}},
+        "paddingInner": 0,
+        "paddingOuter": 0
+      },
+      {
+        "name": "color",
+        "type": "ordinal",
+        "domain": {"data": "data_2", "field": "key", "sort": true},
+        "range": ["black", "red"]
+      }
+    ],
+    "axes": [
+      {
+        "scale": "x",
+        "orient": "bottom",
+        "gridScale": "y",
+        "grid": true,
+        "tickCount": {"signal": "ceil(width/40)"},
+        "domain": false,
+        "labels": false,
+        "maxExtent": 0,
+        "minExtent": 0,
+        "ticks": false,
+        "zindex": 0
+      },
+      {
+        "scale": "y",
+        "orient": "left",
+        "gridScale": "x",
+        "grid": true,
+        "domain": false,
+        "labels": false,
+        "maxExtent": 0,
+        "minExtent": 0,
+        "ticks": false,
+        "zindex": 0
+      },
+      {
+        "scale": "x",
+        "orient": "bottom",
+        "grid": false,
+        "labelFlush": true,
+        "labelOverlap": true,
+        "tickCount": {"signal": "ceil(width/40)"},
+        "zindex": 0
+      },
+      {"scale": "y", "orient": "left", "grid": false, "zindex": 0}
+    ],
+    "legends": [
+      {
+        "columns": 2,
+        "orient": "top",
+        "fill": "color",
+        "direction": "horizontal",
+        "symbolType": "square",
+        "encode": {"symbols": {"update": {"opacity": {"value": 0.7}}}}
+      }
+    ],
+    "config": {"axis": {"grid": true}}
+  }
+}
