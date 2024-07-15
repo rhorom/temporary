@@ -28,9 +28,6 @@ export default function About() {
       <p>
         The representation of political boundaries does not necessarily reflect the organization's view on the legal status of a country or territory.
       </p>
-      <p>
-        In certain areas of Northern India, including Leh in Ladakh and areas of Jammu and Kashmir State, there was a lack of survey data and ancillary covariates for modelling. Predictions were generated for specific portions of the districts in the North, as seen in the gridded maps.  Aggregates at the state and district level are based only on the portions of the areas for which ancillary covariates were available. The entire area is assigned the same value as the portions where predictions were made.
-      </p>
 
       <h3>Acknowledgement</h3>
       <h5>Kenya</h5>
