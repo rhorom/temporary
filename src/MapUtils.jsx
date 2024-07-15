@@ -11,8 +11,8 @@ export function LegendPanel({ param, opt }){
     const unit = param.Unit === 'per cent' ? 'value in %' : param.Unit
     const proportional = param.Proportional ? 'increasing value means better condition' : 'increasing value means worse condition'
     
-    let delta = [0.1,0.2,0.5,1,2,5,10,20]
-    let digit = [1,1,1,0,0,0,0,0]
+    let delta = [0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.2,0.5,1,2,5,10,20]
+    let digit = [3,3,3,2,2,2,2,1,1,0,0,0,0,0]
     const idx = ArgMin(
       delta.map((item) => (
         Math.abs(6 - (minmax[1] - minmax[0])/item)
@@ -21,8 +21,8 @@ export function LegendPanel({ param, opt }){
     digit = digit[idx]
   
     let ticks = [minmax[0]]
-    let sticks = [5]
-    const sdelta = 90*delta/(minmax[1]-minmax[0])
+    let sticks = [10]
+    const sdelta = 80*delta/(minmax[1]-minmax[0])
     while (ticks[ticks.length-1] < minmax[1]){
       const n = ticks.length
       ticks.push(ticks[n-1] + delta)
@@ -32,10 +32,10 @@ export function LegendPanel({ param, opt }){
     const cbar = (
       <div className='text-center'>
       <svg width='100%' height='65'>
-        {ids.slice(0,18).map((item) => (
-          <rect key={item} x={(5+item*5)+'%'} y='0%' rx='5px' ry='5px' width='5%' height='30' stroke='#2b2b2b' fill={colormap[item]}/>
+        {ids.slice(0,20).map((item) => (
+          <rect key={item} x={(10+item*4)+'%'} y='0%' rx='3px' ry='3px' width='4%' height='30' stroke='#2b2b2b' fill={colormap[item]}/>
         ))}
-        <line x1='0' x2='100%' y1='40' y2='40' stroke='black' weight='2'/>
+        <line x1='10%' x2='90%' y1='40' y2='40' stroke='black' weight='2'/>
         {sticks.map((item, id) => (
           <line key={id} x1={item+'%'} x2={item+'%'} y1='37' y2='43' stroke='black' weight='2'/>
         ))}
@@ -57,7 +57,7 @@ export function LegendPanel({ param, opt }){
         </div>
         
         <div className='row p-0 m-0'>
-          <div className='col-5 p-0 m-0' style={{fontSize:'75%'}}>
+          <div className='col-4 p-0 m-0' style={{fontSize:'75%'}}>
             <p>
               <b>Definition</b><br/>
               {param.Definition}
@@ -69,16 +69,16 @@ export function LegendPanel({ param, opt }){
             </p> : <></>}
           </div>
           
-          <div className='col-7' style={{fontSize:'75%'}}>
+          <div className='col-8' style={{fontSize:'75%'}}>
             <div className='row p-0 m-0 justify-content-between'>
-              <div className='col-md-5 p-1 m-0'>
+              <div className='col-md-6 p-0 m-0'>
                 <b>Remarks</b><br/>
-                <b>R<sub>2</sub>{'\u25B9'}</b> {(param.R2) ? (param.R2 + ', ' + param.Y2) : 'NA'}<br/>
-                <b>R<sub>1</sub>{'\u25B9'}</b> {(param.R1) ? (param.R1 + ', ' + param.Y1) : 'NA'}<br/>
-                <b>Ch{'\u25B9'}</b> {(param.R1 && param.R2) ? <>R<sub>2</sub> - R<sub>1</sub></> : 'NA'}
+                <b>Round 2{'\u25B9'}</b> {(param.R2) ? (param.R2 + ', ' + param.Y2) : 'NA'}<br/>
+                <b>Round 1{'\u25B9'}</b> {(param.R1) ? (param.R1 + ', ' + param.Y1) : 'NA'}<br/>
+                <b>Change{'\u25B9'}</b> {(param.R1 && param.R2) ? <>Round 2 - Round 1</> : 'NA'}
               </div>
 
-              <div className='col-md-7 p-1 m-0'>
+              <div className='col-md-6 p-0 m-0'>
                 <div className='float-end'>
                   <Ask about='About this color bar' />
                 </div>

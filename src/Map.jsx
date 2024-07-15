@@ -17,6 +17,7 @@ const basemaps = {
 
 export function Map({ param, data, boundary, func, filterFunc }){
   const cfg = mainConfig[param.country]
+  const description = cfg.indicators[param.indicator]
   const defRound = cfg.NoR2.includes(param.indicator) ? 'R1' : 'R2'
   const [selectedState, setSelectedState] = useState()
   const [opt, setOpt] = useState(
@@ -185,11 +186,10 @@ export function Map({ param, data, boundary, func, filterFunc }){
   }
 
   const theLegendPanel = useMemo(() => {
-    let c = cfg.indicators[param.indicator]
-    c['Definition'] = indicatorDef[param.indicator].Definition
-    c['Unit'] = indicatorDef[param.indicator].Unit
-    c['Proportional'] = indicatorDef[param.indicator].Proportional
-    return <LegendPanel param={c} opt={opt.round}/>
+    description['Definition'] = indicatorDef[param.indicator].Definition
+    description['Unit'] = indicatorDef[param.indicator].Unit
+    description['Proportional'] = indicatorDef[param.indicator].Proportional
+    return <LegendPanel param={description} opt={opt.round}/>
   }, [param.indicator, opt.round])
 
   const theRadioPanel = useMemo(() => {
@@ -232,11 +232,11 @@ export function Map({ param, data, boundary, func, filterFunc }){
   }, [opt])
 
   const TileStyle = useCallback((feature) => {
-    let palette = cfg.indicators[param.indicator]['Palette1']
-    let minmax = [cfg.indicators[param.indicator].Min, cfg.indicators[param.indicator].Max]
+    let palette = description['Palette1']
+    let minmax = [description['Min'], description['Max']]
     if (opt.round === 'CH') {
-      palette = cfg.indicators[param.indicator]['Palette2']
-      minmax = [cfg.indicators[param.indicator].CHMin, cfg.indicators[param.indicator].CHMax]
+      palette = description['Palette2']
+      minmax = [description['CHMin'], description['CHMax']]
     }
     const color = GetColor(feature.properties[opt.field], 
       minmax, palette
@@ -339,6 +339,21 @@ export function Map({ param, data, boundary, func, filterFunc }){
   }
 
   const onEachDistrict = (feature, layer) => {
+    function DistrictPopup(obj){
+      let content = `<div><b>${obj.district}</b>`;
+      const mapper = {
+        'R1': 'R<sub>1</sub>',
+        'R2': 'R<sub>2</sub>',
+        'CH': 'Change',
+      }
+      content += `<br/>${obj.state}<br/>`
+      Object.keys(obj.toDisplay).forEach((key, i) => {
+        content += `<br/> ${mapper[key]}\u25b9 ${FloatFormat(obj.toDisplay[key], 3)}`
+      })
+      content += '</div>'
+      return (content)
+    }
+
     layer.on({
       mouseover: function(e){
         const prop = e.target.feature.properties;
@@ -356,28 +371,9 @@ export function Map({ param, data, boundary, func, filterFunc }){
     })
   }
 
-  function DistrictPopup(obj){
-    let content = `<div><b>${obj.district}</b>`;
-    const mapper = {
-      'R1': 'R<sub>1</sub>',
-      'R2': 'R<sub>2</sub>',
-      'CH': 'Change',
-    }
-    content += `<br/>${obj.state}<br/>`
-    Object.keys(obj.toDisplay).forEach((key, i) => {
-      content += `<br/> ${mapper[key]}\u25b9 ${FloatFormat(obj.toDisplay[key], 1)}`
-    })
-    content += '</div>'
-    return (content)
-  }
-
   return (
     <div id='map-container' className='row p-0 m-0'>
       {theLegendPanel}
-      <div className='row m-0 p-2 mb-2 bg-secondary-subtle rounded-3'>
-        <div className='col'></div>
-        <div className='col m-0 p-0'>{SelectState}</div>
-      </div>
 
       <div className='row m-0 p-0 mb-2'>
         <MapContainer
@@ -436,6 +432,13 @@ export function Map({ param, data, boundary, func, filterFunc }){
           </Pane>}
 
         </MapContainer>
+      </div>
+
+      <div className='row m-0 p-0 mb-2 bg-secondary-subtle rounded-3'>
+        <div className='col-5 p-2' style={{fontSize:'75%'}}>
+          {param.config.Adm1} of interest can be selected by clicking the map or using dropdown menu on the right.
+        </div>
+        <div className='col-7 p-2'>{SelectState}</div>
       </div>
     </div>
   )

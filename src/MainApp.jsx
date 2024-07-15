@@ -207,6 +207,16 @@ export function MainApp() {
   }
 
   const SelectIndicator = useMemo(() => {
+    function compare( a, b ) {
+      if ( a.Indicator < b.Indicator ){
+        return -1;
+      }
+      if ( a.Indicator > b.Indicator ){
+        return 1;
+      }
+      return 0;
+    }
+
     if (appParam.country != '') {
       let indicators = {}
       Object.keys(appParam.config.indicators).forEach((item) => {
@@ -233,7 +243,7 @@ export function MainApp() {
             {Object.keys(indicators).map((item,i) => {
               return (
                 <optgroup label={item} key={i}>
-                  {indicators[item].sort().map((subitem,j) => {
+                  {indicators[item].sort(compare).map((subitem,j) => {
                     return (<option key={j} value={subitem.Key}>{subitem.Indicator}</option>)
                   })}
                 </optgroup>
@@ -256,10 +266,10 @@ export function MainApp() {
     } else {
       return (
         <div className='row rounded-3 m-0 bg-secondary-subtle'>
-          <div className='col-6 p-2' style={{fontSize:'75%'}}>
+          <div className='col-5 p-2' style={{fontSize:'75%'}}>
             The data displayed can also be filtered according to how significant the change is. This applies when the unit-level confidence interval is available.
           </div>
-          <div className='col-6 p-2 ' id='selection'>
+          <div className='col-7 p-2 ' id='selection'>
             <b>Filter by Change Significance</b>
             <Ask about='Note on the change certainty' positive={true}/>
             <Form.Select
@@ -355,12 +365,15 @@ export function MainApp() {
           </div>
 
           <div className='col-xl-5 p-0 m-0 px-1'>
-            {region ? <ToolBar 
-              element={ChartPanel}
-              param={['table', appParam]}
-              elemID='chart-container' 
-              /> : <></>}
-            {ChartPanel}
+            {(region) ? <>
+              <ToolBar 
+                element={ChartPanel}
+                param={['table', appParam]}
+                elemID='chart-container' 
+              />
+              {ChartPanel}
+              </> : <></>
+            }
           </div>
         </div>
       </div>

@@ -112,7 +112,7 @@ function Illustration(){
 export function MoreInfo({ content }){
     const overlay = (
         <Popover>
-            <Popover.Body>{content}</Popover.Body>
+            <Popover.Body><div dangerouslySetInnerHTML={{__html:content}}></div></Popover.Body>
         </Popover>
     )
 

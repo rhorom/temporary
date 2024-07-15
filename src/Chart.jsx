@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { Vega } from 'react-vega';
 import Table from 'react-bootstrap/Table';
-import { Tab, Tabs, Modal, Badge, Stack } from 'react-bootstrap';
+import { Tab, Tabs, Modal, Badge, Alert } from 'react-bootstrap';
 import { SimpleSelect, DecimalFormat, FloatFormat, GetColor, ArgMax, ArgMin } from './Utils';
 import { Ask } from './pages/Info';
 import { pIndicator, indicatorDef } from './config';
@@ -233,13 +233,21 @@ export function Chart({ param, data, filterFunc}){
     }
   })
 
+  function CellFormater({value}){
+    if (value) {
+      return parseFloat(value).toFixed(description['Precision'])
+    } else {
+      return '-'
+    }
+  }
+
   const columns = [
     {Header:`${param.config.Adm2} Name`, accessor:'district', align:'left'},
-    {Header:`R1`, accessor: `${param.indicator}_R1`, Cell:DecimalFormat, sortType:'basic', align:'center'},
+    {Header:`R1`, accessor: `${param.indicator}_R1`, Cell:CellFormater, sortType:'basic', align:'center'},
     {Header:`CI_R1`, accessor: `${param.indicator}_R1CI`, disableSortBy: true, align:'center'},
-    {Header:'R2', accessor:`${param.indicator}_R2`, Cell:DecimalFormat, sortType:'basic', align:'center'},
+    {Header:'R2', accessor:`${param.indicator}_R2`, Cell:CellFormater, sortType:'basic', align:'center'},
     {Header:`CI_R2`, accessor: `${param.indicator}_R2CI`, disableSortBy: true, align:'center'},
-    {Header:'CH', accessor:`${param.indicator}_CH`, Cell:DecimalFormat, sortType:'basic', align:'center'},
+    {Header:'CH', accessor:`${param.indicator}_CH`, Cell:CellFormater, sortType:'basic', align:'center'},
     {Header:`CI_CH`, accessor: `${param.indicator}_CHCI`, disableSortBy: true, align:'center'}
   ]
   
@@ -264,17 +272,17 @@ export function Chart({ param, data, filterFunc}){
           const maxi = ArgMax(y)
           const mini = ArgMin(y)
           
-          obj['avg'] = FloatFormat(Average(y), 1)// + description['Unit'];
+          obj['avg'] = FloatFormat(Average(y), description['Precision'])// + description['Unit'];
           if (pIndicator.includes(param.indicator)){
             obj['best'] = z[maxi]
             obj['worst'] = z[mini]
-            obj['bestVal'] = FloatFormat(y[maxi], 1)
-            obj['worstVal'] = FloatFormat(y[mini], 1)
+            obj['bestVal'] = FloatFormat(y[maxi], description['Precision'])
+            obj['worstVal'] = FloatFormat(y[mini], description['Precision'])
           } else {
             obj['best'] = z[mini]
             obj['worst'] = z[maxi]
-            obj['bestVal'] = FloatFormat(y[mini], 1)
-            obj['worstVal'] = FloatFormat(y[maxi], 1)
+            obj['bestVal'] = FloatFormat(y[mini], description['Precision'])
+            obj['worstVal'] = FloatFormat(y[maxi], description['Precision'])
           }  
         } else {
           obj['avg'] = '-'
@@ -288,6 +296,7 @@ export function Chart({ param, data, filterFunc}){
     )
   }, [data, param])
 
+  const nodata = ((hilite[0]['avg'] === '-') && (hilite[1]['avg'] === '-'))
   const round2 = (description['R2'] !== 'No data') ? ` In round 2, (${description['R2']}, ${description['Y2']}) the figure was ${hilite[1]['avg']} ${description['Unit']}.` : ''
 
   const sumChange = <>
@@ -332,7 +341,7 @@ export function Chart({ param, data, filterFunc}){
   const chartTab = (
     <div className='row p-0'>
       <p>
-      The chart below summarises the indicator values aggregated at {adm2} level. Credible intervals <b>(CIs)</b> with 95% significance for round 1 <b>(R1)</b> and round 2 <b>(R2)</b> are represented as washout rectangles around the mean values.
+      The chart below summarises the indicator values aggregated at {adm2} level. If available, the credible intervals <b>(CIs)</b> with 95% significance for round 1 <b>(R1)</b> and round 2 <b>(R2)</b> are represented as washout rectangles around the mean values.
       </p>
       <p style={{fontSize:'80%'}}>
       The data can be sorted by name, round 1 <b>(R1)</b> values, round 2 <b>(R2)</b> values and change <b>(CH)</b> values by clicking on each heading.
@@ -345,7 +354,7 @@ export function Chart({ param, data, filterFunc}){
   const tableTab = (
     <div className='p-0 m-0'>
       <p>
-      The table below summarises the indicator values aggregated at {adm2} level. Credible intervals <b>(CIs)</b> with 95% significance for round 1 <b>(R1)</b> and round 2 <b>(R2)</b> can be found in brackets.
+      The table below summarises the indicator values aggregated at {adm2} level. If available, the credible intervals <b>(CIs)</b> with 95% significance for round 1 <b>(R1)</b> and round 2 <b>(R2)</b> can be found in brackets.
       </p>
       <p style={{fontSize:'80%'}}>
       The data can be sorted by name, round 1 <b>(R1)</b> values, round 2 <b>(R2)</b> values and change <b>(CH)</b> values by clicking on each heading.
@@ -353,6 +362,33 @@ export function Chart({ param, data, filterFunc}){
       <hr/>
       <div style={{maxHeight:'610px', overflowY:'auto'}}>
         {<MakeTable columns={columns} data={filteredData} palette={palette} indicators={indicators}/>}
+      </div>
+    </div>
+  )
+
+  let stateData = [filteredData[0]]
+  stateData[0]['district'] = stateData[0]['state']
+
+  const tableTab2 = (
+    <div className='p-0 m-0'>
+      <p>
+      The table below summarises the indicator values aggregated at <b>{adm1} level</b>. If available, the credible intervals <b>(CIs)</b> with 95% significance for round 1 <b>(R1)</b> and round 2 <b>(R2)</b> can be found in brackets.
+      </p>
+      <hr/>
+      <div style={{maxHeight:'610px', overflowY:'auto'}}>
+        {<MakeTable columns={columns} data={stateData} palette={palette} indicators={indicators}/>}
+      </div>
+    </div>
+  )
+
+  const chartTab2 = (
+    <div className='row p-0'>
+      <p>
+      The chart below summarises the indicator values aggregated at <b>{adm1} level</b>. If available, the credible intervals <b>(CIs)</b> with 95% significance for round 1 <b>(R1)</b> and round 2 <b>(R2)</b> are represented as washout rectangles around the mean values.
+      </p>
+      <hr/>
+      <div style={{maxHeight:'610px', overflowY:'auto'}}>
+        {<MakeChart input={stateData} field={param.indicator}/>}
       </div>
     </div>
   )
@@ -371,21 +407,41 @@ export function Chart({ param, data, filterFunc}){
         </div>
       </div>
     
-      <Tabs
-        defaultActiveKey="summary"
-        id="data-tabs"
-        className="mt-3"
-      >
-        <Tab eventKey="summary" title="Summary">
-          {summaryTab}
-        </Tab>
-        <Tab eventKey="table" title="Table">
-          {tableTab}
-        </Tab>
-        <Tab eventKey="chart" title="Chart">
-          {chartTab}
-        </Tab>
-      </Tabs>
+      {nodata ? <div className='m-0 p-0 mt-2'><kbd>No data for this {param.config.Adm1.toLowerCase()}</kbd></div> : 
+      param.config.StateOnly.includes(param.indicator) ? <>
+        <div className='m-0 p-0 mt-2'>
+          <kbd>For this indicator, only {adm1} level data is available</kbd>
+        </div>
+        <Tabs
+          defaultActiveKey="table"
+          id="data-tabs"
+          className="mt-2"
+        >
+          <Tab eventKey="table" title="Table">
+            {tableTab2}
+          </Tab>
+          <Tab eventKey="chart" title="Chart">
+            {chartTab2}
+          </Tab>
+        </Tabs>
+      </> : <>
+        <Tabs
+          defaultActiveKey="summary"
+          id="data-tabs"
+          className="mt-2"
+        >
+          <Tab eventKey="summary" title="Summary">
+            {summaryTab}
+          </Tab>
+          <Tab eventKey="table" title="Table">
+            {tableTab}
+          </Tab>
+          <Tab eventKey="chart" title="Chart">
+            {chartTab}
+          </Tab>
+        </Tabs>
+      </>}
+      
     </div>
   )
 }

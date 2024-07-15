@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -43,8 +43,8 @@ export function FloatFormat(value, precision=3){
 }
 
 export function GetColor(d, minmax, cmapID){
-    if (d < -90) {
-        return null
+    if ((d === null) || (d < -90)) {
+        return '#D3D3D3'
     } else {
         d = (d - minmax[0])/(minmax[1] - minmax[0])
         const palette = colormaps[cmapID]

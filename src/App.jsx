@@ -26,8 +26,11 @@ export default function App() {
           </Route>
           <Route path='about' element={<About/>}/>
           <Route path='guide' element={<Guide/>}/>
+          <Route path='technote-0' element={<Technical which='zero'/>}/>
           <Route path='technote-1' element={<Technical which='boundary'/>}/>
           <Route path='technote-2' element={<Technical which='change'/>}/>
+          <Route path='technote-3' element={<Technical which='ihme'/>}/>
+          <Route path='technote-4' element={<Technical which='espen'/>}/>
         </Route>
       </Routes>
     </HashRouter>
@@ -44,17 +47,20 @@ function Layout() {
             <Navbar.Collapse>
               <Nav>
                 <Nav.Link href='./'><i className='pi pi-home mx-1'></i>Home</Nav.Link>
-                <Nav.Link href='#/about' disabled><i className='pi pi-info-circle mx-1'></i>About</Nav.Link>
-                <Nav.Link href='#/guide' disabled><i className='pi pi-question-circle mx-1'></i>Guide</Nav.Link>
+                <Nav.Link href='#/about'><i className='pi pi-info-circle mx-1'></i>About</Nav.Link>
+                <Nav.Link href='#/guide'><i className='pi pi-question-circle mx-1'></i>Guide</Nav.Link>
+                <Nav.Link href='#/technote-0'><i className='pi pi-question-circle mx-1'></i>Technical Note</Nav.Link>
+                {/*
                 <NavDropdown title={<span><i className='pi pi-question-circle mx-1'></i>Technical Note</span>}>
                   <NavDropdown.Item href='#/technote-1' disabled>Technical Note 1</NavDropdown.Item>
                   <NavDropdown.Item href='#/technote-2' disabled>Technical Note 2</NavDropdown.Item>
                 </NavDropdown>
+                */}
               </Nav>
             </Navbar.Collapse>
             <Navbar className='justify-content-end'>
               <Nav>
-                <Nav.Link href='/ciff_portal/'><i className='pi pi-sign-out mx-1'></i>Logout</Nav.Link>
+                <Nav.Link href='/ciff_portal/' disabled><i className='pi pi-sign-out mx-1'></i>Logout</Nav.Link>
               </Nav>
             </Navbar>
           </Navbar>
