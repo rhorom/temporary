@@ -348,7 +348,7 @@ export function Map({ param, data, boundary, func, filterFunc }){
       }
       content += `<br/>${obj.state}<br/>`
       Object.keys(obj.toDisplay).forEach((key, i) => {
-        content += `<br/> ${mapper[key]}\u25b9 ${FloatFormat(obj.toDisplay[key], 3)}`
+        content += `<br/> ${mapper[key]}\u25b9 ${FloatFormat(obj.toDisplay[key], 2)}`
       })
       content += '</div>'
       return (content)

@@ -2,8 +2,8 @@ import { useState, useMemo } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { Vega } from 'react-vega';
 import Table from 'react-bootstrap/Table';
-import { Tab, Tabs, Modal, Badge, Alert } from 'react-bootstrap';
-import { SimpleSelect, DecimalFormat, FloatFormat, GetColor, ArgMax, ArgMin } from './Utils';
+import { Tab, Tabs, Modal, Badge } from 'react-bootstrap';
+import { SimpleSelect, FloatFormat, GetColor, ArgMax, ArgMin } from './Utils';
 import { Ask } from './pages/Info';
 import { pIndicator, indicatorDef } from './config';
 
@@ -153,7 +153,7 @@ function MakeTable({ columns, data, palette, indicators }) {
 
 function MakeChart({ input, field }){
   if (input.length === 0){
-    return <kbd>No data displayed. Modify the filter.</kbd>
+    return <div><kbd>No data displayed. Modify the filter.</kbd></div>
   } else {
     const [sortChart, setSortChart] = useState('SortbyName');
     const [sortType, setSortType] = useState('ascending');
@@ -297,10 +297,18 @@ export function Chart({ param, data, filterFunc}){
   }, [data, param])
 
   const nodata = ((hilite[0]['avg'] === '-') && (hilite[1]['avg'] === '-'))
-  const round2 = (description['R2'] !== 'No data') ? ` In round 2, (${description['R2']}, ${description['Y2']}) the figure was ${hilite[1]['avg']} ${description['Unit']}.` : ''
+  let wording = ''
+  if (description['R1'] !== ''){
+    wording += `approximately ${hilite[0]['avg']} ${definition['Unit']} ${definition['Statement']} in round 1 (${description['R1']}, ${description['Y1']}).`
+    if (description['R2'] !== ''){
+      wording += ` In round 2 (${description['R2']}, ${description['Y2']}), the figure was ${hilite[1]['avg']} ${definition['Unit']}.`
+    }
+  } else {
+    wording += `approximately ${hilite[1]['avg']} ${definition['Unit']} ${definition['Statement']} in round 2 (${description['R2']}, ${description['Y2']}).`
+  }
 
   const sumChange = <>
-    The {adm2} of <b>{hilite[2]['best']}</b> experienced the highest {pIndicator.includes(param.indicator) ? 'increase': 'decrease (lowest increase)'} of {(description['Indicator']).toLowerCase()} with a {hilite[2]['bestVal']} {description['Unit']} change from round 1 ({description['R1']}, {description['Y1']}) to round 2 ({description['R2']}, {description['Y2']}), showing an improvement in conditions.
+    The {adm2} of <b>{hilite[2]['best']}</b> experienced the highest {pIndicator.includes(param.indicator) ? 'increase': 'decrease (lowest increase)'} of {(description['Indicator'])} with a {hilite[2]['bestVal']} {description['Unit']} change from round 1 ({description['R1']}, {description['Y1']}) to round 2 ({description['R2']}, {description['Y2']}), showing an improvement in conditions.
   </>
 
   const summaryTab = (
@@ -329,8 +337,7 @@ export function Chart({ param, data, filterFunc}){
       </div>
 
       <p>
-        In the {adm1} of <b>{stateName}</b>, approximately {hilite[0]['avg']} {definition['Unit']} {definition['Statement']} in round 1 ({description['R1']}, {description['Y1']}).
-        {round2}
+        In the {adm1} of <b>{stateName}</b>, {wording}
       </p>
       <p>
           {hilite[2]['best'] === '-' ? '' : sumChange}
@@ -366,8 +373,8 @@ export function Chart({ param, data, filterFunc}){
     </div>
   )
 
-  let stateData = [filteredData[0]]
-  stateData[0]['district'] = stateData[0]['state']
+  let stateData = [structuredClone(filteredData[0])]
+  if (stateData[0]){stateData[0]['district'] = stateData[0]['state']}
 
   const tableTab2 = (
     <div className='p-0 m-0'>

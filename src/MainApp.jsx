@@ -77,7 +77,7 @@ export function MainApp() {
         param['indicator'] = ''
       }
 
-      const url = `./src/data/${param.country}`
+      const url = `./public/data/${param.country}`
       fetchData(`${url}/${param.config.TLC}_adm1.json`, setBoundary)
       fetchData(`${url}/${param.config.TLC}_data.json`, setAggData)
       fetchData(`${url}/${param.config.TLC}_table.json`, setTabData)
@@ -85,7 +85,7 @@ export function MainApp() {
     }
 
     setAppParam(param, {replace:true})
-  }, [])
+  }, [appParam.country])
 
   useEffect(() => {
     if (region) {
@@ -142,11 +142,13 @@ export function MainApp() {
     setAppParam(param, {replace:true})
     navigate('/'+val, {replace:true})
 
-    const url = `./src/data/${param.country}`
-    console.log('fetch data', url)
-    fetchData(`${url}/${param.config.TLC}_adm1.json`, setBoundary)
-    fetchData(`${url}/${param.config.TLC}_data.json`, setAggData)
-    fetchData(`${url}/${param.config.TLC}_table.json`, setTabData)
+    if (country_paths.includes(val[1])){
+      const url = `./public/data/${param.country}`
+      console.log('fetch data', url)
+      fetchData(`${url}/${param.config.TLC}_adm1.json`, setBoundary)
+      fetchData(`${url}/${param.config.TLC}_data.json`, setAggData)
+      fetchData(`${url}/${param.config.TLC}_table.json`, setTabData)
+    }
 
     if (document.getElementById('selectIndicator')) {
       document.getElementById('selectIndicator').value = ''  
@@ -258,7 +260,7 @@ export function MainApp() {
   }, [appParam.country])
 
   const SelectFilter = useMemo(() => {
-    const disabled = tabData ? !(tabData[0][appParam.indicator+'_CH_P']) : false
+    const disabled = tabData ? !(appParam.indicator+'_CH_P' in tabData[0]) : false
     if (disabled) {
       return (
         <></>
@@ -301,7 +303,7 @@ export function MainApp() {
     if (aggData) {
       return <Map param={appParam} boundary={boundary} data={aggData} func={setRegion} filterFunc={filterFunction}/>
     } else {
-      return <>Refresh</>
+      return <div className='m-0 p-3'><kbd>Refresh the page to reload the data</kbd></div>
     }
   }, [appParam, aggData])
 
@@ -317,7 +319,7 @@ export function MainApp() {
   return (
     <div className='container-fluid'>
       <blockquote className='blockquote text-center p-2'>
-        <h2 className='display-6'>Subnational mapping of child and maternal health and development indicators in selected low- and <br/>middle-income countries</h2>
+        <h1 className='display-6'>Subnational mapping of child and maternal health and development indicators in selected low- and middle-income countries</h1>
       </blockquote>
       
       <div className='row mt-3 p-2 mb-3 rounded-3 bg-secondary-subtle'>
@@ -325,7 +327,7 @@ export function MainApp() {
           <div className='col-lg-8'>
             <p>This web application presents a summary of the child and maternal health and development indicators calculated at subnational level (geographic areas below the national level) for a selection of countries of interest to CIFF.</p>
             <p>Multiple indicators are presented in map, chart, and tabulated form, and for multiple time points based on data availability. Changes over time for each indicator are also presented.</p>
-            {/*<p>Please consult the <a href='./#/guide'>Guide</a> and the <a href='./#/about'>About</a> sections for more information on how to use this portal.</p>*/}
+            <p>Please consult the <a href='./#/guide'>Guide</a> and the <a href='./#/about'>About</a> sections for more information on how to use this portal.</p>
           </div>
           <div className='col-lg-4 px-3' id='selection'>
             <SelectCountry />
@@ -338,10 +340,10 @@ export function MainApp() {
       {appParam.indicator === '' ? <></> : 
       <div className='p-0 m-0'>
         <div className='row'>
-          <div className='col-lg-4 p-0'>
+          {/*<div className='col-lg-4 p-0'>
             {countrySummary}
-          </div>
-          <div className='col-lg-8 p-2 mb-3 rounded-3 bg-secondary-subtle'>
+          </div>*/}
+          <div className='col p-2 mb-3 rounded-3 bg-secondary-subtle'>
             <h3><Badge bg='danger'>
                 {appParam.config.indicators[appParam.indicator].Indicator} in {appParam.config.Name}
             </Badge></h3>

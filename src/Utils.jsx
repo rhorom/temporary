@@ -235,7 +235,7 @@ function Print({ elemID }){
 
     return (
       <div className="text-center m-0 p-0 mb-2">
-        <span className='mx-1' title='Print'><FaPrint/></span>
+        <span className='m-0 fs-4 text-danger' title='Print'><FaPrint/></span>
     </div>
     )
 }
@@ -254,23 +254,15 @@ function DownloadMap({ param }){
     const noR2 = param.config.NoR2.includes(param.indicator)
     const noRaster = param.config.DistrictOnly.includes(param.indicator)
     
-    const dlink = useMemo(() => {
-        const url = `${param.country}/${param.indicator}/${round}/${dtype}`
-        return url
-    }, [round, dtype])
-
     const downloadButton = useMemo(() => {
-        return <Button title={dlink}>Download</Button>
-    }, [dlink])
-
-    const direct = useMemo(() => {
-        const url = `${param.country}/${param.indicator}/${round}/${dtype}`
-        return <a href={url}>{url}</a>
+        //const url = `https://data.worldpop.org/repo/prj/CIFF/${param.country}/${param.indicator}/${round}/${dtype}`
+        const url = 'https://sdi.worldpop.org'
+        return <Button title='click to download' role='link' href={url} target='_blank'>Download</Button>
     }, [round, dtype])
 
     return (
         <div className="text-center m-0 p-0 mb-2">
-        <span className='mx-1' title='Download Data' onClick={handleShow}><FaFileDownload/></span>
+        <span className='m-0 fs-4 text-danger' title='Download Data' onClick={handleShow}><FaFileDownload/></span>
 
         <Modal show={show} onHide={handleHide} size='lg'>
             <Modal.Header closeButton><h4>Download Data</h4></Modal.Header>
@@ -286,26 +278,25 @@ function DownloadMap({ param }){
                 <Form.Group as={Row} className='mb-1'>
                     <Form.Label column sm={2}>Round</Form.Label>
                     <Col sm={10}>
-                        <Form.Select defaultValue={round} id='round'>
-                            <option value='R1' onSelect={() => setRound('R1')} disabled={noR1}>Round 1</option>
-                            <option value='R2' onSelect={() => setRound('R2')} disabled={noR2}>Round 2</option>
-                            <option value='CH' onSelect={() => setRound('CH')} disabled={noR1 || noR2}>Change</option>
+                        <Form.Select defaultValue={round} id='round' onChange={(e) => setRound(e.target.value)}>
+                            <option value='R1' disabled={noR1}>Round 1</option>
+                            <option value='R2' disabled={noR2}>Round 2</option>
+                            <option value='CH' disabled={noR1 || noR2}>Change</option>
                         </Form.Select>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className='mb-1'>
                     <Form.Label column sm={2}>Data Type</Form.Label>
                     <Col sm={10}>
-                        <Form.Select defaultValue={dtype} id='type'>
-                            <option value='Vector' onSelect={() => setType('Vector')}>Vector (unit level)</option>
-                            <option value='Raster' onSelect={() => setType('Raster')} disabled={noRaster}>Raster (grid level)</option>
+                        <Form.Select defaultValue={dtype} id='type' onChange={(e) => setType(e.target.value)}>
+                            <option value='Vector'>Vector (unit level)</option>
+                            <option value='Raster'disabled={noRaster}>Raster (grid level)</option>
                         </Form.Select>
                     </Col>
                 </Form.Group>
             </Form>
             <br/>
             <div>
-                <p>Direct link: {direct}</p>
                 <p>DOI: </p>
                 <p>Release note: <a href='#'>Version 1.1</a></p>
             </div>
@@ -316,16 +307,73 @@ function DownloadMap({ param }){
         </Modal>
     </div>
     )
-    }
+}
 
-    function FullMap({ element, title }){
+function DownloadTable({ param }){
+    const [show,setShow] = useState(false)
+    const [dtype,setType] = useState('CSV')
+    function handleShow(){setShow(true)}
+    function handleHide(){setShow(false)}
+
+    const info = {
+        'Country': param.config.Name,
+        'Indicator': param.config.indicators[param.indicator].Indicator
+    }
+    
+    const downloadButton = useMemo(() => {
+        //const url = `https://data.worldpop.org/repo/prj/CIFF/${param.country}/${param.indicator}/${round}/${dtype}`
+        const url = 'https://sdi.worldpop.org'
+        return <Button title='click to download' role='link' href={url} target='_blank'>Download</Button>
+    }, [dtype])
+
+    return (
+        <div className="text-center m-0 p-0 mb-2">
+        <span className='m-0 fs-4 text-danger' title='Download Data' onClick={handleShow}><FaFileDownload/></span>
+
+        <Modal show={show} onHide={handleHide} size='lg'>
+            <Modal.Header closeButton><h4>Download Data</h4></Modal.Header>
+            <Modal.Body>
+            <p>You are going to download the following dataset:</p>
+            <Form>
+                {Object.keys(info).map((item,i) => {
+                    return <Form.Group key={i} as={Row} className='mb-1'>
+                        <Form.Label column sm={2}>{item}</Form.Label>
+                        <Col sm={10}><Form.Control type='text' disabled placeholder={info[item]} id='country'/></Col>
+                    </Form.Group>
+                })}
+                <Form.Group as={Row} className='mb-1'>
+                    <Form.Label column sm={2}>Data Type</Form.Label>
+                    <Col sm={10}>
+                        <Form.Select defaultValue={dtype} id='type' onChange={(e) => setType(e.target.value)}>
+                            <option value='CSV'>CSV (no geometry)</option>
+                            <option value='JSON'>JSON (no geometry)</option>
+                            <option value='GeoJSON'>GeoJSON (geometry included)</option>
+                        </Form.Select>
+                    </Col>
+                </Form.Group>
+            </Form>
+            <br/>
+            <div>
+                <p>DOI: </p>
+                <p>Release note: <a href='#'>Version 1.1</a></p>
+            </div>
+            </Modal.Body>
+            <Modal.Footer>
+                {downloadButton}
+            </Modal.Footer>
+        </Modal>
+    </div>
+    )
+}
+
+function FullMap({ element, title }){
     const [show,setShow] = useState(false)
     function handleShow(){setShow(true)}
     function handleHide(){setShow(false)}
 
     return (
         <div className="text-center m-0 p-0 mb-2">
-        <span className='mx-1' title='Fullscreen' onClick={handleShow}><FaExpand/></span>
+        <span className='m-0 fs-4 text-danger' title='Fullscreen' onClick={handleShow}><FaExpand/></span>
 
         <Modal show={show} onHide={handleHide} fullscreen={true}>
             <Modal.Header closeButton>{title}</Modal.Header>
@@ -347,7 +395,7 @@ export function ToolBar({element, elemID, param, title}){
                 {/*<Print/>*/}
             </div>
             <div className='m-0 p-0 px-1 col'>
-                {/*param[0] === 'map' ? <DownloadMap param={param[1]}/> : <DownloadMap param={param[1]}/>*/}
+                {param[0] === 'map' ? <DownloadMap param={param[1]}/> : <DownloadTable param={param[1]}/>}
                 {<></>}
             </div>
             <div className='m-0 p-0 px-1 col'>

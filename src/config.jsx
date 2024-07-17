@@ -1234,7 +1234,7 @@ export const mainConfig = {
                 "CHMin":-20.,
                 "CHMax":20.,
                 "CHDelta":0.02,
-                "Precision":3,
+                "Precision":1,
                 "Palette1":"CIFF20",
                 "Palette2":"CIFF20",
                 "Resolution":"5 km",
@@ -1253,14 +1253,14 @@ export const mainConfig = {
                 "CHMin":-10.,
                 "CHMax":10.,
                 "CHDelta":0.002,
-                "Precision":3,
+                "Precision":1,
                 "Palette1":"CIFF20",
                 "Palette2":"CIFF20",
                 "Resolution":"5 km",
-                "R1":"WHO-ESPEN",
-                "R2":"",
-                "Y1":"2010-2018",
-                "Y2":""
+                "R1":"",
+                "R2":"WHO-ESPEN",
+                "Y1":"",
+                "Y2":"2010-2018"
             },
             "Breastfeed": {
                 "Indicator":"Exclusive breastfeeding",
@@ -2250,19 +2250,19 @@ export const indicatorDef = {
     "NTDs_helm": {
         "Indicator":"NTDs: Soil-transmitted helminth infections",
         "Theme":"Neglected Tropical Diseases",
-        "Definition":"Prevalence of soil-transmitted helminth infection in the population",
+        "Definition":"Prevalence (%) of soil-transmitted helminth infection in the population",
         "Unit": "per cent",
         "Denominator": "admin unit level",
-        "Statement":"got soil-transmitted helminth infection",
+        "Statement":"of the population got soil-transmitted helminth infection",
         "Proportional": false,
     },
     "NTDs_schi": {
         "Indicator":"NTDs: Schistosomiasis",
         "Theme":"Neglected Tropical Diseases",
-        "Definition":"Prevalence of schistosomiasis infection in the population",
+        "Definition":"Prevalence (%) of schistosomiasis infection in the population",
         "Unit": "per cent",
         "Denominator": "admin unit level",
-        "Statement":"got schistosomiasis infection",
+        "Statement":"of the population got schistosomiasis infection",
         "Proportional": false,
     },
     "NTDs_fil": {
@@ -2271,7 +2271,7 @@ export const indicatorDef = {
         "Definition":"Prevalence (%) of lymphatic filariasis infection in the population",
         "Unit": "per cent",
         "Denominator": "admin unit level",
-        "Statement":"got lymphatic filariasis infection",
+        "Statement":"of the population got lymphatic filariasis infection",
         "Proportional": false,
     },
     "NTDs_oncho": {
@@ -2280,7 +2280,7 @@ export const indicatorDef = {
         "Definition":"Prevalence (%) of onchocerciasis infection in the population",
         "Unit": "per cent",
         "Denominator": "admin unit level",
-        "Statement":"got onchocerciasis infection",
+        "Statement":"of the population got onchocerciasis infection",
         "Proportional": false,
     },
 }
@@ -2331,13 +2331,13 @@ export const nIndicator = neg
 export const probOption = {
     'Show Improvement': {
       'posA': {'label':'any (>0%)', 'limit':0},
-      'posB': {'label':'likely (>90%)', 'limit':90},
-      'posC': {'label':'highly likely (>95%)', 'limit':95},
+      'posB': {'label':'likely (>95%)', 'limit':95},
+      'posC': {'label':'highly likely (>99%)', 'limit':99},
     },
     'Show Worsening': {
       'negA': {'label':'any (>0%)', 'limit':0},
-      'negB': {'label':'likely (>90%)', 'limit':90},
-      'negC': {'label':'highly likely (>95%)', 'limit':95},
+      'negB': {'label':'likely (>95%)', 'limit':95},
+      'negC': {'label':'highly likely (>99%)', 'limit':99},
     }
 }
   

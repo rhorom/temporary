@@ -247,7 +247,7 @@ optgroup {
 
 @media print {
   body * {
-    visibility:hidden;
+    visibility:visible;
   }
   #printSection, #printSection * {
     visibility:visible;

@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <div className='bg-light rounded-4 p-3'>
+    <div className='bg-secondary-subtle rounded-4 p-3'>
       <h2>About</h2>
       <hr/>
       <p>
@@ -61,7 +61,7 @@ export default function About() {
       </div>
 
       <p>
-        Please consult the <a href='#/technote-0'>Technical Notes</a> section for more information on data sources and specific indicators. Please see <a href='#/technote-1'>Technical Note 1</a> for more information about the boundaries.
+        Please consult the <a href='#/technote-0'>Technical Notes</a> section for more information on data sources and specific indicators.
       </p>
     </div>
   );

@@ -241,7 +241,7 @@ function ContentChanges() {
 
 function FirstIndia() {
     return (
-      <div className='bg-light rounded-4 p-3'>
+      <div className='bg-secondary-subtle rounded-4 p-3'>
         <h4>Background</h4>
         <p>
             The India NFHS surveys are constructed to be representative at national, province and district level for most of the indicators. In the case of rare events indicators such as stillbirth rates, or where more sophisticated estimation methods were needed such as mortality rates (child and neonatal mortality rates), indicators were constructed and mapped at district level using the surveys. Specifically, for four indicators named, unsafe abortion, neonatal mortality rate, child mortality rate and stillbirth rate we used a two-step approach: <b>Step 1</b>. We followed the methods described in Subramaniam et al. (2021) and Ulahannan et al. (2022) to match the 2015-16 NFHS-4 data to 2019-21 NFHS-5 boundaries (ICF. The Demographic and Health Surveys Program Spatial Data Repository), in order to be able to compare changing districts over time; <b>Step 2</b>. Once all data were available at NFHS-5 boundaries, we rasterised the data for the whole country and then aggregated the data using the district level official boundaries of India (Ministry of Science and Technology, Government of India), which were used for final display on the online portal. Average values for districts were used for aggregation.
@@ -501,7 +501,7 @@ function FirstIndia() {
 
 function FirstKenya() {
     return (
-      <div className='bg-light rounded-4 p-3'>
+      <div className='bg-secondary-subtle rounded-4 p-3'>
         <p>
             For this work, Population Division, United States Census Bureau (USCB) open access boundaries were used for geographical aggregations and for displaying purposes. USCB produced administrative level 1 and 2 boundaries in line with the subnational administrative structure used for Kenya’s 2019 census. Kenya national boundaries as reported by the USCB datasets were made to align to the Large Scale International Boundary Line (LSIB) dataset from the United States. The U.S. Census Bureau’s products are open access and can be accessed from <a href='https://www.census.gov/geographies/mapping-files/time-series/demo/international-programs/subnationalpopulation.html'>here</a>.
         </p>
@@ -537,13 +537,13 @@ function FirstKenya() {
 
 function ZeroNote() {
     return (
-        <div className='bg-light rounded-4 p-3'>
+        <div className='bg-secondary-subtle rounded-4 p-3'>
             <h2>Technical Notes</h2>
 
             <Row xs={1} md={3} className='g-2'>
                 <Card style={{ width: '18rem' }}>
                     <Card.Body>
-                        <Card.Title><a href='#/technote-1'>Technical Note 1</a></Card.Title>
+                        <Card.Title><a href='#/technote-1' className='subtitle'>Technical Note 1</a></Card.Title>
                         <Card.Text>
                         This note explains how we manage and harmonise the changes of administrative boundaries from round 1 to round 2. Careful harmonisation of the boundaries enables us to examine how a particular indicator changes over time.
                         </Card.Text>
@@ -553,7 +553,7 @@ function ZeroNote() {
                     
                 <Card style={{ width: '18rem' }}>
                     <Card.Body>
-                        <Card.Title><a href='#/technote-2'>Technical Note 2</a></Card.Title>
+                        <Card.Title><a href='#/technote-2' className='subtitle'>Technical Note 2</a></Card.Title>
                         <Card.Text>
                         Change of an indicator over time can be appreciated as either improvement or worsening. In this technical note, we explain the use of Exceedance Probability to statistically determine the direction of the change.
                         </Card.Text>
@@ -563,7 +563,7 @@ function ZeroNote() {
 
                 <Card style={{ width: '18rem' }}>
                     <Card.Body>
-                        <Card.Title><a href='#/technote-3'>Technical Note 3</a></Card.Title>
+                        <Card.Title><a href='#/technote-3' className='subtitle'>Technical Note 3</a></Card.Title>
                         <Card.Text>
                         Technical note on the use of the Institute for Health Metrics and Evaluation (IHME) data in the modeling.
                         </Card.Text>
@@ -573,7 +573,7 @@ function ZeroNote() {
 
                 <Card style={{ width: '18rem' }}>
                     <Card.Body>
-                        <Card.Title><a href='#/technote-4'>Technical Note 4</a></Card.Title>
+                        <Card.Title><a href='#/technote-4' className='subtitle'>Technical Note 4</a></Card.Title>
                         <Card.Text>
                         Technical note on the use of the WHO's Expanded Special Project for Elimination of Tropical Diseases (WHO-ESPEN) data in the modeling.
                         </Card.Text>
@@ -594,7 +594,7 @@ function FirstNote() {
         'Kenya': FirstKenya(),
     }
     return (
-        <div className='bg-light rounded-4 p-3'>
+        <div className='bg-secondary-subtle rounded-4 p-3'>
             <h2>Technical Note 1</h2>
             <h3>
             National and subnational boundaries
@@ -615,7 +615,7 @@ function FirstNote() {
 
 function SecondNote() {
     return (
-      <div className='bg-light rounded-4 p-3'>
+      <div className='bg-secondary-subtle rounded-4 p-3'>
         <h2>Technical Note 2</h2>
         <h3>Exceedance probability and confidence in changes over time</h3>
         <hr/>
@@ -727,7 +727,7 @@ function SecondNote() {
 
 function ThirdNote() {
     return (
-        <div className='bg-light rounded-4 p-3'>
+        <div className='bg-secondary-subtle rounded-4 p-3'>
             <h2>Technical Note 3</h2>
             <h3>Data sourced from the Institute for Health Metrics and Evaluation (IHME) - Kenya</h3>
             <hr/>
@@ -868,7 +868,7 @@ function ThirdNote() {
 
 function FourthNote() {
     return (
-        <div className='bg-light rounded-4 p-3'>
+        <div className='bg-secondary-subtle rounded-4 p-3'>
             <h2>Technical Note 4</h2>
             <h3>Data sourced from ESPEN programme from WHO - Kenya</h3>
             <hr/>
