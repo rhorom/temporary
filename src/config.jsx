@@ -2331,13 +2331,13 @@ export const nIndicator = neg
 export const probOption = {
     'Show Improvement': {
       'posA': {'label':'any (>0%)', 'limit':0},
-      'posB': {'label':'likely (>95%)', 'limit':95},
-      'posC': {'label':'highly likely (>99%)', 'limit':99},
+      'posB': {'label':'highly likely (>95%)', 'limit':95},
+      'posC': {'label':'almost certain (>99%)', 'limit':99},
     },
     'Show Worsening': {
       'negA': {'label':'any (>0%)', 'limit':0},
-      'negB': {'label':'likely (>95%)', 'limit':95},
-      'negC': {'label':'highly likely (>99%)', 'limit':99},
+      'negB': {'label':'highly likely (>95%)', 'limit':95},
+      'negC': {'label':'almost certain (>99%)', 'limit':99},
     }
 }
   
