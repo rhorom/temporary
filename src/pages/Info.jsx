@@ -47,7 +47,7 @@ const askChangeN = (
             We use that to filter which districts to show on the map. Districts where the exceedance probability is less than the selected limit will be filtered out.
         </p>
         <hr/>
-        Find out more on the <a href='#technote-2' target='_blank'>Technical Note 2</a> page.
+        {/*Find out more on the <a href='#technote-2' target='_blank'>Technical Note 2</a> page.*/}
     </div>
 )
 
@@ -69,7 +69,7 @@ const askChangeP = (
             We use that to filter which districts to show on the map. Districts where the exceedance probability is less than the selected limit will be filtered out.
         </p>
         <hr/>
-        Find out more on the <a href='#tech-note-2' target='_blank'>Technical Note 2</a> page.
+        {/*Find out more on the <a href='#technote-2' target='_blank'>Technical Note 2</a> page.*/}
     </div>
 )
 
@@ -95,6 +95,8 @@ function Illustration(){
     function handleShow(){setShow(true)}
     function handleHide(){setShow(false)}
 
+    return <></>
+    {/*
     return (
         <div className="text-center m-0 p-0 mb-2">
             <Button variant='danger' size='sm' onClick={handleShow}>Illustration</Button>
@@ -107,6 +109,7 @@ function Illustration(){
             </Modal>
         </div>
     )
+    */}
 }
 
 export function MoreInfo({ content }){
