@@ -52,8 +52,10 @@ export function MainApp() {
 
   const [boundary, setBoundary] = useState()
   const [aggData, setAggData] = useState()
+  const [staData, setStaData] = useState()
   const [tabData, setTabData] = useState()
   const [regData, setRegData] = useState()
+  const [rgsData, setRgsData] = useState()
   const [region, setRegion] = useState()
 
   useEffect(() => {
@@ -80,8 +82,9 @@ export function MainApp() {
       const url = `./public/data/${param.country}`
       fetchData(`${url}/${param.config.TLC}_adm1.json`, setBoundary)
       fetchData(`${url}/${param.config.TLC}_data.json`, setAggData)
+      fetchData(`${url}/${param.config.TLC}_data_adm1.json`, setStaData)
       fetchData(`${url}/${param.config.TLC}_table.json`, setTabData)
-      console.log('fetch data', url)
+      //console.log('fetch data', url)
     }
 
     setAppParam(param, {replace:true})
@@ -92,6 +95,9 @@ export function MainApp() {
       const filtered = tabData
         .filter((item) => item.state === region)
       setRegData(filtered, {replace:true})
+      const filtered2 = staData
+        .filter((item) => item.state === region)
+      setRgsData(filtered2, {replace:true})
     }
   }, [region])
 
@@ -138,7 +144,9 @@ export function MainApp() {
     }
     setRegion()
     setAggData()
+    setStaData()
     setRegData()
+    setRgsData()
     setAppParam(param, {replace:true})
     navigate('/'+val, {replace:true})
 
@@ -147,6 +155,7 @@ export function MainApp() {
       console.log('fetch data', url)
       fetchData(`${url}/${param.config.TLC}_adm1.json`, setBoundary)
       fetchData(`${url}/${param.config.TLC}_data.json`, setAggData)
+      fetchData(`${url}/${param.config.TLC}_data_adm1.json`, setStaData)
       fetchData(`${url}/${param.config.TLC}_table.json`, setTabData)
     }
 
@@ -164,6 +173,7 @@ export function MainApp() {
 
     setRegion()
     setRegData()
+    setRgsData()
     setAppParam(par, {replace:true})
     navigate(`/${appParam.country}/${val}`, {replace:true})
     const elem1 = document.getElementById('selectFilter')
@@ -309,7 +319,7 @@ export function MainApp() {
 
   const ChartPanel = useMemo(() => {
     if (regData) {
-      return <Chart data={regData} param={appParam} filterFunc={filterFunction}/>
+      return <Chart data={regData} stat={rgsData} param={appParam} filterFunc={filterFunction}/>
       //return <></>
     } else {
       return <></>

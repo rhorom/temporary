@@ -49,7 +49,7 @@ function Layout() {
                 <Nav.Link href='./'><i className='pi pi-home mx-1'></i>Home</Nav.Link>
                 <Nav.Link href='#/about'><i className='pi pi-info-circle mx-1'></i>About</Nav.Link>
                 <Nav.Link href='#/guide'><i className='pi pi-question-circle mx-1'></i>Guide</Nav.Link>
-                <Nav.Link href='#/technote-0' disabled><i className='pi pi-question-circle mx-1'></i>Technical Note</Nav.Link>
+                <Nav.Link href='#/technote-0'><i className='pi pi-question-circle mx-1'></i>Technical Note</Nav.Link>
                 {/*
                 <NavDropdown title={<span><i className='pi pi-question-circle mx-1'></i>Technical Note</span>}>
                   <NavDropdown.Item href='#/technote-1' disabled>Technical Note 1</NavDropdown.Item>
@@ -58,11 +58,6 @@ function Layout() {
                 */}
               </Nav>
             </Navbar.Collapse>
-            <Navbar className='justify-content-end'>
-              <Nav>
-                <Nav.Link href='/ciff_portal/' disabled><i className='pi pi-sign-out mx-1'></i>Logout</Nav.Link>
-              </Nav>
-            </Navbar>
           </Navbar>
         </div>
       </div>

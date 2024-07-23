@@ -321,9 +321,9 @@ function DownloadTable({ param }){
     }
     
     const downloadButton = useMemo(() => {
-        //const url = `https://data.worldpop.org/repo/prj/CIFF/${param.country}/${param.indicator}/${round}/${dtype}`
-        const url = 'https://sdi.worldpop.org'
-        return <Button title='click to download' role='link' href={url} target='_blank'>Download</Button>
+        const url = `https://data.worldpop.org/repo/prj/CIFF/${param.config.TLC}/${dtype.toUpperCase()}/data_${param.indicator}.${dtype}`
+        //const url = 'https://sdi.worldpop.org'
+        return <Button title='click to download' role='link' href={url}>Download</Button>
     }, [dtype])
 
     return (
@@ -346,8 +346,7 @@ function DownloadTable({ param }){
                     <Col sm={10}>
                         <Form.Select defaultValue={dtype} id='type' onChange={(e) => setType(e.target.value)}>
                             <option value='CSV'>CSV (no geometry)</option>
-                            <option value='JSON'>JSON (no geometry)</option>
-                            <option value='GeoJSON'>GeoJSON (geometry included)</option>
+                            <option value='json'>GeoJSON (geometry included)</option>
                         </Form.Select>
                     </Col>
                 </Form.Group>

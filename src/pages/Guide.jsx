@@ -48,7 +48,7 @@ export default function Guide() {
           <h4>Filtering by change</h4>
           <ol start={9}>
             <li>If the underlying dataset is statistically sufficient to estimate the significance in change between rounds, "Filtering by change" can be performed. Use the dropdown to display subnational units with significant improvement or worsening through time for the selected indicator. This allows the user to choose the probability that there is meaningful improvement/worsening. The map filters out units where it is unlikely that there have been meaningful improvements.</li>
-            <li>Additional information can be found by clicking on the <i className='pi pi-question-circle'></i> icon on top of the change significance slider. <a href='#/technote-2'>Technical Note 2</a> provides details on "Exceedance Probability and Confidence in Changes Over Time", which is the basis of the filtering.</li>
+            <li>Additional information can be found by clicking on the <i className='pi pi-question-circle'></i> icon on top of the change significance slider. <a href='#/technote-0'>Technical Note 2</a> provides details on "Exceedance Probability and Confidence in Changes Over Time", which is the basis of the filtering.</li>
           </ol>
           </div>
           </div>

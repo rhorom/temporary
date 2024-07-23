@@ -207,7 +207,7 @@ function MakeChart({ input, field }){
   }
 }
 
-export function Chart({ param, data, filterFunc}){
+export function Chart({ param, data, stat, filterFunc}){
   const length = data.length
 
   const stateName = length === 0 ? '' : data[0].state;
@@ -219,17 +219,24 @@ export function Chart({ param, data, filterFunc}){
   const definition = indicatorDef[param.indicator]
   const rounds = ['R1', 'R2', 'CH']
   
-  let palette = {}
+  const filteredData = data.filter(filterFunc)
 
+  let stateData = [structuredClone(filteredData[0])]
+  let admHeader = param.config.Adm2 + ' Name'
+  if (stateData[0] && param.config.StateOnly.includes(param.indicator)){
+    stateData[0]['district'] = stateData[0]['state']
+    admHeader = param.config.Adm1 + ' Name'
+  }
+
+  let palette = {}
   rounds.forEach((item) => {
     palette[item] = {}
-    const minmax = [description.Min,description.Max]
     if (item === 'CH') {
       palette[item]['Palette'] = description.Palette2
-      palette[item]['Minmax'] = [0.5*(minmax[0] - minmax[1]), 0.5*(minmax[1] - minmax[0])]
+      palette[item]['Minmax'] = [description.CHMin,description.CHMax]
     } else {
       palette[item]['Palette'] = description.Palette1
-      palette[item]['Minmax'] = minmax
+      palette[item]['Minmax'] = [description.Min,description.Max]
     }
   })
 
@@ -242,7 +249,7 @@ export function Chart({ param, data, filterFunc}){
   }
 
   const columns = [
-    {Header:`${param.config.Adm2} Name`, accessor:'district', align:'left'},
+    {Header:`${admHeader}`, accessor:'district', align:'left'},
     {Header:`R1`, accessor: `${param.indicator}_R1`, Cell:CellFormater, sortType:'basic', align:'center'},
     {Header:`CI_R1`, accessor: `${param.indicator}_R1CI`, disableSortBy: true, align:'center'},
     {Header:'R2', accessor:`${param.indicator}_R2`, Cell:CellFormater, sortType:'basic', align:'center'},
@@ -251,8 +258,6 @@ export function Chart({ param, data, filterFunc}){
     {Header:`CI_CH`, accessor: `${param.indicator}_CHCI`, disableSortBy: true, align:'center'}
   ]
   
-  const filteredData = data.filter(filterFunc)
-
   const districtchart = useMemo(() => {
     return <MakeChart input={filteredData} field={param.indicator}/>
   }, [filteredData])
@@ -261,41 +266,31 @@ export function Chart({ param, data, filterFunc}){
     return (
       ['_R1', '_R2', '_CH'].map((item) => {
         let obj = {}
+        const x = param.indicator + item   
         function removeNull(x){
           return x[param.indicator+item] != null
         }
-        const data1 = data.filter(removeNull)
-        const y = data1.map((x) => x[param.indicator+item])
-        const z = data1.map((x) => x['district'])
         
-        if (y.length > 0){
-          const maxi = ArgMax(y)
-          const mini = ArgMin(y)
-          
-          obj['avg'] = FloatFormat(Average(y), description['Precision'])// + description['Unit'];
+
+        obj['avg'] = FloatFormat(stat[0][x + '_wavg'], description['Precision'])// + description['Unit'];
           if (pIndicator.includes(param.indicator)){
-            obj['best'] = z[maxi]
-            obj['worst'] = z[mini]
-            obj['bestVal'] = FloatFormat(y[maxi], description['Precision'])
-            obj['worstVal'] = FloatFormat(y[mini], description['Precision'])
+            obj['best'] = stat[0][x + '_max_unit']
+            obj['worst'] = stat[0][x + '_min_unit']
+            obj['bestVal'] = FloatFormat(stat[0][x + '_max'], description['Precision'])
+            obj['worstVal'] = FloatFormat(stat[0][x + '_min'], description['Precision'])
           } else {
-            obj['best'] = z[mini]
-            obj['worst'] = z[maxi]
-            obj['bestVal'] = FloatFormat(y[mini], description['Precision'])
-            obj['worstVal'] = FloatFormat(y[maxi], description['Precision'])
+            obj['best'] = stat[0][x + '_min_unit']
+            obj['worst'] = stat[0][x + '_max_unit']
+            obj['bestVal'] = FloatFormat(stat[0][x + '_min'], description['Precision'])
+            obj['worstVal'] = FloatFormat(stat[0][x + '_max'], description['Precision'])
           }  
-        } else {
-          obj['avg'] = '-'
-          obj['best'] = '-'
-          obj['worst'] = '-'
-          obj['bestVal'] = '-'
-          obj['worstVal'] = '-'
-        }
         return obj
       })
     )
   }, [data, param])
 
+  console.log(hilite)
+  
   const nodata = ((hilite[0]['avg'] === '-') && (hilite[1]['avg'] === '-'))
   let wording = ''
   if (description['R1'] !== ''){
@@ -372,9 +367,6 @@ export function Chart({ param, data, filterFunc}){
       </div>
     </div>
   )
-
-  let stateData = [structuredClone(filteredData[0])]
-  if (stateData[0]){stateData[0]['district'] = stateData[0]['state']}
 
   const tableTab2 = (
     <div className='p-0 m-0'>

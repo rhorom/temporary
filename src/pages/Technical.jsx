@@ -528,9 +528,6 @@ function FirstKenya() {
             </ul>
             </div>
         </div>
-        <br/>
-        <hr/>
-        <h4>.</h4>
       </div>
     );
 }
@@ -553,11 +550,11 @@ function ZeroNote() {
                     
                 <Card style={{ width: '18rem' }}>
                     <Card.Body>
-                        <Card.Title><a href='#/technote-2' className='subtitle'>Technical Note 2</a></Card.Title>
+                        <Card.Title><a href='#/technote-0' className='subtitle'>Technical Note 2</a></Card.Title>
                         <Card.Text>
                         Change of an indicator over time can be appreciated as either improvement or worsening. In this technical note, we explain the use of Exceedance Probability to statistically determine the direction of the change.
                         </Card.Text>
-                        <a href='#/technote-2'>Go to note<i className='pi pi-arrow-circle-right mx-1'></i></a>
+                        <a href='#/technote-0'>Go to note<i className='pi pi-arrow-circle-right mx-1'></i></a>
                     </Card.Body>
                 </Card>
 

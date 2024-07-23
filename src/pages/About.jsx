@@ -1,3 +1,32 @@
+import { Accordion } from "react-bootstrap";
+
+const countries = ['Kenya']
+const content = {
+  'Kenya': AckKenya(),
+}
+
+function AckKenya(){
+  return <div className='row m-0 p-0 px-3'>
+    <ul>
+      <li>
+        Administrative Boundary of Kenya: Population Division, U.S. Census Bureau. The U.S. Census Bureau's products are open access and can be accessed from <a href='https://www.census.gov/geographies/mapping-files/time-series/demo/international-programs/subnationalpopulation.html'>here</a>.
+      </li>
+      <li>
+        2014 Kenya DHS: Kenya National Bureau of Statistics, Ministry of Health/Kenya, National AIDS Control Council/Kenya, Kenya Medical Research Institute, National Council for Population and Development/Kenya, and ICF International. 2015. Kenya Demographic and Health Survey 2014 [DATASETS]. Rockville, MD, USA: Kenya National Bureau of Statistics, Ministry of Health/Kenya, National AIDS Control Council/Kenya, Kenya Medical Research Institute, National Council for Population and Development/Kenya, and ICF International.
+      </li>
+      <li>
+        2022 Kenya DHS: KNBS and ICF. 2023. Kenya Demographic and Health Survey 2022: [DATASETS]. Nairobi, Kenya, and Rockville, Maryland, USA: KNBS and ICF. 
+      </li>
+      <li>
+        World Health Organisation Regional Office for Africa (2024) Expanded Special Project for Elimination of Neglected Tropical Diseases. Data and more information can be accessed <a href='https://espen.afro.who.int/'>here</a>.
+      </li>
+      <li>
+        Institute for Health Metrics and Evaluation (2024) Global Health Data Exchange (GHDx). Data and more information can be accessed from <a href='https://ghdx.healthdata.org/'>here</a>.
+      </li>
+    </ul>
+  </div>
+}
+
 export default function About() {
   return (
     <div className='bg-secondary-subtle rounded-4 p-3'>
@@ -20,6 +49,9 @@ export default function About() {
       <p>
         The estimates presented in this portal are the result of a standard modelling approach for estimating high resolution maps and there may be deviations from aggregated measures published elsewhere. 
       </p>
+      <p>
+        Please consult the <a href='#/technote-0'>Technical Notes</a> section for more information on data sources and specific indicators.
+      </p>
 
       <h3>Disclaimer</h3>
       <p>
@@ -30,39 +62,32 @@ export default function About() {
       </p>
 
       <h3>Acknowledgement</h3>
-      <h5>Kenya</h5>
+      <Accordion className="mb-3" flush>
+      {countries.map((country,i) => {
+        return (
+        <Accordion.Item key={i} eventKey={i}>
+          <Accordion.Header>{country}</Accordion.Header>
+          <Accordion.Body>{content[country]}</Accordion.Body>
+        </Accordion.Item>
+        )
+      })}
+      </Accordion>
+
+      <h3>References</h3>
       <div className='row m-0 p-0 px-3'>
-      <ul>
-        <li>
-          Administrative Boundary of Kenya: Population Division, U.S. Census Bureau. The U.S. Census Bureau's products are open access and can be accessed from <a href='https://www.census.gov/geographies/mapping-files/time-series/demo/international-programs/subnationalpopulation.html'>here</a>.
-        </li>
-        <li>
-          2014 Kenya DHS: Kenya National Bureau of Statistics, Ministry of Health/Kenya, National AIDS Control Council/Kenya, Kenya Medical Research Institute, National Council for Population and Development/Kenya, and ICF International. 2015. Kenya Demographic and Health Survey 2014 [DATASETS]. Rockville, MD, USA: Kenya National Bureau of Statistics, Ministry of Health/Kenya, National AIDS Control Council/Kenya, Kenya Medical Research Institute, National Council for Population and Development/Kenya, and ICF International.
-        </li>
-        <li>
-          2022 Kenya DHS: KNBS and ICF. 2023. Kenya Demographic and Health Survey 2022: [DATASETS]. Nairobi, Kenya, and Rockville, Maryland, USA: KNBS and ICF. 
-        </li>
-        <li>
-          World Health Organisation Regional Office for Africa (2024) Expanded Special Project for Elimination of Neglected Tropical Diseases. Data and more information can be accessed <a href='https://espen.afro.who.int/'>here</a>.
-        </li>
-        <li>
-          Institute for Health Metrics and Evaluation (2024) Global Health Data Exchange (GHDx). Data and more information can be accessed from <a href='https://ghdx.healthdata.org/'>here</a>.
-        </li>
-        <li>
-          Rue, H., Martino, S., & Chopin, N. (2009). Approximate Bayesian inference for latent Gaussian models by using integrated nested Laplace approximations. Journal of the Royal Statistical Society Series B: Statistical Methodology, 71(2), 319-392. DOI: <a href='https://doi.org/10.1111/j.1467-9868.2008.00700.x'>10.1111/j.1467-9868.2008.00700.x</a>.
-        </li>
-        <li>
-          Lindgren, F., Rue, H., & Lindström, J. (2011). An explicit link between Gaussian fields and Gaussian Markov random fields: the stochastic partial differential equation approach. Journal of the Royal Statistical Society Series B: Statistical Methodology, 73(4), 423-498. DOI: <a href='https://doi.org/10.1111/j.1467-9868.2011.00777.x'>10.1111/j.1467-9868.2011.00777.x</a>.
-        </li>
-        <li>
-          Martins, T. G., Simpson, D., Lindgren, F., & Rue, H. (2013). Bayesian computing with INLA: new features. Computational Statistics & Data Analysis, 67, 68-83. DOI: <a href='https://doi.org/10.1016/j.csda.2013.04.014'>10.1016/j.csda.2013.04.014</a>.
-        </li>
-      </ul>
+        <ul>
+          <li>
+            Rue, H., Martino, S., & Chopin, N. (2009). Approximate Bayesian inference for latent Gaussian models by using integrated nested Laplace approximations. Journal of the Royal Statistical Society Series B: Statistical Methodology, 71(2), 319-392. DOI: <a href='https://doi.org/10.1111/j.1467-9868.2008.00700.x'>10.1111/j.1467-9868.2008.00700.x</a>.
+          </li>
+          <li>
+            Lindgren, F., Rue, H., & Lindström, J. (2011). An explicit link between Gaussian fields and Gaussian Markov random fields: the stochastic partial differential equation approach. Journal of the Royal Statistical Society Series B: Statistical Methodology, 73(4), 423-498. DOI: <a href='https://doi.org/10.1111/j.1467-9868.2011.00777.x'>10.1111/j.1467-9868.2011.00777.x</a>.
+          </li>
+          <li>
+            Martins, T. G., Simpson, D., Lindgren, F., & Rue, H. (2013). Bayesian computing with INLA: new features. Computational Statistics & Data Analysis, 67, 68-83. DOI: <a href='https://doi.org/10.1016/j.csda.2013.04.014'>10.1016/j.csda.2013.04.014</a>.
+          </li>
+        </ul>
       </div>
 
-      <p>
-        Please consult the <a href='#/technote-0'>Technical Notes</a> section for more information on data sources and specific indicators.
-      </p>
     </div>
   );
 }
