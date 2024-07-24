@@ -32,176 +32,6 @@ function Figure ({src, label, number, caption, width='80%'}){
     )
 }
 
-const ContentTab3 = [
-    {"State": "Andaman & Nicobar Islands", "Count": "3"},
-    {"State": "Andhra Pradesh", "Count": "13"},
-    {"State": "Bihar", "Count": "38"},
-    {"State": "Chandigarh", "Count": "1"},
-    {"State": "Dandra & Nagar Haveli & Daman & Diu", "Count": "3"},
-    {"State": "Goa", "Count": "2"},
-    {"State": "Himachal Pradesh", "Count": "12"},
-    {"State": "Jammu and Kashmir", "Count": "20"},
-    {"State": "Jharkhand", "Count": "24"},
-    {"State": "Karnataka", "Count": "30"},
-    {"State": "Kerala", "Count": "2"},
-    {"State": "Ladakh", "Count": "1"},
-    {"State": "Lakshadweep", "Count": "14"},
-    {"State": "Manipur", "Count": "9"},
-    {"State": "Mizoram", "Count": "8"},
-    {"State": "Nagaland", "Count": "11"},
-    {"State": "Odisha", "Count": "30"},
-    {"State": "Puducherry", "Count": "4"},
-    {"State": "Rajasthan", "Count": "33"},
-    {"State": "Sikkim", "Count": "4"},
-    {"State": "Tamil Nadu", "Count": "32"},
-    {"State": "Uttarakhand", "Count": "13"}
-]
-
-const ContentTab4 = [
-    {"State": "Arunachal Pradesh", "Type1": "6", "Type2": "1", "Count15": "16", "Count19": "20", "New": "4"},
-    {"State": "Assam", "Type1": "12", "Type2": "-", "Count15": "27", "Count19": "33", "New": "6"},
-    {"State": "Chhattisgarh", "Type1": "15", "Type2": "-", "Count15": "18", "Count19": "27", "New": "9"},
-    {"State": "Gujarat", "Type1": "8", "Type2": "3", "Count15": "26", "Count19": "33", "New": "7"},
-    {"State": "Haryana", "Type1": "1", "Type2": "-", "Count15": "21", "Count19": "22", "New": "1"},
-    {"State": "Madhya Pradesh", "Type1": "2", "Type2": "-", "Count15": "50", "Count19": "51", "New": "1"},
-    {"State": "Maharashtra", "Type1": "2", "Type2": "-", "Count15": "35", "Count19": "36", "New": "1"},
-    {"State": "Meghalaya", "Type1": "8", "Type2": "-", "Count15": "7", "Count19": "11", "New": "4"},
-    {"State": "NCT of Delhi", "Type1": "4", "Type2": "4", "Count15": "9", "Count19": "11", "New": "2"},
-    {"State": "Punjab", "Type1": "4", "Type2": "-", "Count15": "20", "Count19": "22", "New": "2"},
-    {"State": "Telangana", "Type1": "23", "Type2": "7", "Count15": "10", "Count19": "31", "New": "21"},
-    {"State": "Tripura", "Type1": "7", "Type2": "-", "Count15": "4", "Count19": "8", "New": "4"},
-    {"State": "Uttar Pradesh", "Type1": "4", "Type2": "2", "Count15": "71", "Count19": "75", "New": "4"},
-    {"State": "West Bengal", "Type1": "2", "Type2": "-", "Count15": "19", "Count19": "20", "New": "1"}
-]
-
-const ListOfChanges = [
-    {
-        title: 'Arunachal Pradesh',
-        items: [
-            'A new district (Kra Daadi) was formed from Kurung Kumey district.',
-            'Longding district was created from Tirap district.',
-            'Namsai district was created from Lohit district.',
-            'A new Siang district was created from Parent districts West Siang and East Siang.'
-        ]
-    },
-    {
-        title: 'Assam',
-        subtitle: 'All 6 new districts created from type 1 Parent districts include:',
-        items: [
-            'Biswanath district was created from Sonitpur', 
-            'Charaideo from Sivasagar', 
-            'Hojai from Nagaon', 
-            'Majuli from Jorhat', 
-            'South Salmara Mancachar from Dhubri',
-            'West Karbi Anglong from Karbi Anglong' 
-            ]
-    },
-    {
-        title: 'Gujarat',
-        subtitle: 'New districts formed include:',
-        items: [
-            'Botad from Bhavnagar and Ahmadabad',
-            'Chhota Udaipur from Vadodara',
-            'Devbhumi Dwarka from Jamnagar',
-            'Gir Somnath from Junagadh',
-            'Mahisagar from Panchmahal and Kheda',
-            'Morbi from Rajkot and Surrendranagar'
-        ]
-    },
-    {
-        title: 'Chhattisgarh',
-        subtitle: 'Dakshin Bastar Dantewada district in 2015-16 no longer exists, as two new districts: Dantewada and Sukma were created from it in 2019-21. Balod and Bemetara districts were also created from Durg district, thus forming three new districts including Durg.  Surguja district in 2015-16 has also been divided into three: Balarampur, Surajpur, and Surguja. Other districts formed include:',
-        items: [
-            'Baloda Bazar from Raipur',
-            'Kodagaon from Bastar',
-            'Mungeli from Bilaspur'
-        ]
-    },
-    {
-        title: 'NCT of Delhi',
-        subtitle: 'Two entirely new districts: Shahdara (formed from North East and East districts), and South East Delhi (formed from South district) have been added. Although other districts bear the same name as in 2015-16, they have changed boundaries, for example,',
-        items: [
-            'Central district and North district boundaries have been merged to form a new Central district in 2019-21',
-            'With the 2015-16 North merging as stated above, the 2015-16 North West district was also divided into new North and North West districts',
-            'New Delhi district in 2019-21 now includes a part of the 2015-16 South West boundaries with the 2015-16 New Delhi boundary',
-            '2015-16 South district is now divided into two 2019-21 districts- South and South East'
-        ]
-    },
-    {
-        title: 'Telangana',
-        subtitle: 'The following type 1 and type 2 districts exist in Telangana state in 2019-21:',
-        items: [
-            'Komaram Bheem Asifabad, Mancherial, and Nirmal from Adilabad district in 2015-16',
-            'Jagitial, Peddapalli, and Rajanna Sircilla districts from Karimnagar 2015-16 district',
-            'Kothagudem from Khammam',
-            'Jogulamba Gadwal and Nagarkurnool from Mahbubnagar',
-            'Kamareddy from Nizamabad',
-            'Medchal-Malkajgiri from RangaReddy',
-            'Sangareddy from Medak',
-            'Suryapet and Yadadri Bhuvanagiri from Nalgonda',
-            'Warangal Rural from Warangal',
-            'Jangoan from Warangal and Nalgonda',
-            'Jayashankar Bhupalapally from Karimnagar, Warangal, and Khammam',
-            'Mahabubabad from Warangal and Khammam',
-            'Ranga Reddy and Vikarabad from RangaReddy and Mahabubnagar',
-            'Siddipet from Medak, Warangal, and Karimnagar',
-            'Warangal Urban from Warangal and Karimnagar'
-        ]
-    },
-    {
-        title: 'Haryana',
-        subtitle: 'The only new district formed is Charkhi Dadri from Bhiwani district.',
-        items: ''
-    },
-    {
-        title: 'Madhya Pradesh',
-        subtitle: 'Only one new district was formed: Agar Malwa from Shajapur district.',
-        items: ''
-    },
-    {
-        title: 'Punjab',
-        subtitle: 'The two new districts formed are:',
-        items: [
-            'Fazilka from Firozpur',
-            'Pathankot from Gurdaspur'
-        ]
-    },
-    {
-        title: 'Meghalaya',
-        subtitle: 'Jaintia Hills no longer exists in 2015-16 as the district now includes two new districts: East Jaintia Hills and West Jaintia Hills. Other new districts formed include:',
-        items: [
-            'North Garo Hills from East Garo Hills',
-            'South West Garo Hills from West Garo Hills',
-            'South West Khasi Hills from West Khasi Hills'
-        ]
-    },
-    {
-        title: 'Uttar Pradesh',
-        subtitle: 'Four new districts formed are:',
-        items : [
-            'Amethi from Sultanpur and Rae Bareli',
-            'Hapur from Ghaziabad',
-            'Sambhal from Moradabad and Budaun',
-            'Shamli from Muzaffarnagar'
-        ]
-    },
-    {
-        title: 'West Bengal',
-        subtitle: 'Barddhaman district no longer exists, but has two new districts created from it:',
-        items : [
-            'Paschim Barddhaman and Purba Barddhaman'
-        ]
-    },
-    {
-        title: 'Tripura',
-        subtitle: 'The new districts formed include:',
-        items : [
-            'Khowai and Sepahijala from West district',
-            'Unakoti from North district'
-        ]
-    },
-]
-
 function DetailCard({obj}) {
     return (
         <div>
@@ -236,6 +66,253 @@ function ContentChanges() {
                 </Col>
             )})}
         </Row>
+    )
+}
+
+function ZeroNote() {
+    return (
+        <div className='bg-secondary-subtle rounded-4 p-3'>
+            <h2>Technical Notes</h2>
+
+            <Row xs={1} md={3} className='g-2'>
+                <Card style={{ width: '18rem' }}>
+                    <Card.Body>
+                        <Card.Title><a href='#/technote-1' className='subtitle'>Technical Note 1</a></Card.Title>
+                        <Card.Text>
+                        This note explains how we manage and harmonise the changes of administrative boundaries from round 1 to round 2. Careful harmonisation of the boundaries enables us to examine how a particular indicator changes over time.
+                        </Card.Text>
+                        <a href='#/technote-1'>Go to note<i className='pi pi-arrow-circle-right mx-1'></i></a>
+                    </Card.Body>
+                </Card>
+                    
+                <Card style={{ width: '18rem' }}>
+                    <Card.Body>
+                        <Card.Title><a href='#/technote-0' className='subtitle'>Technical Note 2</a></Card.Title>
+                        <Card.Text>
+                        Change of an indicator over time can be appreciated as either improvement or worsening. In this technical note, we explain the use of Exceedance Probability to statistically determine the direction of the change.
+                        </Card.Text>
+                        <a href='#/technote-0'>Go to note<i className='pi pi-arrow-circle-right mx-1'></i></a>
+                    </Card.Body>
+                </Card>
+
+                <Card style={{ width: '18rem' }}>
+                    <Card.Body>
+                        <Card.Title><a href='#/technote-3' className='subtitle'>Technical Note 3</a></Card.Title>
+                        <Card.Text>
+                        Technical note on the use of the Institute for Health Metrics and Evaluation (IHME) data in the modeling.
+                        </Card.Text>
+                        <a href='#/technote-3'>Go to note<i className='pi pi-arrow-circle-right mx-1'></i></a>
+                    </Card.Body>
+                </Card>
+
+                <Card style={{ width: '18rem' }}>
+                    <Card.Body>
+                        <Card.Title><a href='#/technote-4' className='subtitle'>Technical Note 4</a></Card.Title>
+                        <Card.Text>
+                        Technical note on the use of the WHO's Expanded Special Project for Elimination of Tropical Diseases (WHO-ESPEN) data in the modeling.
+                        </Card.Text>
+                        <a href='#/technote-4'>Go to note<i className='pi pi-arrow-circle-right mx-1'></i></a>
+                    </Card.Body>
+                </Card>
+
+            </Row>
+
+        </div>
+    )
+}
+
+function FirstNote() {
+    const countries = ['Kenya']
+    const content = {
+        'India': FirstIndia(),
+        'Kenya': FirstKenya(),
+    }
+    return (
+        <div className='bg-secondary-subtle rounded-4 p-3'>
+            <h2>Technical Note 1</h2>
+            <h3>
+            National and subnational boundaries
+            </h3>
+            <hr/>
+            <Tabs className='mb-3'>
+                {countries.map((country,i) => {
+                    return (
+                        <Tab eventKey={country} key={i} title={country}>
+                            {content[country]}
+                        </Tab>
+                    )
+                })}
+            </Tabs>
+        </div>
+    )
+}
+
+function SecondNote() {
+    return (
+      <div className='bg-secondary-subtle rounded-4 p-3'>
+        <h2>Technical Note 2</h2>
+        <h3>Exceedance probability and confidence in changes over time</h3>
+        <hr/>
+        <h4>Background</h4>
+        <p>
+            We have produced 5x5km high-resolution (also referred to as grid level) prediction and uncertainty maps illustrating changes over time for health and development indicators within specific subnational areas, such as districts or similar administrative divisions varying by country. Our methodology relies on data from the two most recent rounds of the nationally representative Demographic and Health Surveys (DHS), which are available at the cluster level, and mapped through GPS coordinates of the cluster centres. In the case of India, we utilised the National Family Health Surveys (NFHS), specifically NFHS-4 (2015-16) denoted as Round 1, and NFHS-5 (2019-22) denoted as Round 2. Measuring changes between these survey rounds allows us to track and assess the progress of the health and development indicators over time
+        </p>
+        <p>
+            To ensure the reliability of our estimates of the changes within each subnational area, we employed exceedance probability to quantify our confidence in these observed changes. Exceedance probability, commonly applied in environmental and risk analysis Richards et al., 2014, assesses the likelihood of an event surpassing a specific limit within a defined period (Soch, 2020). In simpler terms, exceedance probability helps us assess potential improvements or worsening of our health and development indicators. We express this likelihood as a percentage, indicating the probability of an indicator exceeding our defined threshold. For this work, we use the statistical significance levels of 90% (likely), 95% (highly likely), and 99% (almost certain). 
+        </p>
+
+        <h4>Outline</h4>
+        <p>
+            We outline the entire process of implementing and applying exceedance probability using the indicator "Percentage of women who had 4 or more antenatal visits" (ANC4+) in India as an example. For India, the subnational areas are the districts. This outline unfolds in three main steps: (1) preparation, (2) implementation, and (3) application. Further detail can be found in the Methods section. 
+        </p>
+        <div className="border border-secondary rounded-4 p-3 mb-4">
+        <h5>Preparation</h5>
+        <div className='row p-0 m-0 px-3'>
+        <ol>
+            <li>
+                Sample grid-level estimates from the posterior distributions of the models. These models, processed through the Integrated Nested Laplace Approximation – Stochastic Partial Differential Equation method (INLA-SPDE) (Rue et al., 2009; Lindgren et al., 2011; Martins et al., 2013), pertain to the two rounds of survey data for ANC4+. 
+            </li>
+            <li>
+                Derive grid-level change estimate samples by calculating the difference between the grid-level estimate samples of Round 2 and Round 1. 
+            </li>
+            <li>
+                Aggregate the grid level change estimate samples to the subnational level, specifically at the district level, to obtain district level change estimate samples (see Figure 1a). 
+            </li>
+        </ol>
+        </div>
+
+        <h5>Implementation</h5>
+        <div className='row p-0 m-0 px-3'>
+        <ol>
+            <li>
+                The district level change estimate samples can be depicted using an empirical cumulative density function (ECDF) (Dekking et al., 2005). The ECDF offers insights into the probability, given the data, that the true change is equal to or less than a specified value. It derives from the proportion of samples that are equal to or less than the specified value. For change in ANC4+, we are interested in the district estimate value zero, because we want to observe where there have been meaningful improvements for ANC4+.  
+            </li>
+            <li>
+                The ECDF at zero for each district indicates the proportion of samples equal to or less than zero. This informs us of the probability, given the data, that the true change is less than or equal to zero. 
+            </li>
+            <li>
+                The complement of the ECDF at zero, calculated as 1 - ECDF(0), tells us the proportion of samples greater than zero. This provides the probability, given the data, that the true change is greater than zero (see Figure 1b). 
+            </li>
+        </ol>
+        </div>
+
+        <h5>Application</h5>
+        <div className='row p-0 m-0 px-3'>
+        <ol>
+            <li>
+                To ensure a high level of certainty (95% certain) that district level estimates are greater than zero, compare the probability (or proportion) obtained with 95% (or 0.95). Adjust the slider in the Portal to highlight districts where improvements are highly certain (95% certain). 
+            </li>
+            <li>
+                Conversely, if the probability (or proportion) is below 95% (less than 0.95), it indicates a lack of high certainty (95% certain) regarding meaningful improvements in those districts. 
+            </li>
+            <li>
+                Steps 1 and 2 can be repeated for various certainty levels (see Figure 1c).
+            </li>
+        </ol>
+        </div>
+        <br/>
+        <Figure src={exceedance}
+            label='fig-exceedance' 
+            number='1'
+            caption={'Workflow highlighting some of the key steps of the process described in the Outline for implementing and applying exceedance probability using the indicator ANC4+ in selected districts in India. Panel (a) links to Step 1.3 in the Outline and shows the samples of district level estimates for the change over time between NFHS-4 (Round 1) and NFHS-5 (Round2) for the ANC4+ indicator in the state of Odisha, India. Panel (b) links to Step 2.3 in the Outline and shows the histograms and proportions of samples for estimates of change over time in two districts within the state of Odisha, India. Panel (c) links to Step 3 in the Outline and is a visual representation of how changing significance levels affect the confidence (uncertainty) around the estimated improvement of ANC4+ over time for the selected districts.'}/>
+        </div>
+
+        <h4>Methods</h4>
+        <p>
+            In examining changes in ANC4, we employed the statistical method INLA-SPDE to estimate ANC4+ values. This method generates "best estimations" (posterior distributions) based on available data, enabling us to predict potential ANC4 values. By comparing these values across different survey rounds, we obtain samples representing changes at grid and district levels.
+        </p>
+        <p>
+            To ensure reliability in these estimates, we utilised the ECDF. The ECDF visually represents the likelihood of observing specific changes in ANC4+. For example, the ECDF at zero indicates the likelihood of observing changes equal to or less than zero in ANC4+. Its complement, calculated as 1 minus the ECDF value at zero, informs us about the probability, given the data, of observing changes greater than zero (see Figure 1c). We then apply this information by comparing probabilities from the ECDF at zero against a 95% threshold, illustrated in Figure 1d, to highlight districts where improvements are highly certain (95% certain).  
+        </p>
+
+        <h4>Conclusion</h4>
+        <p>
+            Our utilisation of exceedance probability establishes a robust framework for interpreting changes over time, offering critical insights into trends and the potential for achieving significant improvements within specified timeframes. For example, assessing the exceedance probability associated with the prevalence of stunting provides valuable insights into the reduction of stunting over time. This methodology empowers policymakers by providing a credible assessment of trends, enabling informed decisions for effective interventions. 
+        </p>
+
+        <div id='reference'>
+        <h4>Reference</h4>
+        <div className='row p-0 m-0 px-3'>
+        <ul>
+            <li>
+                Dekking, F. M., Kraaikamp, C., Lopuhaä, H. P., & Meester, L. E. (2005). A Modern Introduction to Probability and Statistics: Understanding why and how (Vol. 488). London: springer. DOI: <a href='https://link.springer.com/book/10.1007/1-84628-168-7' target='_blank'>10.1007/1-84628-168-7</a>.
+            </li>
+            <li>
+                Lindgren, F., Rue, H., & Lindström, J. (2011). An explicit link between Gaussian fields and Gaussian Markov random fields: the stochastic partial differential equation approach. Journal of the Royal Statistical Society Series B: Statistical Methodology, 73(4), 423-498. DOI: <a href='https://doi.org/10.1111/j.1467-9868.2011.00777.x' target='_blank'>10.1111/j.1467-9868.2011.00777.x</a>.
+            </li>
+            <li>
+                Martins, T. G., Simpson, D., Lindgren, F., & Rue, H. (2013). Bayesian computing with INLA: new features. Computational Statistics & Data Analysis, 67, 68-83. DOI: <a href='https://doi.org/10.1016/j.csda.2013.04.014' target='_blank'>10.1016/j.csda.2013.04.014</a>.
+            </li>
+            <li>
+                Richards, K. K., Hazelton, M. L., Stevenson, M. A., Lockhart, C. Y., Pinto, J., & Nguyen, L. (2014). Using exceedance probabilities to detect anomalies in routinely recorded animal health data, with particular reference to foot-and-mouth disease in Viet Nam. Spatial and Spatio-Temporal Epidemiology, 11, 125-133. DOI: <a href='https://doi.org/10.1016/j.sste.2014.08.002' target='_blank'>10.1016/j.sste.2014.08.002</a>
+            </li>
+            <li>
+                Rue, H., Martino, S., & Chopin, N. (2009). Approximate Bayesian inference for latent Gaussian models by using integrated nested Laplace approximations. Journal of the Royal Statistical Society Series B: Statistical Methodology, 71(2), 319-392. DOI: <a href='https://doi.org/10.1111/j.1467-9868.2008.00700.x' target='_blank'>10.1111/j.1467-9868.2008.00700.x</a>.
+            </li>
+            <li>
+                Soch, J. (2020). Definition: Exceedance probability. The Book of Statistical Proofs. Url: <a href='https://statproofbook.github.io/D/prob-exc.html' target='_blank'>https://statproofbook.github.io/D/prob-exc.html</a>
+            </li>
+        </ul>
+        </div>
+        </div>
+      </div>
+    );
+}
+
+function ThirdNote() {
+    const countries = ['Kenya']
+    const content = {
+        'Burkina Faso': ThirdBurkinaFaso(),
+        'Kenya': ThirdKenya(),
+    }
+    return (
+        <div className='bg-secondary-subtle rounded-4 p-3'>
+            <h2>Technical Note 1</h2>
+            <h3>
+            Data sourced from the Institute for Health Metrics and Evaluation (IHME)
+            </h3>
+            <hr/>
+            <Tabs className='mb-3'>
+                {countries.map((country,i) => {
+                    return (
+                        <Tab eventKey={country} key={i} title={country}>
+                            {content[country]}
+                        </Tab>
+                    )
+                })}
+            </Tabs>
+            <hr/>
+
+            <h4>IHME Data license</h4>
+            <p>
+                IHME specify that the data made available for download on IHME Websites can be used, shared, modified, or built upon by non-commercial users in accordance with the IHME Free-Of-Charge Non-Commercial User Agreement. <a href='https://www.healthdata.org/Data-tools-practices/data-practices/ihme-free-charge-non-commercial-user-agreement' target='_blank'><i className='pi pi-external-link'></i></a>
+            </p>
+        </div>
+    )
+}
+
+function FourthNote() {
+    const countries = ['Kenya']
+    const content = {
+        'Kenya': FourthKenya(),
+    }
+    return (
+        <div className='bg-secondary-subtle rounded-4 p-3'>
+            <h2>Technical Note 4</h2>
+            <h3>Data sourced from ESPEN programme from WHO</h3>
+            <hr/>
+
+            <Tabs className='mb-3'>
+                {countries.map((country,i) => {
+                    return (
+                        <Tab eventKey={country} key={i} title={country}>
+                            {content[country]}
+                        </Tab>
+                    )
+                })}
+            </Tabs>
+            <hr/>
+        </div>
     )
 }
 
@@ -503,7 +580,7 @@ function FirstKenya() {
     return (
       <div className='bg-secondary-subtle rounded-4 p-3'>
         <p>
-            For this work, Population Division, United States Census Bureau (USCB) open access boundaries were used for geographical aggregations and for displaying purposes. USCB produced administrative level 1 and 2 boundaries in line with the subnational administrative structure used for Kenya’s 2019 census. Kenya national boundaries as reported by the USCB datasets were made to align to the Large Scale International Boundary Line (LSIB) dataset from the United States. The U.S. Census Bureau’s products are open access and can be accessed from <a href='https://www.census.gov/geographies/mapping-files/time-series/demo/international-programs/subnationalpopulation.html'>here</a>.
+            For this work, Population Division, United States Census Bureau (USCB) open access boundaries were used for geographical aggregations and for displaying purposes. USCB produced administrative level 1 and 2 boundaries in line with the subnational administrative structure used for Kenya’s 2019 census. Kenya national boundaries as reported by the USCB datasets were made to align to the Large Scale International Boundary Line (LSIB) dataset from the United States. The U.S. Census Bureau’s products are open access and can be accessed from <a href='https://www.census.gov/geographies/mapping-files/time-series/demo/international-programs/subnationalpopulation.html' target='_blank'>here</a>.
         </p>
         <p>
             For modelled-based indicators (5x5km high resolution maps), official national country boundaries were used to model and summarise the estimates at sub-county level (US Census Bureau). Pixels coinciding with known water bodies were left as NAs and were ignored when aggregating to administrative boundaries. 
@@ -517,13 +594,13 @@ function FirstKenya() {
         <div className='row p-0 m-0 px-3'>
             <ul style={{marginBottom:'20px'}}>
                 <li>
-                    Population Division, U.S. Census Bureau. The U.S. Census Bureau's products are open access and can be accessed from <a href='https://www.census.gov/geographies/mapping-files/time-series/demo/international-programs/subnationalpopulation.html'>here</a>.
+                    Population Division, U.S. Census Bureau. The U.S. Census Bureau's products are open access and can be accessed from <a href='https://www.census.gov/geographies/mapping-files/time-series/demo/international-programs/subnationalpopulation.html' target='_blank'>here</a>.
                 </li>
                 <li>
                     KNBS and ICF. 2023. Kenya Demographic and Health Survey 2022: Volume 1. Nairobi, Kenya, and Rockville, Maryland, USA: KNBS and ICF. 
                 </li>
                 <li>
-                    Spatial Data Repository: Kenya 2014 & 2020 DHS - National and Sub-National Boundaries. <a href='spatialdata.dhsprogram.com'>spatialdata.dhsprogram.com</a>. [Accessed 01-01-2024]. ICF, The Demographic and Health Surveys Program Spatial Data Repository. Funded by USAID.
+                    Spatial Data Repository: Kenya 2014 & 2020 DHS - National and Sub-National Boundaries. <a href='https://spatialdata.dhsprogram.com' target='_blank'>spatialdata.dhsprogram.com</a>. [Accessed 01-01-2024]. ICF, The Demographic and Health Surveys Program Spatial Data Repository. Funded by USAID.
                 </li>
             </ul>
             </div>
@@ -532,203 +609,13 @@ function FirstKenya() {
     );
 }
 
-function ZeroNote() {
-    return (
-        <div className='bg-secondary-subtle rounded-4 p-3'>
-            <h2>Technical Notes</h2>
-
-            <Row xs={1} md={3} className='g-2'>
-                <Card style={{ width: '18rem' }}>
-                    <Card.Body>
-                        <Card.Title><a href='#/technote-1' className='subtitle'>Technical Note 1</a></Card.Title>
-                        <Card.Text>
-                        This note explains how we manage and harmonise the changes of administrative boundaries from round 1 to round 2. Careful harmonisation of the boundaries enables us to examine how a particular indicator changes over time.
-                        </Card.Text>
-                        <a href='#/technote-1'>Go to note<i className='pi pi-arrow-circle-right mx-1'></i></a>
-                    </Card.Body>
-                </Card>
-                    
-                <Card style={{ width: '18rem' }}>
-                    <Card.Body>
-                        <Card.Title><a href='#/technote-0' className='subtitle'>Technical Note 2</a></Card.Title>
-                        <Card.Text>
-                        Change of an indicator over time can be appreciated as either improvement or worsening. In this technical note, we explain the use of Exceedance Probability to statistically determine the direction of the change.
-                        </Card.Text>
-                        <a href='#/technote-0'>Go to note<i className='pi pi-arrow-circle-right mx-1'></i></a>
-                    </Card.Body>
-                </Card>
-
-                <Card style={{ width: '18rem' }}>
-                    <Card.Body>
-                        <Card.Title><a href='#/technote-3' className='subtitle'>Technical Note 3</a></Card.Title>
-                        <Card.Text>
-                        Technical note on the use of the Institute for Health Metrics and Evaluation (IHME) data in the modeling.
-                        </Card.Text>
-                        <a href='#/technote-3'>Go to note<i className='pi pi-arrow-circle-right mx-1'></i></a>
-                    </Card.Body>
-                </Card>
-
-                <Card style={{ width: '18rem' }}>
-                    <Card.Body>
-                        <Card.Title><a href='#/technote-4' className='subtitle'>Technical Note 4</a></Card.Title>
-                        <Card.Text>
-                        Technical note on the use of the WHO's Expanded Special Project for Elimination of Tropical Diseases (WHO-ESPEN) data in the modeling.
-                        </Card.Text>
-                        <a href='#/technote-4'>Go to note<i className='pi pi-arrow-circle-right mx-1'></i></a>
-                    </Card.Body>
-                </Card>
-
-            </Row>
-
-        </div>
-    )
+function ThirdBurkinaFaso(){
+    return <></>
 }
 
-function FirstNote() {
-    const countries = ['Kenya']
-    const content = {
-        'India': FirstIndia(),
-        'Kenya': FirstKenya(),
-    }
+function ThirdKenya() {
     return (
         <div className='bg-secondary-subtle rounded-4 p-3'>
-            <h2>Technical Note 1</h2>
-            <h3>
-            National and subnational boundaries
-            </h3>
-            <hr/>
-            <Tabs className='mb-3'>
-                {countries.map((country,i) => {
-                    return (
-                        <Tab eventKey={country} key={i} title={country}>
-                            {content[country]}
-                        </Tab>
-                    )
-                })}
-            </Tabs>
-        </div>
-    )
-}
-
-function SecondNote() {
-    return (
-      <div className='bg-secondary-subtle rounded-4 p-3'>
-        <h2>Technical Note 2</h2>
-        <h3>Exceedance probability and confidence in changes over time</h3>
-        <hr/>
-        <h4>Background</h4>
-        <p>
-            We have produced 5x5km high-resolution (also referred to as grid level) prediction and uncertainty maps illustrating changes over time for health and development indicators within specific subnational areas, such as districts or similar administrative divisions varying by country. Our methodology relies on data from the two most recent rounds of the nationally representative Demographic and Health Surveys (DHS), which are available at the cluster level, and mapped through GPS coordinates of the cluster centres. In the case of India, we utilised the National Family Health Surveys (NFHS), specifically NFHS-4 (2015-16) denoted as Round 1, and NFHS-5 (2019-22) denoted as Round 2. Measuring changes between these survey rounds allows us to track and assess the progress of the health and development indicators over time
-        </p>
-        <p>
-            To ensure the reliability of our estimates of the changes within each subnational area, we employed exceedance probability to quantify our confidence in these observed changes. Exceedance probability, commonly applied in environmental and risk analysis Richards et al., 2014, assesses the likelihood of an event surpassing a specific limit within a defined period (Soch, 2020). In simpler terms, exceedance probability helps us assess potential improvements or worsening of our health and development indicators. We express this likelihood as a percentage, indicating the probability of an indicator exceeding our defined threshold. For this work, we use the statistical significance levels of 90% (likely), 95% (highly likely), and 99% (almost certain). 
-        </p>
-
-        <h4>Outline</h4>
-        <p>
-            We outline the entire process of implementing and applying exceedance probability using the indicator "Percentage of women who had 4 or more antenatal visits" (ANC4+) in India as an example. For India, the subnational areas are the districts. This outline unfolds in three main steps: (1) preparation, (2) implementation, and (3) application. Further detail can be found in the Methods section. 
-        </p>
-        <div className="border border-secondary rounded-4 p-3 mb-4">
-        <h5>Preparation</h5>
-        <div className='row p-0 m-0 px-3'>
-        <ol>
-            <li>
-                Sample grid-level estimates from the posterior distributions of the models. These models, processed through the Integrated Nested Laplace Approximation – Stochastic Partial Differential Equation method (INLA-SPDE) (Rue et al., 2009; Lindgren et al., 2011; Martins et al., 2013), pertain to the two rounds of survey data for ANC4+. 
-            </li>
-            <li>
-                Derive grid-level change estimate samples by calculating the difference between the grid-level estimate samples of Round 2 and Round 1. 
-            </li>
-            <li>
-                Aggregate the grid level change estimate samples to the subnational level, specifically at the district level, to obtain district level change estimate samples (see Figure 1a). 
-            </li>
-        </ol>
-        </div>
-
-        <h5>Implementation</h5>
-        <div className='row p-0 m-0 px-3'>
-        <ol>
-            <li>
-                The district level change estimate samples can be depicted using an empirical cumulative density function (ECDF) (Dekking et al., 2005). The ECDF offers insights into the probability, given the data, that the true change is equal to or less than a specified value. It derives from the proportion of samples that are equal to or less than the specified value. For change in ANC4+, we are interested in the district estimate value zero, because we want to observe where there have been meaningful improvements for ANC4+.  
-            </li>
-            <li>
-                The ECDF at zero for each district indicates the proportion of samples equal to or less than zero. This informs us of the probability, given the data, that the true change is less than or equal to zero. 
-            </li>
-            <li>
-                The complement of the ECDF at zero, calculated as 1 - ECDF(0), tells us the proportion of samples greater than zero. This provides the probability, given the data, that the true change is greater than zero (see Figure 1b). 
-            </li>
-        </ol>
-        </div>
-
-        <h5>Application</h5>
-        <div className='row p-0 m-0 px-3'>
-        <ol>
-            <li>
-                To ensure a high level of certainty (95% certain) that district level estimates are greater than zero, compare the probability (or proportion) obtained with 95% (or 0.95). Adjust the slider in the Portal to highlight districts where improvements are highly certain (95% certain). 
-            </li>
-            <li>
-                Conversely, if the probability (or proportion) is below 95% (less than 0.95), it indicates a lack of high certainty (95% certain) regarding meaningful improvements in those districts. 
-            </li>
-            <li>
-                Steps 1 and 2 can be repeated for various certainty levels (see Figure 1c).
-            </li>
-        </ol>
-        </div>
-        <br/>
-        <Figure src={exceedance}
-            label='fig-exceedance' 
-            number='1'
-            caption={'Workflow highlighting some of the key steps of the process described in the Outline for implementing and applying exceedance probability using the indicator ANC4+ in selected districts in India. Panel (a) links to Step 1.3 in the Outline and shows the samples of district level estimates for the change over time between NFHS-4 (Round 1) and NFHS-5 (Round2) for the ANC4+ indicator in the state of Odisha, India. Panel (b) links to Step 2.3 in the Outline and shows the histograms and proportions of samples for estimates of change over time in two districts within the state of Odisha, India. Panel (c) links to Step 3 in the Outline and is a visual representation of how changing significance levels affect the confidence (uncertainty) around the estimated improvement of ANC4+ over time for the selected districts.'}/>
-        </div>
-
-        <h4>Methods</h4>
-        <p>
-            In examining changes in ANC4, we employed the statistical method INLA-SPDE to estimate ANC4+ values. This method generates "best estimations" (posterior distributions) based on available data, enabling us to predict potential ANC4 values. By comparing these values across different survey rounds, we obtain samples representing changes at grid and district levels.
-        </p>
-        <p>
-            To ensure reliability in these estimates, we utilised the ECDF. The ECDF visually represents the likelihood of observing specific changes in ANC4+. For example, the ECDF at zero indicates the likelihood of observing changes equal to or less than zero in ANC4+. Its complement, calculated as 1 minus the ECDF value at zero, informs us about the probability, given the data, of observing changes greater than zero (see Figure 1c). We then apply this information by comparing probabilities from the ECDF at zero against a 95% threshold, illustrated in Figure 1d, to highlight districts where improvements are highly certain (95% certain).  
-        </p>
-
-        <h4>Conclusion</h4>
-        <p>
-            Our utilisation of exceedance probability establishes a robust framework for interpreting changes over time, offering critical insights into trends and the potential for achieving significant improvements within specified timeframes. For example, assessing the exceedance probability associated with the prevalence of stunting provides valuable insights into the reduction of stunting over time. This methodology empowers policymakers by providing a credible assessment of trends, enabling informed decisions for effective interventions. 
-        </p>
-
-        <div id='reference'>
-        <h4>Reference</h4>
-        <div className='row p-0 m-0 px-3'>
-        <ul>
-            <li>
-                Dekking, F. M., Kraaikamp, C., Lopuhaä, H. P., & Meester, L. E. (2005). A Modern Introduction to Probability and Statistics: Understanding why and how (Vol. 488). London: springer. DOI: <a href='https://link.springer.com/book/10.1007/1-84628-168-7' target='_blank'>10.1007/1-84628-168-7</a>.
-            </li>
-            <li>
-                Lindgren, F., Rue, H., & Lindström, J. (2011). An explicit link between Gaussian fields and Gaussian Markov random fields: the stochastic partial differential equation approach. Journal of the Royal Statistical Society Series B: Statistical Methodology, 73(4), 423-498. DOI: <a href='https://doi.org/10.1111/j.1467-9868.2011.00777.x'>10.1111/j.1467-9868.2011.00777.x</a>.
-            </li>
-            <li>
-                Martins, T. G., Simpson, D., Lindgren, F., & Rue, H. (2013). Bayesian computing with INLA: new features. Computational Statistics & Data Analysis, 67, 68-83. DOI: <a href='https://doi.org/10.1016/j.csda.2013.04.014'>10.1016/j.csda.2013.04.014</a>.
-            </li>
-            <li>
-                Richards, K. K., Hazelton, M. L., Stevenson, M. A., Lockhart, C. Y., Pinto, J., & Nguyen, L. (2014). Using exceedance probabilities to detect anomalies in routinely recorded animal health data, with particular reference to foot-and-mouth disease in Viet Nam. Spatial and Spatio-Temporal Epidemiology, 11, 125-133. DOI: <a href='https://doi.org/10.1016/j.sste.2014.08.002' target='_blank'>10.1016/j.sste.2014.08.002</a>
-            </li>
-            <li>
-                Rue, H., Martino, S., & Chopin, N. (2009). Approximate Bayesian inference for latent Gaussian models by using integrated nested Laplace approximations. Journal of the Royal Statistical Society Series B: Statistical Methodology, 71(2), 319-392. DOI: <a href='https://doi.org/10.1111/j.1467-9868.2008.00700.x'>10.1111/j.1467-9868.2008.00700.x</a>.
-            </li>
-            <li>
-                Soch, J. (2020). Definition: Exceedance probability. The Book of Statistical Proofs. Url: <a href='https://statproofbook.github.io/D/prob-exc.html' target='_blank'>https://statproofbook.github.io/D/prob-exc.html</a>
-            </li>
-        </ul>
-        </div>
-        </div>
-      </div>
-    );
-}
-
-function ThirdNote() {
-    return (
-        <div className='bg-secondary-subtle rounded-4 p-3'>
-            <h2>Technical Note 3</h2>
-            <h3>Data sourced from the Institute for Health Metrics and Evaluation (IHME) - Kenya</h3>
-            <hr/>
-
             <div id='table1' className='px-5'>
                 <Table striped>
                     <thead>
@@ -778,7 +665,7 @@ function ThirdNote() {
 
             <h4>Introduction</h4>
             <p>
-                In this work, 5x5 km cell-level estimates for two separate time points—2014 and 2018 for the two NTDs, and 2014 and 2017 for the two mortality indicators—were sourced and downloaded from <a href='https://ghdx.healthdata.org/'>the IHME websites</a>. The data were further aggregated to sub-counties (second-level administrative units) of Kenya using the Population Division. US Census Bureau national and subnational boundaries.
+                In this work, 5x5 km cell-level estimates for two separate time points—2014 and 2018 for the two NTDs, and 2014 and 2017 for the two mortality indicators—were sourced and downloaded from <a href='https://ghdx.healthdata.org/' target='_blank'>the IHME websites</a>. The data were further aggregated to sub-counties (second-level administrative units) of Kenya using the Population Division. US Census Bureau national and subnational boundaries.
             </p>
 
             <h4>Data</h4>
@@ -829,47 +716,37 @@ function ThirdNote() {
             <div className='row p-0 m-0 px-3'>
             <ul style={{marginBottom:'20px'}}>
                 <li>
-                    Population Division, U.S. Census Bureau. The U.S. Census Bureau's products are open access and can be accessed from <a href='https://www.census.gov/geographies/mapping-files/time-series/demo/international-programs/subnationalpopulation.html'>here</a>.
+                    Population Division, U.S. Census Bureau. The U.S. Census Bureau's products are open access and can be accessed from <a href='https://www.census.gov/geographies/mapping-files/time-series/demo/international-programs/subnationalpopulation.html' target='_blank'>here</a>.
                 </li>
                 <li>
-                    Institute for Health Metrics and Evaluation (IHME). Africa and Yemen Onchocerciasis Prevalence Geospatial Estimates 2000-2018. Seattle, United States of America: Institute for Health Metrics and Evaluation (IHME), 2022. DOI: <a href='https://doi.org/10.6069/11JK-D224'>10.6069/11JK-D224</a>. Data are visualised <a href='https://vizhub.healthdata.org/lbd/oncho#'>here</a>.
+                    Institute for Health Metrics and Evaluation (IHME). Africa and Yemen Onchocerciasis Prevalence Geospatial Estimates 2000-2018. Seattle, United States of America: Institute for Health Metrics and Evaluation (IHME), 2022. DOI: <a href='https://doi.org/10.6069/11JK-D224'>10.6069/11JK-D224</a>. Data are visualised <a href='https://vizhub.healthdata.org/lbd/oncho#' target='_blank'>here</a>.
                 </li>
                 <li>
-                    Schmidt et al. (2022) The prevalence of onchocerciasis in Africa and Yemen, 2000–2018: a geospatial analysis. BMC Med 20, 293. DOI: <a href='https://doi.org/10.1186/s12916-022-02486-y'>10.1186/s12916-022-02486-y</a>.
+                    Schmidt et al. (2022) The prevalence of onchocerciasis in Africa and Yemen, 2000–2018: a geospatial analysis. BMC Med 20, 293. DOI: <a href='https://doi.org/10.1186/s12916-022-02486-y' target='_blank'>10.1186/s12916-022-02486-y</a>.
                 </li>
                 <li>
                     Institute for Health Metrics and Evaluation (IHME). Global Lymphatic Filariasis Prevalence Geospatial Estimates 2000-2018. Seattle, United States of America: Institute for Health Metrics and Evaluation (IHME), 2020. DOI: 
-                    <a href='https://doi.org/10.6069/8NA6-6Z2'>10.6069/8NA6-6Z2</a>. Data are visualised <a href='https://vizhub.healthdata.org/lbd/lf#'>here</a>.
+                    <a href='https://doi.org/10.6069/8NA6-6Z2' target='_blank'>10.6069/8NA6-6Z2</a>. Data are visualised <a href='https://vizhub.healthdata.org/lbd/lf#' target='_blank'>here</a>.
                 </li>
                 <li>
-                    Local Burden of Disease 2019 Neglected Tropical Diseases Collaborators (2020) The global distribution of lymphatic filariasis, 2000–18: a geospatial analysis. The Lancet Global Health 8(9): e1186-e1194. DOI: <a href='https://doi.org/10.1016/S2214-109X(20)30286-2'>10.1016/S2214-109X(20)30286-2</a>
+                    Local Burden of Disease 2019 Neglected Tropical Diseases Collaborators (2020) The global distribution of lymphatic filariasis, 2000–18: a geospatial analysis. The Lancet Global Health 8(9): e1186-e1194. DOI: <a href='https://doi.org/10.1016/S2214-109X(20)30286-2' target='_blank'>10.1016/S2214-109X(20)30286-2</a>
                 </li>
                 <li>
                     Institute for Health Metrics and Evaluation (IHME). Low- and Middle-Income Country Neonatal, Infant, and Under-5 Mortality Geospatial Estimates 2000-2017. Seattle, United States of America: Institute for Health Metrics and Evaluation (IHME), 2019. DOI: 
-                    <a href='https://doi.org/10.6069/9ABZ-XG84'>10.6069/9ABZ-XG84</a>. Data are visualised <a href='https://vizhub.healthdata.org/lbd/under5#'>here</a>
+                    <a href='https://doi.org/10.6069/9ABZ-XG84' target='_blank'>10.6069/9ABZ-XG84</a>. Data are visualised <a href='https://vizhub.healthdata.org/lbd/under5#' target='_blank'>here</a>
                 </li>
                 <li>
-                    Burstein et al. (2019) Mapping 123 million neonatal, infant, and child deaths between 2000 and 2017. Nature 574: 353–358. DOI: <a href='https://doi.org/10.1038/s41586-019-1545-0'>10.1038/s41586-019-1545-0</a>. 
+                    Burstein et al. (2019) Mapping 123 million neonatal, infant, and child deaths between 2000 and 2017. Nature 574: 353–358. DOI: <a href='https://doi.org/10.1038/s41586-019-1545-0' target='_blank'>10.1038/s41586-019-1545-0</a>. 
                 </li>
             </ul>
             </div>
-
-            <h4>IHME Data license</h4>
-            <p>
-                IHME specify that the data made available for download on IHME Websites can be used, shared, modified, or built upon by non-commercial users in accordance with the IHME Free-Of-Charge Non-Commercial User Agreement. <a href='https://www.healthdata.org/Data-tools-practices/data-practices/ihme-free-charge-non-commercial-user-agreement'><i className='pi pi-external-link'></i></a>
-            </p>
-
         </div>
     )
 }
 
-function FourthNote() {
+function FourthKenya() {
     return (
         <div className='bg-secondary-subtle rounded-4 p-3'>
-            <h2>Technical Note 4</h2>
-            <h3>Data sourced from ESPEN programme from WHO - Kenya</h3>
-            <hr/>
-
             <div id='table1' className='px-5'>
                 <Table striped>
                     <thead>
@@ -943,25 +820,195 @@ function FourthNote() {
             <div className='row p-0 m-0 px-3'>
             <ul style={{marginBottom:'20px'}}>
                 <li>
-                    Population Division, U.S. Census Bureau. The U.S. Census Bureau's products are open access and can be accessed from <a href='https://www.census.gov/geographies/mapping-files/time-series/demo/international-programs/subnationalpopulation.html'>here</a>.
+                    Population Division, U.S. Census Bureau. The U.S. Census Bureau's products are open access and can be accessed from <a href='https://www.census.gov/geographies/mapping-files/time-series/demo/international-programs/subnationalpopulation.html' target='_blank'>here</a>.
                 </li>
                 <li>
-                    World Health Organisation Regional Office for Africa (2024) Expanded Special Project for Elimination of Neglected Tropical Diseases. Data and more information can be accessed from <a href='https://espen.afro.who.int/'>here</a>.
+                    World Health Organisation Regional Office for Africa (2024) Expanded Special Project for Elimination of Neglected Tropical Diseases. Data and more information can be accessed from <a href='https://espen.afro.who.int/' target='_blank'>here</a>.
                 </li>
                 <li>
-                    Rue, H., Martino, S., & Chopin, N. (2009). Approximate Bayesian inference for latent Gaussian models by using integrated nested Laplace approximations. Journal of the Royal Statistical Society Series B: Statistical Methodology, 71(2), 319-392. DOI: <a href='https://doi.org/10.1111/j.1467-9868.2008.00700.x'>10.1111/j.1467-9868.2008.00700.x</a>.
+                    Rue, H., Martino, S., & Chopin, N. (2009). Approximate Bayesian inference for latent Gaussian models by using integrated nested Laplace approximations. Journal of the Royal Statistical Society Series B: Statistical Methodology, 71(2), 319-392. DOI: <a href='https://doi.org/10.1111/j.1467-9868.2008.00700.x' target='_blank'>10.1111/j.1467-9868.2008.00700.x</a>.
                 </li>
                 <li>
-                    Lindgren, F., Rue, H., & Lindström, J. (2011). An explicit link between Gaussian fields and Gaussian Markov random fields: the stochastic partial differential equation approach. Journal of the Royal Statistical Society Series B: Statistical Methodology, 73(4), 423-498. DOI: <a href='https://doi.org/10.1111/j.1467-9868.2011.00777.x'>10.1111/j.1467-9868.2011.00777.x</a>.
+                    Lindgren, F., Rue, H., & Lindström, J. (2011). An explicit link between Gaussian fields and Gaussian Markov random fields: the stochastic partial differential equation approach. Journal of the Royal Statistical Society Series B: Statistical Methodology, 73(4), 423-498. DOI: <a href='https://doi.org/10.1111/j.1467-9868.2011.00777.x' target='_blank'>10.1111/j.1467-9868.2011.00777.x</a>.
                 </li>
                 <li>
-                    Martins, T. G., Simpson, D., Lindgren, F., & Rue, H. (2013). Bayesian computing with INLA: new features. Computational Statistics & Data Analysis, 67, 68-83. DOI: <a href='https://doi.org/10.1016/j.csda.2013.04.014'>10.1016/j.csda.2013.04.014</a>
+                    Martins, T. G., Simpson, D., Lindgren, F., & Rue, H. (2013). Bayesian computing with INLA: new features. Computational Statistics & Data Analysis, 67, 68-83. DOI: <a href='https://doi.org/10.1016/j.csda.2013.04.014' target='_blank'>10.1016/j.csda.2013.04.014</a>
                 </li>
                 <li>
-                    de Silva N, Hall A. Using the prevalence of individual species of intestinal nematode worms to estimate the combined prevalence of any species. PLoS Negl Trop Dis. 2010 Apr 13;4(4):e655. DOI: <a href='https://doi.org/10.1371/journal.pntd.0000655'>10.1371/journal.pntd.0000655</a>. 
+                    de Silva N, Hall A. Using the prevalence of individual species of intestinal nematode worms to estimate the combined prevalence of any species. PLoS Negl Trop Dis. 2010 Apr 13;4(4):e655. DOI: <a href='https://doi.org/10.1371/journal.pntd.0000655' target='_blank'>10.1371/journal.pntd.0000655</a>. 
                 </li>
             </ul>
             </div>
         </div>
     )
 }
+
+const ContentTab3 = [
+    {"State": "Andaman & Nicobar Islands", "Count": "3"},
+    {"State": "Andhra Pradesh", "Count": "13"},
+    {"State": "Bihar", "Count": "38"},
+    {"State": "Chandigarh", "Count": "1"},
+    {"State": "Dandra & Nagar Haveli & Daman & Diu", "Count": "3"},
+    {"State": "Goa", "Count": "2"},
+    {"State": "Himachal Pradesh", "Count": "12"},
+    {"State": "Jammu and Kashmir", "Count": "20"},
+    {"State": "Jharkhand", "Count": "24"},
+    {"State": "Karnataka", "Count": "30"},
+    {"State": "Kerala", "Count": "2"},
+    {"State": "Ladakh", "Count": "1"},
+    {"State": "Lakshadweep", "Count": "14"},
+    {"State": "Manipur", "Count": "9"},
+    {"State": "Mizoram", "Count": "8"},
+    {"State": "Nagaland", "Count": "11"},
+    {"State": "Odisha", "Count": "30"},
+    {"State": "Puducherry", "Count": "4"},
+    {"State": "Rajasthan", "Count": "33"},
+    {"State": "Sikkim", "Count": "4"},
+    {"State": "Tamil Nadu", "Count": "32"},
+    {"State": "Uttarakhand", "Count": "13"}
+]
+
+const ContentTab4 = [
+    {"State": "Arunachal Pradesh", "Type1": "6", "Type2": "1", "Count15": "16", "Count19": "20", "New": "4"},
+    {"State": "Assam", "Type1": "12", "Type2": "-", "Count15": "27", "Count19": "33", "New": "6"},
+    {"State": "Chhattisgarh", "Type1": "15", "Type2": "-", "Count15": "18", "Count19": "27", "New": "9"},
+    {"State": "Gujarat", "Type1": "8", "Type2": "3", "Count15": "26", "Count19": "33", "New": "7"},
+    {"State": "Haryana", "Type1": "1", "Type2": "-", "Count15": "21", "Count19": "22", "New": "1"},
+    {"State": "Madhya Pradesh", "Type1": "2", "Type2": "-", "Count15": "50", "Count19": "51", "New": "1"},
+    {"State": "Maharashtra", "Type1": "2", "Type2": "-", "Count15": "35", "Count19": "36", "New": "1"},
+    {"State": "Meghalaya", "Type1": "8", "Type2": "-", "Count15": "7", "Count19": "11", "New": "4"},
+    {"State": "NCT of Delhi", "Type1": "4", "Type2": "4", "Count15": "9", "Count19": "11", "New": "2"},
+    {"State": "Punjab", "Type1": "4", "Type2": "-", "Count15": "20", "Count19": "22", "New": "2"},
+    {"State": "Telangana", "Type1": "23", "Type2": "7", "Count15": "10", "Count19": "31", "New": "21"},
+    {"State": "Tripura", "Type1": "7", "Type2": "-", "Count15": "4", "Count19": "8", "New": "4"},
+    {"State": "Uttar Pradesh", "Type1": "4", "Type2": "2", "Count15": "71", "Count19": "75", "New": "4"},
+    {"State": "West Bengal", "Type1": "2", "Type2": "-", "Count15": "19", "Count19": "20", "New": "1"}
+]
+
+const ListOfChanges = [
+    {
+        title: 'Arunachal Pradesh',
+        items: [
+            'A new district (Kra Daadi) was formed from Kurung Kumey district.',
+            'Longding district was created from Tirap district.',
+            'Namsai district was created from Lohit district.',
+            'A new Siang district was created from Parent districts West Siang and East Siang.'
+        ]
+    },
+    {
+        title: 'Assam',
+        subtitle: 'All 6 new districts created from type 1 Parent districts include:',
+        items: [
+            'Biswanath district was created from Sonitpur', 
+            'Charaideo from Sivasagar', 
+            'Hojai from Nagaon', 
+            'Majuli from Jorhat', 
+            'South Salmara Mancachar from Dhubri',
+            'West Karbi Anglong from Karbi Anglong' 
+            ]
+    },
+    {
+        title: 'Gujarat',
+        subtitle: 'New districts formed include:',
+        items: [
+            'Botad from Bhavnagar and Ahmadabad',
+            'Chhota Udaipur from Vadodara',
+            'Devbhumi Dwarka from Jamnagar',
+            'Gir Somnath from Junagadh',
+            'Mahisagar from Panchmahal and Kheda',
+            'Morbi from Rajkot and Surrendranagar'
+        ]
+    },
+    {
+        title: 'Chhattisgarh',
+        subtitle: 'Dakshin Bastar Dantewada district in 2015-16 no longer exists, as two new districts: Dantewada and Sukma were created from it in 2019-21. Balod and Bemetara districts were also created from Durg district, thus forming three new districts including Durg.  Surguja district in 2015-16 has also been divided into three: Balarampur, Surajpur, and Surguja. Other districts formed include:',
+        items: [
+            'Baloda Bazar from Raipur',
+            'Kodagaon from Bastar',
+            'Mungeli from Bilaspur'
+        ]
+    },
+    {
+        title: 'NCT of Delhi',
+        subtitle: 'Two entirely new districts: Shahdara (formed from North East and East districts), and South East Delhi (formed from South district) have been added. Although other districts bear the same name as in 2015-16, they have changed boundaries, for example,',
+        items: [
+            'Central district and North district boundaries have been merged to form a new Central district in 2019-21',
+            'With the 2015-16 North merging as stated above, the 2015-16 North West district was also divided into new North and North West districts',
+            'New Delhi district in 2019-21 now includes a part of the 2015-16 South West boundaries with the 2015-16 New Delhi boundary',
+            '2015-16 South district is now divided into two 2019-21 districts- South and South East'
+        ]
+    },
+    {
+        title: 'Telangana',
+        subtitle: 'The following type 1 and type 2 districts exist in Telangana state in 2019-21:',
+        items: [
+            'Komaram Bheem Asifabad, Mancherial, and Nirmal from Adilabad district in 2015-16',
+            'Jagitial, Peddapalli, and Rajanna Sircilla districts from Karimnagar 2015-16 district',
+            'Kothagudem from Khammam',
+            'Jogulamba Gadwal and Nagarkurnool from Mahbubnagar',
+            'Kamareddy from Nizamabad',
+            'Medchal-Malkajgiri from RangaReddy',
+            'Sangareddy from Medak',
+            'Suryapet and Yadadri Bhuvanagiri from Nalgonda',
+            'Warangal Rural from Warangal',
+            'Jangoan from Warangal and Nalgonda',
+            'Jayashankar Bhupalapally from Karimnagar, Warangal, and Khammam',
+            'Mahabubabad from Warangal and Khammam',
+            'Ranga Reddy and Vikarabad from RangaReddy and Mahabubnagar',
+            'Siddipet from Medak, Warangal, and Karimnagar',
+            'Warangal Urban from Warangal and Karimnagar'
+        ]
+    },
+    {
+        title: 'Haryana',
+        subtitle: 'The only new district formed is Charkhi Dadri from Bhiwani district.',
+        items: ''
+    },
+    {
+        title: 'Madhya Pradesh',
+        subtitle: 'Only one new district was formed: Agar Malwa from Shajapur district.',
+        items: ''
+    },
+    {
+        title: 'Punjab',
+        subtitle: 'The two new districts formed are:',
+        items: [
+            'Fazilka from Firozpur',
+            'Pathankot from Gurdaspur'
+        ]
+    },
+    {
+        title: 'Meghalaya',
+        subtitle: 'Jaintia Hills no longer exists in 2015-16 as the district now includes two new districts: East Jaintia Hills and West Jaintia Hills. Other new districts formed include:',
+        items: [
+            'North Garo Hills from East Garo Hills',
+            'South West Garo Hills from West Garo Hills',
+            'South West Khasi Hills from West Khasi Hills'
+        ]
+    },
+    {
+        title: 'Uttar Pradesh',
+        subtitle: 'Four new districts formed are:',
+        items : [
+            'Amethi from Sultanpur and Rae Bareli',
+            'Hapur from Ghaziabad',
+            'Sambhal from Moradabad and Budaun',
+            'Shamli from Muzaffarnagar'
+        ]
+    },
+    {
+        title: 'West Bengal',
+        subtitle: 'Barddhaman district no longer exists, but has two new districts created from it:',
+        items : [
+            'Paschim Barddhaman and Purba Barddhaman'
+        ]
+    },
+    {
+        title: 'Tripura',
+        subtitle: 'The new districts formed include:',
+        items : [
+            'Khowai and Sepahijala from West district',
+            'Unakoti from North district'
+        ]
+    },
+]

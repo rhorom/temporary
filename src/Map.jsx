@@ -5,9 +5,8 @@ import { Form } from 'react-bootstrap';
 import { FaPlusCircle, FaMinusCircle, FaHome, FaChevronUp, FaChevronDown } from 'react-icons/fa'
 
 import { FloatFormat, GetColor } from './Utils';
-import { mainConfig, indicatorDef, StateStyle, StateStyle2, DistrictStyle, pIndicator, nIndicator } from './config';
+import { mainConfig, indicatorDef, StateStyle, StateStyle2, DistrictStyle } from './config';
 import { LegendPanel } from './MapUtils'
-import { Ask } from './pages/Info';
 
 const basemaps = {
   'esri':'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
@@ -17,6 +16,7 @@ const basemaps = {
 
 export function Map({ param, data, boundary, func, filterFunc }){
   const cfg = mainConfig[param.country]
+  console.log(cfg)
   const description = cfg.indicators[param.indicator]
   const defRound = cfg.NoR2.includes(param.indicator) ? 'R1' : 'R2'
   const [selectedState, setSelectedState] = useState()
@@ -109,7 +109,7 @@ export function Map({ param, data, boundary, func, filterFunc }){
         <div className='leaflet-control m-1 p-0 m-0'>
           <div className='p-1 m-0 mt-1 rounded-2 bg-secondary-subtle' style={{display:'block'}}>
             <div className='subtitle' onClick={hideLayerControl}
-              style={{height:'25px', width:'125px'}}>
+              style={{height:'25px', width:'140px'}}>
               <b>Control</b><i className='float-end'>{showControl ? <FaChevronUp title='minimize'/> : <FaChevronDown title='maximize'/>}</i>
             </div>
 
@@ -152,7 +152,7 @@ export function Map({ param, data, boundary, func, filterFunc }){
                   defaultChecked={opt.showRaster === false}
                   type='radio'
                   id='radio_agg'
-                  label='District Level'
+                  label='Administrative Level'
                   name='optRaster'
                   title='Show aggregated data'
                   onClick={() => showHiRes(false)}
