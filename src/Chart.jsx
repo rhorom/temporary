@@ -289,8 +289,6 @@ export function Chart({ param, data, stat, filterFunc}){
     )
   }, [data, param])
 
-  console.log(hilite)
-  
   const nodata = ((hilite[0]['avg'] === '-') && (hilite[1]['avg'] === '-'))
   let wording = ''
   if (description['R1'] !== ''){
@@ -302,8 +300,28 @@ export function Chart({ param, data, stat, filterFunc}){
     wording += `approximately ${hilite[1]['avg']} ${definition['Unit']} ${definition['Statement']} in round 2 (${description['R2']}, ${description['Y2']}).`
   }
 
+  let text = []
+  if (pIndicator.includes(param.indicator)){
+    if (hilite[2]['bestVal'].startsWith('-')){
+      text.push('experienced the smallest decrease')
+    } else {
+      text.push('had the highest increase')
+      text.push(', showing an improvement in conditions')
+    }
+  } else {
+    if (hilite[2]['bestVal'].startsWith('-')){
+      text.push('experience the largest decrease')
+      text.push(', showing an improvement in conditions')
+    } else {
+      text.push('had the lowest increase')
+    }
+  }
+  
+  {/*const sumChange = <>
+    The {adm2} of <b>{hilite[2]['best']}</b> had {text[0]} in {(description['Indicator'])} with a {hilite[2]['bestVal']} {description['Unit']} change from round 1 ({description['R1']}, {description['Y1']}) to round 2 ({description['R2']}, {description['Y2']}){text[1]}.
+  </>*/}
   const sumChange = <>
-    The {adm2} of <b>{hilite[2]['best']}</b> experienced the highest {pIndicator.includes(param.indicator) ? 'increase': 'decrease (lowest increase)'} of {(description['Indicator'])} with a {hilite[2]['bestVal']} {description['Unit']} change from round 1 ({description['R1']}, {description['Y1']}) to round 2 ({description['R2']}, {description['Y2']}), showing an improvement in conditions.
+    Among the listed {adm2s}, <b>{hilite[2]['best']}</b> {text[0]} in {(description['Indicator'])} with a {hilite[2]['bestVal']} {description['Unit']} change from round 1 ({description['R1']}, {description['Y1']}) to round 2 ({description['R2']}, {description['Y2']}){text[1]}.
   </>
 
   const summaryTab = (

@@ -23,7 +23,7 @@ export function LegendPanel({ param, opt }){
     let ticks = [minmax[0]]
     let sticks = [10]
     const sdelta = 80*delta/(minmax[1]-minmax[0])
-    while (ticks[ticks.length-1] < minmax[1]){
+    while (ticks[ticks.length-1] <= (minmax[1] - delta)){
       const n = ticks.length
       ticks.push(ticks[n-1] + delta)
       sticks.push(sticks[n-1] + sdelta)

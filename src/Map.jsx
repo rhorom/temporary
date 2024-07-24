@@ -16,7 +16,6 @@ const basemaps = {
 
 export function Map({ param, data, boundary, func, filterFunc }){
   const cfg = mainConfig[param.country]
-  console.log(cfg)
   const description = cfg.indicators[param.indicator]
   const defRound = cfg.NoR2.includes(param.indicator) ? 'R1' : 'R2'
   const [selectedState, setSelectedState] = useState()
