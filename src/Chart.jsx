@@ -3,15 +3,11 @@ import { useTable, useSortBy } from 'react-table';
 import { Vega } from 'react-vega';
 import Table from 'react-bootstrap/Table';
 import { Tab, Tabs, Modal, Badge } from 'react-bootstrap';
-import { SimpleSelect, FloatFormat, GetColor, ArgMax, ArgMin } from './Utils';
+import { SimpleSelect, FloatFormat, GetColor } from './Utils';
 import { Ask } from './pages/Info';
 import { pIndicator, indicatorDef } from './config';
 
 import specs from './chart_spec.json';
-
-function Average(array) {
-  return array.reduce((a, b) => a + b) / array.length;
-}
 
 function AllIndicators({ input, proportional }){
   let spec = JSON.parse(JSON.stringify(specs['AllInRanges']));
@@ -317,9 +313,6 @@ export function Chart({ param, data, stat, filterFunc}){
     }
   }
   
-  {/*const sumChange = <>
-    The {adm2} of <b>{hilite[2]['best']}</b> had {text[0]} in {(description['Indicator'])} with a {hilite[2]['bestVal']} {description['Unit']} change from round 1 ({description['R1']}, {description['Y1']}) to round 2 ({description['R2']}, {description['Y2']}){text[1]}.
-  </>*/}
   const sumChange = <>
     Among the listed {adm2s}, <b>{hilite[2]['best']}</b> {text[0]} in {(description['Indicator'])} with a {hilite[2]['bestVal']} {description['Unit']} change from round 1 ({description['R1']}, {description['Y1']}) to round 2 ({description['R2']}, {description['Y2']}){text[1]}.
   </>
@@ -353,7 +346,7 @@ export function Chart({ param, data, stat, filterFunc}){
         In the {adm1} of <b>{stateName}</b>, {wording}
       </p>
       <p>
-          {hilite[2]['best'] === '-' ? '' : sumChange}
+          {hilite[2]['best'] ? sumChange : ''}
       </p>
     </div>
   )
@@ -377,7 +370,7 @@ export function Chart({ param, data, stat, filterFunc}){
       The table below summarises the indicator values aggregated at {adm2} level. If available, the credible intervals <b>(CIs)</b> with 95% significance for round 1 <b>(R1)</b> and round 2 <b>(R2)</b> can be found in brackets.
       </p>
       <p style={{fontSize:'80%'}}>
-      The data can be sorted by name, round 1 <b>(R1)</b> values, round 2 <b>(R2)</b> values and change <b>(CH)</b> values by clicking on each heading.
+      The data can be sorted by name, round 1 <b>(R1)</b> values, round 2 <b>(R2)</b> values and change <b>(CH)</b> values by clicking on each heading. Additionally, all-indicator summary can be displayed by clicking <i className='pi pi-arrow-circle-right'></i> on each row.
       </p>
       <hr/>
       <div style={{maxHeight:'610px', overflowY:'auto'}}>
