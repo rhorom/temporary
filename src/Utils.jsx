@@ -384,7 +384,11 @@ function FullMap({ element, title }){
     )
 }
 
-export function ToolBar({element, elemID, param, title}){
+export function ToolBar(){
+    return <></>
+}
+
+export function ToolBare({element, elemID, param, title}){
     return (
         <div className='row m-0 p-0'>
         <div className='col-sm'>

@@ -95,8 +95,6 @@ function Illustration(){
     function handleShow(){setShow(true)}
     function handleHide(){setShow(false)}
 
-    return <></>
-    {/*
     return (
         <div className="text-center m-0 p-0 mb-2">
             <Button variant='danger' size='sm' onClick={handleShow}>Illustration</Button>
@@ -104,12 +102,20 @@ function Illustration(){
             <Modal show={show} onHide={handleHide} size='lg'>
                 <Modal.Header closeButton><h4>Illustration</h4></Modal.Header>
                 <Modal.Body>
+                    <p>
+                        How <b>certain</b> are we with the changes? <br/>
+                        Example: Change defined as ANC4 (R2) - ANC4 (R1) for Kwale, Kenya.
+                    </p>
+
                     <img alt='exceedance' src={exceedance} width='100%'/>
+
+                    <p className="mt-3">
+                        We have varying levels of certainty regarding improvements in different sub-counties. As we move from panels (a) to (c), we see fewer colored sub-counties showing meaningful improvements. For example, without filtering (panel a), we observe ANC4 coverage improvements in <i>Msambweni</i> (circled in <mark style={{color:'red'}}>red</mark>) and <i>Lunga Lunga</i> (circled in <mark style={{color:'orange'}}>orange</mark>). However, with a 95% certainty filter (panel b), we cannot be highly certain that there is an improvement in <i>Msambweni</i>, and with a 99% certainty filter (panel c), we cannot be almost certain that there is an improvement in <i>Lunga Lunga</i>. Further detail can be found in the Technical Note 2.
+                    </p>
                 </Modal.Body>
             </Modal>
         </div>
     )
-    */}
 }
 
 export function MoreInfo({ content }){

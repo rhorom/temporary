@@ -991,8 +991,8 @@ export const mainConfig = {
         "Adm2": "Sub-county",
         "Center": [0.6, 37.5],
         "Zoom": [6],
-        "DistrictOnly": ['LBW', 'Stillbirth', 'Lab_child'],
-        "StateOnly": ['LBW', 'Stillbirth', 'Lab_child'],
+        "DistrictOnly": ['LBW', 'Stillbirth', 'Lab_child', 'Breastfeed'],
+        "StateOnly": ['LBW', 'Stillbirth', 'Lab_child', 'Breastfeed'],
         "NoR1": ['Lab_child', 'NTDs_helm', 'NTDs_schi'],
         "NoR2": ['NAR_prim', 'NAR_sec'],
         "indicators": {
